@@ -2,6 +2,13 @@
 
 .DS_Store
 
+*/settings
+*/settings/*
+*/target
+*/target/*
+*/classes
+*/classes/*
+
 # Package Files #
 *.jar
 *.war
