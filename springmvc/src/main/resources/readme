@@ -1,0 +1,3 @@
+log4j.threshold=level
+
+level就是前面所说的 OFF ,FATAL ,ERROR ,WARN ,INFO ,DEBUG ,ALL。Threshold是个全局的过滤器，它将把低于所设置的level的信息过滤不显示出来。
