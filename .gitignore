@@ -1,9 +1,12 @@
 *.class
+*.classpath
+*.project
+*.gitignore
 
 .DS_Store
 
-*/settings
-*/settings/*
+*/.settings
+*/.settings/*
 */target
 */target/*
 */classes
