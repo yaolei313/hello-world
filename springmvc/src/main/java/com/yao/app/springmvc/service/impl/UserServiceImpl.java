@@ -10,12 +10,12 @@ import com.yao.app.springmvc.service.UserService;
 @Service
 public class UserServiceImpl implements UserService {
 
-	@Autowired
-	private UserMapper userMapper;
-	
-	@Override
-	public UserBean fetchUserInfo(String id) {
-		return userMapper.findUser(id);
-	}
+    @Autowired
+    private UserMapper userMapper;
+
+    @Override
+    public UserBean fetchUserInfo(String id) {
+        return userMapper.findUser(id);
+    }
 
 }
