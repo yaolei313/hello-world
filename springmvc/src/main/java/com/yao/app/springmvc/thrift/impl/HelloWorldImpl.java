@@ -1,7 +1,8 @@
-package com.yao.app.springmvc.thrift;
+package com.yao.app.springmvc.thrift.impl;
 
 import org.apache.thrift.TException;
 
+import com.yao.app.springmvc.thrift.HelloWorldService;
 import com.yao.app.springmvc.thrift.HelloWorldService.Iface;
 
 public class HelloWorldImpl implements Iface {

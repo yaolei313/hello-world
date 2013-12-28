@@ -3,6 +3,11 @@ package com.yao.app.springmvc.domain;
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * 用户对象bean
+ * 
+ * @author summer
+ */
 public class UserBean implements Serializable {
 
     /**
@@ -12,13 +17,25 @@ public class UserBean implements Serializable {
 
     private String id;
 
+    /**
+     * 注册用户名
+     */
     private String name;
 
-    private String age;
+    /**
+     * 注册邮箱
+     */
+    private String email;
 
-    private Date birthDay;
+    /**
+     * gravatar邮件地址
+     */
+    private String gravatarMail;
 
-    private String address;
+    /**
+     * 注册时间
+     */
+    private Date regiterTime;
 
     public String getId() {
         return id;
@@ -36,34 +53,28 @@ public class UserBean implements Serializable {
         this.name = name;
     }
 
-    public String getAge() {
-        return age;
+    public String getEmail() {
+        return email;
     }
 
-    public void setAge(String age) {
-        this.age = age;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public Date getBirthDay() {
-        return birthDay;
+    public String getGravatarMail() {
+        return gravatarMail;
     }
 
-    public void setBirthDay(Date birthDay) {
-        this.birthDay = birthDay;
+    public void setGravatarMail(String gravatarMail) {
+        this.gravatarMail = gravatarMail;
     }
 
-    public String getAddress() {
-        return address;
+    public Date getRegiterTime() {
+        return regiterTime;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    @Override
-    public String toString() {
-        return "UserBean [id=" + id + ", name=" + name + ", age=" + age
-                + ", birthDay=" + birthDay + ", address=" + address + "]";
+    public void setRegiterTime(Date regiterTime) {
+        this.regiterTime = regiterTime;
     }
 
 }

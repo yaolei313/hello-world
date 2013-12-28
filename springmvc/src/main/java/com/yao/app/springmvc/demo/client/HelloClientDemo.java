@@ -1,4 +1,4 @@
-package com.yao.app.springmvc.thrift.client;
+package com.yao.app.springmvc.demo.client;
 
 import org.apache.thrift.TException;
 import org.apache.thrift.protocol.TBinaryProtocol;

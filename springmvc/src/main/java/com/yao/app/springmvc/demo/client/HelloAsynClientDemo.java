@@ -1,4 +1,4 @@
-package com.yao.app.springmvc.thrift.client;
+package com.yao.app.springmvc.demo.client;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
