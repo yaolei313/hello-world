@@ -35,7 +35,7 @@ public class UserBean implements Serializable {
     /**
      * 注册时间
      */
-    private Date regiterTime;
+    private Date registerTime;
 
     public String getId() {
         return id;
@@ -69,12 +69,12 @@ public class UserBean implements Serializable {
         this.gravatarMail = gravatarMail;
     }
 
-    public Date getRegiterTime() {
-        return regiterTime;
+    public Date getRegisterTime() {
+        return registerTime;
     }
 
-    public void setRegiterTime(Date regiterTime) {
-        this.regiterTime = regiterTime;
+    public void setRegisterTime(Date registerTime) {
+        this.registerTime = registerTime;
     }
 
 }

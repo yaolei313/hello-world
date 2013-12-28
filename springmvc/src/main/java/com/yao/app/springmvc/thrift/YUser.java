@@ -38,7 +38,7 @@ public class YUser implements org.apache.thrift.TBase<YUser, YUser._Fields>, jav
   private static final org.apache.thrift.protocol.TField ID_FIELD_DESC = new org.apache.thrift.protocol.TField("id", org.apache.thrift.protocol.TType.STRING, (short)1);
   private static final org.apache.thrift.protocol.TField NAME_FIELD_DESC = new org.apache.thrift.protocol.TField("name", org.apache.thrift.protocol.TType.STRING, (short)2);
   private static final org.apache.thrift.protocol.TField GRAVATAR_MAIL_FIELD_DESC = new org.apache.thrift.protocol.TField("gravatarMail", org.apache.thrift.protocol.TType.STRING, (short)3);
-  private static final org.apache.thrift.protocol.TField REGITER_TIME_FIELD_DESC = new org.apache.thrift.protocol.TField("regiterTime", org.apache.thrift.protocol.TType.STRUCT, (short)4);
+  private static final org.apache.thrift.protocol.TField REGISTER_TIME_FIELD_DESC = new org.apache.thrift.protocol.TField("registerTime", org.apache.thrift.protocol.TType.STRUCT, (short)4);
   private static final org.apache.thrift.protocol.TField EMAIL_FIELD_DESC = new org.apache.thrift.protocol.TField("email", org.apache.thrift.protocol.TType.STRING, (short)5);
 
   private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
@@ -50,7 +50,7 @@ public class YUser implements org.apache.thrift.TBase<YUser, YUser._Fields>, jav
   public String id; // required
   public String name; // required
   public String gravatarMail; // required
-  public YTimestamp regiterTime; // required
+  public YTimestamp registerTime; // required
   public String email; // required
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
@@ -58,7 +58,7 @@ public class YUser implements org.apache.thrift.TBase<YUser, YUser._Fields>, jav
     ID((short)1, "id"),
     NAME((short)2, "name"),
     GRAVATAR_MAIL((short)3, "gravatarMail"),
-    REGITER_TIME((short)4, "regiterTime"),
+    REGISTER_TIME((short)4, "registerTime"),
     EMAIL((short)5, "email");
 
     private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
@@ -80,8 +80,8 @@ public class YUser implements org.apache.thrift.TBase<YUser, YUser._Fields>, jav
           return NAME;
         case 3: // GRAVATAR_MAIL
           return GRAVATAR_MAIL;
-        case 4: // REGITER_TIME
-          return REGITER_TIME;
+        case 4: // REGISTER_TIME
+          return REGISTER_TIME;
         case 5: // EMAIL
           return EMAIL;
         default:
@@ -133,7 +133,7 @@ public class YUser implements org.apache.thrift.TBase<YUser, YUser._Fields>, jav
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
     tmpMap.put(_Fields.GRAVATAR_MAIL, new org.apache.thrift.meta_data.FieldMetaData("gravatarMail", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.REGITER_TIME, new org.apache.thrift.meta_data.FieldMetaData("regiterTime", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+    tmpMap.put(_Fields.REGISTER_TIME, new org.apache.thrift.meta_data.FieldMetaData("registerTime", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, YTimestamp.class)));
     tmpMap.put(_Fields.EMAIL, new org.apache.thrift.meta_data.FieldMetaData("email", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
@@ -148,14 +148,14 @@ public class YUser implements org.apache.thrift.TBase<YUser, YUser._Fields>, jav
     String id,
     String name,
     String gravatarMail,
-    YTimestamp regiterTime,
+    YTimestamp registerTime,
     String email)
   {
     this();
     this.id = id;
     this.name = name;
     this.gravatarMail = gravatarMail;
-    this.regiterTime = regiterTime;
+    this.registerTime = registerTime;
     this.email = email;
   }
 
@@ -172,8 +172,8 @@ public class YUser implements org.apache.thrift.TBase<YUser, YUser._Fields>, jav
     if (other.isSetGravatarMail()) {
       this.gravatarMail = other.gravatarMail;
     }
-    if (other.isSetRegiterTime()) {
-      this.regiterTime = new YTimestamp(other.regiterTime);
+    if (other.isSetRegisterTime()) {
+      this.registerTime = new YTimestamp(other.registerTime);
     }
     if (other.isSetEmail()) {
       this.email = other.email;
@@ -189,7 +189,7 @@ public class YUser implements org.apache.thrift.TBase<YUser, YUser._Fields>, jav
     this.id = null;
     this.name = null;
     this.gravatarMail = null;
-    this.regiterTime = null;
+    this.registerTime = null;
     this.email = null;
   }
 
@@ -265,27 +265,27 @@ public class YUser implements org.apache.thrift.TBase<YUser, YUser._Fields>, jav
     }
   }
 
-  public YTimestamp getRegiterTime() {
-    return this.regiterTime;
+  public YTimestamp getRegisterTime() {
+    return this.registerTime;
   }
 
-  public YUser setRegiterTime(YTimestamp regiterTime) {
-    this.regiterTime = regiterTime;
+  public YUser setRegisterTime(YTimestamp registerTime) {
+    this.registerTime = registerTime;
     return this;
   }
 
-  public void unsetRegiterTime() {
-    this.regiterTime = null;
+  public void unsetRegisterTime() {
+    this.registerTime = null;
   }
 
-  /** Returns true if field regiterTime is set (has been assigned a value) and false otherwise */
-  public boolean isSetRegiterTime() {
-    return this.regiterTime != null;
+  /** Returns true if field registerTime is set (has been assigned a value) and false otherwise */
+  public boolean isSetRegisterTime() {
+    return this.registerTime != null;
   }
 
-  public void setRegiterTimeIsSet(boolean value) {
+  public void setRegisterTimeIsSet(boolean value) {
     if (!value) {
-      this.regiterTime = null;
+      this.registerTime = null;
     }
   }
 
@@ -339,11 +339,11 @@ public class YUser implements org.apache.thrift.TBase<YUser, YUser._Fields>, jav
       }
       break;
 
-    case REGITER_TIME:
+    case REGISTER_TIME:
       if (value == null) {
-        unsetRegiterTime();
+        unsetRegisterTime();
       } else {
-        setRegiterTime((YTimestamp)value);
+        setRegisterTime((YTimestamp)value);
       }
       break;
 
@@ -369,8 +369,8 @@ public class YUser implements org.apache.thrift.TBase<YUser, YUser._Fields>, jav
     case GRAVATAR_MAIL:
       return getGravatarMail();
 
-    case REGITER_TIME:
-      return getRegiterTime();
+    case REGISTER_TIME:
+      return getRegisterTime();
 
     case EMAIL:
       return getEmail();
@@ -392,8 +392,8 @@ public class YUser implements org.apache.thrift.TBase<YUser, YUser._Fields>, jav
       return isSetName();
     case GRAVATAR_MAIL:
       return isSetGravatarMail();
-    case REGITER_TIME:
-      return isSetRegiterTime();
+    case REGISTER_TIME:
+      return isSetRegisterTime();
     case EMAIL:
       return isSetEmail();
     }
@@ -440,12 +440,12 @@ public class YUser implements org.apache.thrift.TBase<YUser, YUser._Fields>, jav
         return false;
     }
 
-    boolean this_present_regiterTime = true && this.isSetRegiterTime();
-    boolean that_present_regiterTime = true && that.isSetRegiterTime();
-    if (this_present_regiterTime || that_present_regiterTime) {
-      if (!(this_present_regiterTime && that_present_regiterTime))
+    boolean this_present_registerTime = true && this.isSetRegisterTime();
+    boolean that_present_registerTime = true && that.isSetRegisterTime();
+    if (this_present_registerTime || that_present_registerTime) {
+      if (!(this_present_registerTime && that_present_registerTime))
         return false;
-      if (!this.regiterTime.equals(that.regiterTime))
+      if (!this.registerTime.equals(that.registerTime))
         return false;
     }
 
@@ -504,12 +504,12 @@ public class YUser implements org.apache.thrift.TBase<YUser, YUser._Fields>, jav
         return lastComparison;
       }
     }
-    lastComparison = Boolean.valueOf(isSetRegiterTime()).compareTo(other.isSetRegiterTime());
+    lastComparison = Boolean.valueOf(isSetRegisterTime()).compareTo(other.isSetRegisterTime());
     if (lastComparison != 0) {
       return lastComparison;
     }
-    if (isSetRegiterTime()) {
-      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.regiterTime, other.regiterTime);
+    if (isSetRegisterTime()) {
+      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.registerTime, other.registerTime);
       if (lastComparison != 0) {
         return lastComparison;
       }
@@ -568,11 +568,11 @@ public class YUser implements org.apache.thrift.TBase<YUser, YUser._Fields>, jav
     }
     first = false;
     if (!first) sb.append(", ");
-    sb.append("regiterTime:");
-    if (this.regiterTime == null) {
+    sb.append("registerTime:");
+    if (this.registerTime == null) {
       sb.append("null");
     } else {
-      sb.append(this.regiterTime);
+      sb.append(this.registerTime);
     }
     first = false;
     if (!first) sb.append(", ");
@@ -590,8 +590,8 @@ public class YUser implements org.apache.thrift.TBase<YUser, YUser._Fields>, jav
   public void validate() throws org.apache.thrift.TException {
     // check for required fields
     // check for sub-struct validity
-    if (regiterTime != null) {
-      regiterTime.validate();
+    if (registerTime != null) {
+      registerTime.validate();
     }
   }
 
@@ -653,11 +653,11 @@ public class YUser implements org.apache.thrift.TBase<YUser, YUser._Fields>, jav
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
             break;
-          case 4: // REGITER_TIME
+          case 4: // REGISTER_TIME
             if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
-              struct.regiterTime = new YTimestamp();
-              struct.regiterTime.read(iprot);
-              struct.setRegiterTimeIsSet(true);
+              struct.registerTime = new YTimestamp();
+              struct.registerTime.read(iprot);
+              struct.setRegisterTimeIsSet(true);
             } else { 
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
@@ -700,9 +700,9 @@ public class YUser implements org.apache.thrift.TBase<YUser, YUser._Fields>, jav
         oprot.writeString(struct.gravatarMail);
         oprot.writeFieldEnd();
       }
-      if (struct.regiterTime != null) {
-        oprot.writeFieldBegin(REGITER_TIME_FIELD_DESC);
-        struct.regiterTime.write(oprot);
+      if (struct.registerTime != null) {
+        oprot.writeFieldBegin(REGISTER_TIME_FIELD_DESC);
+        struct.registerTime.write(oprot);
         oprot.writeFieldEnd();
       }
       if (struct.email != null) {
@@ -737,7 +737,7 @@ public class YUser implements org.apache.thrift.TBase<YUser, YUser._Fields>, jav
       if (struct.isSetGravatarMail()) {
         optionals.set(2);
       }
-      if (struct.isSetRegiterTime()) {
+      if (struct.isSetRegisterTime()) {
         optionals.set(3);
       }
       if (struct.isSetEmail()) {
@@ -753,8 +753,8 @@ public class YUser implements org.apache.thrift.TBase<YUser, YUser._Fields>, jav
       if (struct.isSetGravatarMail()) {
         oprot.writeString(struct.gravatarMail);
       }
-      if (struct.isSetRegiterTime()) {
-        struct.regiterTime.write(oprot);
+      if (struct.isSetRegisterTime()) {
+        struct.registerTime.write(oprot);
       }
       if (struct.isSetEmail()) {
         oprot.writeString(struct.email);
@@ -778,9 +778,9 @@ public class YUser implements org.apache.thrift.TBase<YUser, YUser._Fields>, jav
         struct.setGravatarMailIsSet(true);
       }
       if (incoming.get(3)) {
-        struct.regiterTime = new YTimestamp();
-        struct.regiterTime.read(iprot);
-        struct.setRegiterTimeIsSet(true);
+        struct.registerTime = new YTimestamp();
+        struct.registerTime.read(iprot);
+        struct.setRegisterTimeIsSet(true);
       }
       if (incoming.get(4)) {
         struct.email = iprot.readString();

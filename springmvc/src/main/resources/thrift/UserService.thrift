@@ -12,7 +12,7 @@ struct YUser{
 	1:string id,
 	2:string name,
 	3:string gravatarMail,
-	4:YTimestamp regiterTime,
+	4:YTimestamp registerTime,
 	5:string email
 }
 
