@@ -40,6 +40,8 @@ public class YTimestamp implements org.apache.thrift.TBase<YTimestamp, YTimestam
   private static final org.apache.thrift.protocol.TField DAY_FIELD_DESC = new org.apache.thrift.protocol.TField("day", org.apache.thrift.protocol.TType.BYTE, (short)3);
   private static final org.apache.thrift.protocol.TField HOUR_FIELD_DESC = new org.apache.thrift.protocol.TField("hour", org.apache.thrift.protocol.TType.BYTE, (short)4);
   private static final org.apache.thrift.protocol.TField MINUTE_FIELD_DESC = new org.apache.thrift.protocol.TField("minute", org.apache.thrift.protocol.TType.BYTE, (short)5);
+  private static final org.apache.thrift.protocol.TField SECOND_FIELD_DESC = new org.apache.thrift.protocol.TField("second", org.apache.thrift.protocol.TType.BYTE, (short)6);
+  private static final org.apache.thrift.protocol.TField MILLISECOND_FIELD_DESC = new org.apache.thrift.protocol.TField("millisecond", org.apache.thrift.protocol.TType.I16, (short)7);
 
   private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
   static {
@@ -52,6 +54,8 @@ public class YTimestamp implements org.apache.thrift.TBase<YTimestamp, YTimestam
   public byte day; // required
   public byte hour; // required
   public byte minute; // required
+  public byte second; // required
+  public short millisecond; // required
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements org.apache.thrift.TFieldIdEnum {
@@ -59,7 +63,9 @@ public class YTimestamp implements org.apache.thrift.TBase<YTimestamp, YTimestam
     MONTH((short)2, "month"),
     DAY((short)3, "day"),
     HOUR((short)4, "hour"),
-    MINUTE((short)5, "minute");
+    MINUTE((short)5, "minute"),
+    SECOND((short)6, "second"),
+    MILLISECOND((short)7, "millisecond");
 
     private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
 
@@ -84,6 +90,10 @@ public class YTimestamp implements org.apache.thrift.TBase<YTimestamp, YTimestam
           return HOUR;
         case 5: // MINUTE
           return MINUTE;
+        case 6: // SECOND
+          return SECOND;
+        case 7: // MILLISECOND
+          return MILLISECOND;
         default:
           return null;
       }
@@ -129,6 +139,8 @@ public class YTimestamp implements org.apache.thrift.TBase<YTimestamp, YTimestam
   private static final int __DAY_ISSET_ID = 2;
   private static final int __HOUR_ISSET_ID = 3;
   private static final int __MINUTE_ISSET_ID = 4;
+  private static final int __SECOND_ISSET_ID = 5;
+  private static final int __MILLISECOND_ISSET_ID = 6;
   private byte __isset_bitfield = 0;
   public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
   static {
@@ -143,6 +155,10 @@ public class YTimestamp implements org.apache.thrift.TBase<YTimestamp, YTimestam
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.BYTE)));
     tmpMap.put(_Fields.MINUTE, new org.apache.thrift.meta_data.FieldMetaData("minute", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.BYTE)));
+    tmpMap.put(_Fields.SECOND, new org.apache.thrift.meta_data.FieldMetaData("second", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.BYTE)));
+    tmpMap.put(_Fields.MILLISECOND, new org.apache.thrift.meta_data.FieldMetaData("millisecond", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I16)));
     metaDataMap = Collections.unmodifiableMap(tmpMap);
     org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(YTimestamp.class, metaDataMap);
   }
@@ -155,7 +171,9 @@ public class YTimestamp implements org.apache.thrift.TBase<YTimestamp, YTimestam
     byte month,
     byte day,
     byte hour,
-    byte minute)
+    byte minute,
+    byte second,
+    short millisecond)
   {
     this();
     this.year = year;
@@ -168,6 +186,10 @@ public class YTimestamp implements org.apache.thrift.TBase<YTimestamp, YTimestam
     setHourIsSet(true);
     this.minute = minute;
     setMinuteIsSet(true);
+    this.second = second;
+    setSecondIsSet(true);
+    this.millisecond = millisecond;
+    setMillisecondIsSet(true);
   }
 
   /**
@@ -180,6 +202,8 @@ public class YTimestamp implements org.apache.thrift.TBase<YTimestamp, YTimestam
     this.day = other.day;
     this.hour = other.hour;
     this.minute = other.minute;
+    this.second = other.second;
+    this.millisecond = other.millisecond;
   }
 
   public YTimestamp deepCopy() {
@@ -198,6 +222,10 @@ public class YTimestamp implements org.apache.thrift.TBase<YTimestamp, YTimestam
     this.hour = 0;
     setMinuteIsSet(false);
     this.minute = 0;
+    setSecondIsSet(false);
+    this.second = 0;
+    setMillisecondIsSet(false);
+    this.millisecond = 0;
   }
 
   public short getYear() {
@@ -315,6 +343,52 @@ public class YTimestamp implements org.apache.thrift.TBase<YTimestamp, YTimestam
     __isset_bitfield = EncodingUtils.setBit(__isset_bitfield, __MINUTE_ISSET_ID, value);
   }
 
+  public byte getSecond() {
+    return this.second;
+  }
+
+  public YTimestamp setSecond(byte second) {
+    this.second = second;
+    setSecondIsSet(true);
+    return this;
+  }
+
+  public void unsetSecond() {
+    __isset_bitfield = EncodingUtils.clearBit(__isset_bitfield, __SECOND_ISSET_ID);
+  }
+
+  /** Returns true if field second is set (has been assigned a value) and false otherwise */
+  public boolean isSetSecond() {
+    return EncodingUtils.testBit(__isset_bitfield, __SECOND_ISSET_ID);
+  }
+
+  public void setSecondIsSet(boolean value) {
+    __isset_bitfield = EncodingUtils.setBit(__isset_bitfield, __SECOND_ISSET_ID, value);
+  }
+
+  public short getMillisecond() {
+    return this.millisecond;
+  }
+
+  public YTimestamp setMillisecond(short millisecond) {
+    this.millisecond = millisecond;
+    setMillisecondIsSet(true);
+    return this;
+  }
+
+  public void unsetMillisecond() {
+    __isset_bitfield = EncodingUtils.clearBit(__isset_bitfield, __MILLISECOND_ISSET_ID);
+  }
+
+  /** Returns true if field millisecond is set (has been assigned a value) and false otherwise */
+  public boolean isSetMillisecond() {
+    return EncodingUtils.testBit(__isset_bitfield, __MILLISECOND_ISSET_ID);
+  }
+
+  public void setMillisecondIsSet(boolean value) {
+    __isset_bitfield = EncodingUtils.setBit(__isset_bitfield, __MILLISECOND_ISSET_ID, value);
+  }
+
   public void setFieldValue(_Fields field, Object value) {
     switch (field) {
     case YEAR:
@@ -357,6 +431,22 @@ public class YTimestamp implements org.apache.thrift.TBase<YTimestamp, YTimestam
       }
       break;
 
+    case SECOND:
+      if (value == null) {
+        unsetSecond();
+      } else {
+        setSecond((Byte)value);
+      }
+      break;
+
+    case MILLISECOND:
+      if (value == null) {
+        unsetMillisecond();
+      } else {
+        setMillisecond((Short)value);
+      }
+      break;
+
     }
   }
 
@@ -376,6 +466,12 @@ public class YTimestamp implements org.apache.thrift.TBase<YTimestamp, YTimestam
 
     case MINUTE:
       return Byte.valueOf(getMinute());
+
+    case SECOND:
+      return Byte.valueOf(getSecond());
+
+    case MILLISECOND:
+      return Short.valueOf(getMillisecond());
 
     }
     throw new IllegalStateException();
@@ -398,6 +494,10 @@ public class YTimestamp implements org.apache.thrift.TBase<YTimestamp, YTimestam
       return isSetHour();
     case MINUTE:
       return isSetMinute();
+    case SECOND:
+      return isSetSecond();
+    case MILLISECOND:
+      return isSetMillisecond();
     }
     throw new IllegalStateException();
   }
@@ -457,6 +557,24 @@ public class YTimestamp implements org.apache.thrift.TBase<YTimestamp, YTimestam
       if (!(this_present_minute && that_present_minute))
         return false;
       if (this.minute != that.minute)
+        return false;
+    }
+
+    boolean this_present_second = true;
+    boolean that_present_second = true;
+    if (this_present_second || that_present_second) {
+      if (!(this_present_second && that_present_second))
+        return false;
+      if (this.second != that.second)
+        return false;
+    }
+
+    boolean this_present_millisecond = true;
+    boolean that_present_millisecond = true;
+    if (this_present_millisecond || that_present_millisecond) {
+      if (!(this_present_millisecond && that_present_millisecond))
+        return false;
+      if (this.millisecond != that.millisecond)
         return false;
     }
 
@@ -526,6 +644,26 @@ public class YTimestamp implements org.apache.thrift.TBase<YTimestamp, YTimestam
         return lastComparison;
       }
     }
+    lastComparison = Boolean.valueOf(isSetSecond()).compareTo(other.isSetSecond());
+    if (lastComparison != 0) {
+      return lastComparison;
+    }
+    if (isSetSecond()) {
+      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.second, other.second);
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+    }
+    lastComparison = Boolean.valueOf(isSetMillisecond()).compareTo(other.isSetMillisecond());
+    if (lastComparison != 0) {
+      return lastComparison;
+    }
+    if (isSetMillisecond()) {
+      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.millisecond, other.millisecond);
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+    }
     return 0;
   }
 
@@ -564,6 +702,14 @@ public class YTimestamp implements org.apache.thrift.TBase<YTimestamp, YTimestam
     if (!first) sb.append(", ");
     sb.append("minute:");
     sb.append(this.minute);
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("second:");
+    sb.append(this.second);
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("millisecond:");
+    sb.append(this.millisecond);
     first = false;
     sb.append(")");
     return sb.toString();
@@ -650,6 +796,22 @@ public class YTimestamp implements org.apache.thrift.TBase<YTimestamp, YTimestam
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
             break;
+          case 6: // SECOND
+            if (schemeField.type == org.apache.thrift.protocol.TType.BYTE) {
+              struct.second = iprot.readByte();
+              struct.setSecondIsSet(true);
+            } else { 
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+            }
+            break;
+          case 7: // MILLISECOND
+            if (schemeField.type == org.apache.thrift.protocol.TType.I16) {
+              struct.millisecond = iprot.readI16();
+              struct.setMillisecondIsSet(true);
+            } else { 
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+            }
+            break;
           default:
             org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
         }
@@ -679,6 +841,12 @@ public class YTimestamp implements org.apache.thrift.TBase<YTimestamp, YTimestam
       oprot.writeFieldEnd();
       oprot.writeFieldBegin(MINUTE_FIELD_DESC);
       oprot.writeByte(struct.minute);
+      oprot.writeFieldEnd();
+      oprot.writeFieldBegin(SECOND_FIELD_DESC);
+      oprot.writeByte(struct.second);
+      oprot.writeFieldEnd();
+      oprot.writeFieldBegin(MILLISECOND_FIELD_DESC);
+      oprot.writeI16(struct.millisecond);
       oprot.writeFieldEnd();
       oprot.writeFieldStop();
       oprot.writeStructEnd();
@@ -713,7 +881,13 @@ public class YTimestamp implements org.apache.thrift.TBase<YTimestamp, YTimestam
       if (struct.isSetMinute()) {
         optionals.set(4);
       }
-      oprot.writeBitSet(optionals, 5);
+      if (struct.isSetSecond()) {
+        optionals.set(5);
+      }
+      if (struct.isSetMillisecond()) {
+        optionals.set(6);
+      }
+      oprot.writeBitSet(optionals, 7);
       if (struct.isSetYear()) {
         oprot.writeI16(struct.year);
       }
@@ -729,12 +903,18 @@ public class YTimestamp implements org.apache.thrift.TBase<YTimestamp, YTimestam
       if (struct.isSetMinute()) {
         oprot.writeByte(struct.minute);
       }
+      if (struct.isSetSecond()) {
+        oprot.writeByte(struct.second);
+      }
+      if (struct.isSetMillisecond()) {
+        oprot.writeI16(struct.millisecond);
+      }
     }
 
     @Override
     public void read(org.apache.thrift.protocol.TProtocol prot, YTimestamp struct) throws org.apache.thrift.TException {
       TTupleProtocol iprot = (TTupleProtocol) prot;
-      BitSet incoming = iprot.readBitSet(5);
+      BitSet incoming = iprot.readBitSet(7);
       if (incoming.get(0)) {
         struct.year = iprot.readI16();
         struct.setYearIsSet(true);
@@ -754,6 +934,14 @@ public class YTimestamp implements org.apache.thrift.TBase<YTimestamp, YTimestam
       if (incoming.get(4)) {
         struct.minute = iprot.readByte();
         struct.setMinuteIsSet(true);
+      }
+      if (incoming.get(5)) {
+        struct.second = iprot.readByte();
+        struct.setSecondIsSet(true);
+      }
+      if (incoming.get(6)) {
+        struct.millisecond = iprot.readI16();
+        struct.setMillisecondIsSet(true);
       }
     }
   }

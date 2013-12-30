@@ -5,7 +5,9 @@ struct YTimestamp{
 	2:byte month,
 	3:byte day,
 	4:byte hour,
-	5:byte minute
+	5:byte minute,
+	6:byte second,
+	7:i16 millisecond
 }
 
 struct YUser{
