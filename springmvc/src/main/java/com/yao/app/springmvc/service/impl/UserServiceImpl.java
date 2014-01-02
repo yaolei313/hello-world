@@ -14,7 +14,7 @@ public class UserServiceImpl implements UserService {
     private UserMapper userMapper;
 
     @Override
-    public UserBean fetchUserInfo(String id) {
+    public UserBean queryUserById(String id) {
         return userMapper.findUser(id);
     }
 

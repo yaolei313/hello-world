@@ -12,8 +12,8 @@ import org.apache.thrift.transport.TFramedTransport;
 import org.apache.thrift.transport.TNonblockingServerSocket;
 import org.apache.thrift.transport.TServerSocket;
 
-import com.yao.app.springmvc.thrift.HelloWorldService;
-import com.yao.app.springmvc.thrift.impl.HelloWorldImpl;
+import com.yao.app.springmvc.thrift.service.HelloWorldService;
+import com.yao.app.springmvc.thrift.service.impl.HelloWorldImpl;
 
 public class HelloServerDemo {
     

@@ -1,4 +1,4 @@
-namespace java com.yao.app.springmvc.thrift
+namespace java com.yao.app.springmvc.thrift.service
 
 struct YTimestamp{
 	1:i16 year,

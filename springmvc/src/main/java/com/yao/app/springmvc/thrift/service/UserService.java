@@ -4,12 +4,11 @@
  * DO NOT EDIT UNLESS YOU ARE SURE THAT YOU KNOW WHAT YOU ARE DOING
  *  @generated
  */
-package com.yao.app.springmvc.thrift;
+package com.yao.app.springmvc.thrift.service;
 
 import org.apache.thrift.scheme.IScheme;
 import org.apache.thrift.scheme.SchemeFactory;
 import org.apache.thrift.scheme.StandardScheme;
-
 import org.apache.thrift.scheme.TupleScheme;
 import org.apache.thrift.protocol.TTupleProtocol;
 import org.apache.thrift.protocol.TProtocolException;
@@ -17,6 +16,7 @@ import org.apache.thrift.EncodingUtils;
 import org.apache.thrift.TException;
 import org.apache.thrift.async.AsyncMethodCallback;
 import org.apache.thrift.server.AbstractNonblockingServer.*;
+
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
@@ -29,20 +29,21 @@ import java.util.Collections;
 import java.util.BitSet;
 import java.nio.ByteBuffer;
 import java.util.Arrays;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class HelloWorldService {
+public class UserService {
 
   public interface Iface {
 
-    public String sayHello(String username) throws org.apache.thrift.TException;
+    public YUser queryUserInfo(String userId) throws org.apache.thrift.TException;
 
   }
 
   public interface AsyncIface {
 
-    public void sayHello(String username, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
+    public void queryUserInfo(String userId, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
 
   }
 
@@ -66,27 +67,27 @@ public class HelloWorldService {
       super(iprot, oprot);
     }
 
-    public String sayHello(String username) throws org.apache.thrift.TException
+    public YUser queryUserInfo(String userId) throws org.apache.thrift.TException
     {
-      send_sayHello(username);
-      return recv_sayHello();
+      send_queryUserInfo(userId);
+      return recv_queryUserInfo();
     }
 
-    public void send_sayHello(String username) throws org.apache.thrift.TException
+    public void send_queryUserInfo(String userId) throws org.apache.thrift.TException
     {
-      sayHello_args args = new sayHello_args();
-      args.setUsername(username);
-      sendBase("sayHello", args);
+      queryUserInfo_args args = new queryUserInfo_args();
+      args.setUserId(userId);
+      sendBase("queryUserInfo", args);
     }
 
-    public String recv_sayHello() throws org.apache.thrift.TException
+    public YUser recv_queryUserInfo() throws org.apache.thrift.TException
     {
-      sayHello_result result = new sayHello_result();
-      receiveBase(result, "sayHello");
+      queryUserInfo_result result = new queryUserInfo_result();
+      receiveBase(result, "queryUserInfo");
       if (result.isSetSuccess()) {
         return result.success;
       }
-      throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "sayHello failed: unknown result");
+      throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "queryUserInfo failed: unknown result");
     }
 
   }
@@ -107,35 +108,35 @@ public class HelloWorldService {
       super(protocolFactory, clientManager, transport);
     }
 
-    public void sayHello(String username, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException {
+    public void queryUserInfo(String userId, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException {
       checkReady();
-      sayHello_call method_call = new sayHello_call(username, resultHandler, this, ___protocolFactory, ___transport);
+      queryUserInfo_call method_call = new queryUserInfo_call(userId, resultHandler, this, ___protocolFactory, ___transport);
       this.___currentMethod = method_call;
       ___manager.call(method_call);
     }
 
-    public static class sayHello_call extends org.apache.thrift.async.TAsyncMethodCall {
-      private String username;
-      public sayHello_call(String username, org.apache.thrift.async.AsyncMethodCallback resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
+    public static class queryUserInfo_call extends org.apache.thrift.async.TAsyncMethodCall {
+      private String userId;
+      public queryUserInfo_call(String userId, org.apache.thrift.async.AsyncMethodCallback resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
         super(client, protocolFactory, transport, resultHandler, false);
-        this.username = username;
+        this.userId = userId;
       }
 
       public void write_args(org.apache.thrift.protocol.TProtocol prot) throws org.apache.thrift.TException {
-        prot.writeMessageBegin(new org.apache.thrift.protocol.TMessage("sayHello", org.apache.thrift.protocol.TMessageType.CALL, 0));
-        sayHello_args args = new sayHello_args();
-        args.setUsername(username);
+        prot.writeMessageBegin(new org.apache.thrift.protocol.TMessage("queryUserInfo", org.apache.thrift.protocol.TMessageType.CALL, 0));
+        queryUserInfo_args args = new queryUserInfo_args();
+        args.setUserId(userId);
         args.write(prot);
         prot.writeMessageEnd();
       }
 
-      public String getResult() throws org.apache.thrift.TException {
+      public YUser getResult() throws org.apache.thrift.TException {
         if (getState() != org.apache.thrift.async.TAsyncMethodCall.State.RESPONSE_READ) {
           throw new IllegalStateException("Method call not finished!");
         }
         org.apache.thrift.transport.TMemoryInputTransport memoryTransport = new org.apache.thrift.transport.TMemoryInputTransport(getFrameBuffer().array());
         org.apache.thrift.protocol.TProtocol prot = client.getProtocolFactory().getProtocol(memoryTransport);
-        return (new Client(prot)).recv_sayHello();
+        return (new Client(prot)).recv_queryUserInfo();
       }
     }
 
@@ -152,26 +153,26 @@ public class HelloWorldService {
     }
 
     private static <I extends Iface> Map<String,  org.apache.thrift.ProcessFunction<I, ? extends  org.apache.thrift.TBase>> getProcessMap(Map<String,  org.apache.thrift.ProcessFunction<I, ? extends  org.apache.thrift.TBase>> processMap) {
-      processMap.put("sayHello", new sayHello());
+      processMap.put("queryUserInfo", new queryUserInfo());
       return processMap;
     }
 
-    public static class sayHello<I extends Iface> extends org.apache.thrift.ProcessFunction<I, sayHello_args> {
-      public sayHello() {
-        super("sayHello");
+    public static class queryUserInfo<I extends Iface> extends org.apache.thrift.ProcessFunction<I, queryUserInfo_args> {
+      public queryUserInfo() {
+        super("queryUserInfo");
       }
 
-      public sayHello_args getEmptyArgsInstance() {
-        return new sayHello_args();
+      public queryUserInfo_args getEmptyArgsInstance() {
+        return new queryUserInfo_args();
       }
 
       protected boolean isOneway() {
         return false;
       }
 
-      public sayHello_result getResult(I iface, sayHello_args args) throws org.apache.thrift.TException {
-        sayHello_result result = new sayHello_result();
-        result.success = iface.sayHello(args.username);
+      public queryUserInfo_result getResult(I iface, queryUserInfo_args args) throws org.apache.thrift.TException {
+        queryUserInfo_result result = new queryUserInfo_result();
+        result.success = iface.queryUserInfo(args.userId);
         return result;
       }
     }
@@ -189,24 +190,24 @@ public class HelloWorldService {
     }
 
     private static <I extends AsyncIface> Map<String,  org.apache.thrift.AsyncProcessFunction<I, ? extends  org.apache.thrift.TBase,?>> getProcessMap(Map<String,  org.apache.thrift.AsyncProcessFunction<I, ? extends  org.apache.thrift.TBase, ?>> processMap) {
-      processMap.put("sayHello", new sayHello());
+      processMap.put("queryUserInfo", new queryUserInfo());
       return processMap;
     }
 
-    public static class sayHello<I extends AsyncIface> extends org.apache.thrift.AsyncProcessFunction<I, sayHello_args, String> {
-      public sayHello() {
-        super("sayHello");
+    public static class queryUserInfo<I extends AsyncIface> extends org.apache.thrift.AsyncProcessFunction<I, queryUserInfo_args, YUser> {
+      public queryUserInfo() {
+        super("queryUserInfo");
       }
 
-      public sayHello_args getEmptyArgsInstance() {
-        return new sayHello_args();
+      public queryUserInfo_args getEmptyArgsInstance() {
+        return new queryUserInfo_args();
       }
 
-      public AsyncMethodCallback<String> getResultHandler(final AsyncFrameBuffer fb, final int seqid) {
+      public AsyncMethodCallback<YUser> getResultHandler(final AsyncFrameBuffer fb, final int seqid) {
         final org.apache.thrift.AsyncProcessFunction fcall = this;
-        return new AsyncMethodCallback<String>() { 
-          public void onComplete(String o) {
-            sayHello_result result = new sayHello_result();
+        return new AsyncMethodCallback<YUser>() { 
+          public void onComplete(YUser o) {
+            queryUserInfo_result result = new queryUserInfo_result();
             result.success = o;
             try {
               fcall.sendResponse(fb,result, org.apache.thrift.protocol.TMessageType.REPLY,seqid);
@@ -219,7 +220,7 @@ public class HelloWorldService {
           public void onError(Exception e) {
             byte msgType = org.apache.thrift.protocol.TMessageType.REPLY;
             org.apache.thrift.TBase msg;
-            sayHello_result result = new sayHello_result();
+            queryUserInfo_result result = new queryUserInfo_result();
             {
               msgType = org.apache.thrift.protocol.TMessageType.EXCEPTION;
               msg = (org.apache.thrift.TBase)new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.INTERNAL_ERROR, e.getMessage());
@@ -239,29 +240,29 @@ public class HelloWorldService {
         return false;
       }
 
-      public void start(I iface, sayHello_args args, org.apache.thrift.async.AsyncMethodCallback<String> resultHandler) throws TException {
-        iface.sayHello(args.username,resultHandler);
+      public void start(I iface, queryUserInfo_args args, org.apache.thrift.async.AsyncMethodCallback<YUser> resultHandler) throws TException {
+        iface.queryUserInfo(args.userId,resultHandler);
       }
     }
 
   }
 
-  public static class sayHello_args implements org.apache.thrift.TBase<sayHello_args, sayHello_args._Fields>, java.io.Serializable, Cloneable, Comparable<sayHello_args>   {
-    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("sayHello_args");
+  public static class queryUserInfo_args implements org.apache.thrift.TBase<queryUserInfo_args, queryUserInfo_args._Fields>, java.io.Serializable, Cloneable, Comparable<queryUserInfo_args>   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("queryUserInfo_args");
 
-    private static final org.apache.thrift.protocol.TField USERNAME_FIELD_DESC = new org.apache.thrift.protocol.TField("username", org.apache.thrift.protocol.TType.STRING, (short)1);
+    private static final org.apache.thrift.protocol.TField USER_ID_FIELD_DESC = new org.apache.thrift.protocol.TField("userId", org.apache.thrift.protocol.TType.STRING, (short)1);
 
     private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
     static {
-      schemes.put(StandardScheme.class, new sayHello_argsStandardSchemeFactory());
-      schemes.put(TupleScheme.class, new sayHello_argsTupleSchemeFactory());
+      schemes.put(StandardScheme.class, new queryUserInfo_argsStandardSchemeFactory());
+      schemes.put(TupleScheme.class, new queryUserInfo_argsTupleSchemeFactory());
     }
 
-    public String username; // required
+    public String userId; // required
 
     /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
     public enum _Fields implements org.apache.thrift.TFieldIdEnum {
-      USERNAME((short)1, "username");
+      USER_ID((short)1, "userId");
 
       private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
 
@@ -276,8 +277,8 @@ public class HelloWorldService {
        */
       public static _Fields findByThriftId(int fieldId) {
         switch(fieldId) {
-          case 1: // USERNAME
-            return USERNAME;
+          case 1: // USER_ID
+            return USER_ID;
           default:
             return null;
         }
@@ -321,71 +322,71 @@ public class HelloWorldService {
     public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
     static {
       Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
-      tmpMap.put(_Fields.USERNAME, new org.apache.thrift.meta_data.FieldMetaData("username", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+      tmpMap.put(_Fields.USER_ID, new org.apache.thrift.meta_data.FieldMetaData("userId", org.apache.thrift.TFieldRequirementType.DEFAULT, 
           new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
       metaDataMap = Collections.unmodifiableMap(tmpMap);
-      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(sayHello_args.class, metaDataMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(queryUserInfo_args.class, metaDataMap);
     }
 
-    public sayHello_args() {
+    public queryUserInfo_args() {
     }
 
-    public sayHello_args(
-      String username)
+    public queryUserInfo_args(
+      String userId)
     {
       this();
-      this.username = username;
+      this.userId = userId;
     }
 
     /**
      * Performs a deep copy on <i>other</i>.
      */
-    public sayHello_args(sayHello_args other) {
-      if (other.isSetUsername()) {
-        this.username = other.username;
+    public queryUserInfo_args(queryUserInfo_args other) {
+      if (other.isSetUserId()) {
+        this.userId = other.userId;
       }
     }
 
-    public sayHello_args deepCopy() {
-      return new sayHello_args(this);
+    public queryUserInfo_args deepCopy() {
+      return new queryUserInfo_args(this);
     }
 
     @Override
     public void clear() {
-      this.username = null;
+      this.userId = null;
     }
 
-    public String getUsername() {
-      return this.username;
+    public String getUserId() {
+      return this.userId;
     }
 
-    public sayHello_args setUsername(String username) {
-      this.username = username;
+    public queryUserInfo_args setUserId(String userId) {
+      this.userId = userId;
       return this;
     }
 
-    public void unsetUsername() {
-      this.username = null;
+    public void unsetUserId() {
+      this.userId = null;
     }
 
-    /** Returns true if field username is set (has been assigned a value) and false otherwise */
-    public boolean isSetUsername() {
-      return this.username != null;
+    /** Returns true if field userId is set (has been assigned a value) and false otherwise */
+    public boolean isSetUserId() {
+      return this.userId != null;
     }
 
-    public void setUsernameIsSet(boolean value) {
+    public void setUserIdIsSet(boolean value) {
       if (!value) {
-        this.username = null;
+        this.userId = null;
       }
     }
 
     public void setFieldValue(_Fields field, Object value) {
       switch (field) {
-      case USERNAME:
+      case USER_ID:
         if (value == null) {
-          unsetUsername();
+          unsetUserId();
         } else {
-          setUsername((String)value);
+          setUserId((String)value);
         }
         break;
 
@@ -394,8 +395,8 @@ public class HelloWorldService {
 
     public Object getFieldValue(_Fields field) {
       switch (field) {
-      case USERNAME:
-        return getUsername();
+      case USER_ID:
+        return getUserId();
 
       }
       throw new IllegalStateException();
@@ -408,8 +409,8 @@ public class HelloWorldService {
       }
 
       switch (field) {
-      case USERNAME:
-        return isSetUsername();
+      case USER_ID:
+        return isSetUserId();
       }
       throw new IllegalStateException();
     }
@@ -418,21 +419,21 @@ public class HelloWorldService {
     public boolean equals(Object that) {
       if (that == null)
         return false;
-      if (that instanceof sayHello_args)
-        return this.equals((sayHello_args)that);
+      if (that instanceof queryUserInfo_args)
+        return this.equals((queryUserInfo_args)that);
       return false;
     }
 
-    public boolean equals(sayHello_args that) {
+    public boolean equals(queryUserInfo_args that) {
       if (that == null)
         return false;
 
-      boolean this_present_username = true && this.isSetUsername();
-      boolean that_present_username = true && that.isSetUsername();
-      if (this_present_username || that_present_username) {
-        if (!(this_present_username && that_present_username))
+      boolean this_present_userId = true && this.isSetUserId();
+      boolean that_present_userId = true && that.isSetUserId();
+      if (this_present_userId || that_present_userId) {
+        if (!(this_present_userId && that_present_userId))
           return false;
-        if (!this.username.equals(that.username))
+        if (!this.userId.equals(that.userId))
           return false;
       }
 
@@ -445,19 +446,19 @@ public class HelloWorldService {
     }
 
     @Override
-    public int compareTo(sayHello_args other) {
+    public int compareTo(queryUserInfo_args other) {
       if (!getClass().equals(other.getClass())) {
         return getClass().getName().compareTo(other.getClass().getName());
       }
 
       int lastComparison = 0;
 
-      lastComparison = Boolean.valueOf(isSetUsername()).compareTo(other.isSetUsername());
+      lastComparison = Boolean.valueOf(isSetUserId()).compareTo(other.isSetUserId());
       if (lastComparison != 0) {
         return lastComparison;
       }
-      if (isSetUsername()) {
-        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.username, other.username);
+      if (isSetUserId()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.userId, other.userId);
         if (lastComparison != 0) {
           return lastComparison;
         }
@@ -479,14 +480,14 @@ public class HelloWorldService {
 
     @Override
     public String toString() {
-      StringBuilder sb = new StringBuilder("sayHello_args(");
+      StringBuilder sb = new StringBuilder("queryUserInfo_args(");
       boolean first = true;
 
-      sb.append("username:");
-      if (this.username == null) {
+      sb.append("userId:");
+      if (this.userId == null) {
         sb.append("null");
       } else {
-        sb.append(this.username);
+        sb.append(this.userId);
       }
       first = false;
       sb.append(")");
@@ -514,15 +515,15 @@ public class HelloWorldService {
       }
     }
 
-    private static class sayHello_argsStandardSchemeFactory implements SchemeFactory {
-      public sayHello_argsStandardScheme getScheme() {
-        return new sayHello_argsStandardScheme();
+    private static class queryUserInfo_argsStandardSchemeFactory implements SchemeFactory {
+      public queryUserInfo_argsStandardScheme getScheme() {
+        return new queryUserInfo_argsStandardScheme();
       }
     }
 
-    private static class sayHello_argsStandardScheme extends StandardScheme<sayHello_args> {
+    private static class queryUserInfo_argsStandardScheme extends StandardScheme<queryUserInfo_args> {
 
-      public void read(org.apache.thrift.protocol.TProtocol iprot, sayHello_args struct) throws org.apache.thrift.TException {
+      public void read(org.apache.thrift.protocol.TProtocol iprot, queryUserInfo_args struct) throws org.apache.thrift.TException {
         org.apache.thrift.protocol.TField schemeField;
         iprot.readStructBegin();
         while (true)
@@ -532,10 +533,10 @@ public class HelloWorldService {
             break;
           }
           switch (schemeField.id) {
-            case 1: // USERNAME
+            case 1: // USER_ID
               if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
-                struct.username = iprot.readString();
-                struct.setUsernameIsSet(true);
+                struct.userId = iprot.readString();
+                struct.setUserIdIsSet(true);
               } else { 
                 org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
               }
@@ -551,13 +552,13 @@ public class HelloWorldService {
         struct.validate();
       }
 
-      public void write(org.apache.thrift.protocol.TProtocol oprot, sayHello_args struct) throws org.apache.thrift.TException {
+      public void write(org.apache.thrift.protocol.TProtocol oprot, queryUserInfo_args struct) throws org.apache.thrift.TException {
         struct.validate();
 
         oprot.writeStructBegin(STRUCT_DESC);
-        if (struct.username != null) {
-          oprot.writeFieldBegin(USERNAME_FIELD_DESC);
-          oprot.writeString(struct.username);
+        if (struct.userId != null) {
+          oprot.writeFieldBegin(USER_ID_FIELD_DESC);
+          oprot.writeString(struct.userId);
           oprot.writeFieldEnd();
         }
         oprot.writeFieldStop();
@@ -566,52 +567,52 @@ public class HelloWorldService {
 
     }
 
-    private static class sayHello_argsTupleSchemeFactory implements SchemeFactory {
-      public sayHello_argsTupleScheme getScheme() {
-        return new sayHello_argsTupleScheme();
+    private static class queryUserInfo_argsTupleSchemeFactory implements SchemeFactory {
+      public queryUserInfo_argsTupleScheme getScheme() {
+        return new queryUserInfo_argsTupleScheme();
       }
     }
 
-    private static class sayHello_argsTupleScheme extends TupleScheme<sayHello_args> {
+    private static class queryUserInfo_argsTupleScheme extends TupleScheme<queryUserInfo_args> {
 
       @Override
-      public void write(org.apache.thrift.protocol.TProtocol prot, sayHello_args struct) throws org.apache.thrift.TException {
+      public void write(org.apache.thrift.protocol.TProtocol prot, queryUserInfo_args struct) throws org.apache.thrift.TException {
         TTupleProtocol oprot = (TTupleProtocol) prot;
         BitSet optionals = new BitSet();
-        if (struct.isSetUsername()) {
+        if (struct.isSetUserId()) {
           optionals.set(0);
         }
         oprot.writeBitSet(optionals, 1);
-        if (struct.isSetUsername()) {
-          oprot.writeString(struct.username);
+        if (struct.isSetUserId()) {
+          oprot.writeString(struct.userId);
         }
       }
 
       @Override
-      public void read(org.apache.thrift.protocol.TProtocol prot, sayHello_args struct) throws org.apache.thrift.TException {
+      public void read(org.apache.thrift.protocol.TProtocol prot, queryUserInfo_args struct) throws org.apache.thrift.TException {
         TTupleProtocol iprot = (TTupleProtocol) prot;
         BitSet incoming = iprot.readBitSet(1);
         if (incoming.get(0)) {
-          struct.username = iprot.readString();
-          struct.setUsernameIsSet(true);
+          struct.userId = iprot.readString();
+          struct.setUserIdIsSet(true);
         }
       }
     }
 
   }
 
-  public static class sayHello_result implements org.apache.thrift.TBase<sayHello_result, sayHello_result._Fields>, java.io.Serializable, Cloneable, Comparable<sayHello_result>   {
-    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("sayHello_result");
+  public static class queryUserInfo_result implements org.apache.thrift.TBase<queryUserInfo_result, queryUserInfo_result._Fields>, java.io.Serializable, Cloneable, Comparable<queryUserInfo_result>   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("queryUserInfo_result");
 
-    private static final org.apache.thrift.protocol.TField SUCCESS_FIELD_DESC = new org.apache.thrift.protocol.TField("success", org.apache.thrift.protocol.TType.STRING, (short)0);
+    private static final org.apache.thrift.protocol.TField SUCCESS_FIELD_DESC = new org.apache.thrift.protocol.TField("success", org.apache.thrift.protocol.TType.STRUCT, (short)0);
 
     private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
     static {
-      schemes.put(StandardScheme.class, new sayHello_resultStandardSchemeFactory());
-      schemes.put(TupleScheme.class, new sayHello_resultTupleSchemeFactory());
+      schemes.put(StandardScheme.class, new queryUserInfo_resultStandardSchemeFactory());
+      schemes.put(TupleScheme.class, new queryUserInfo_resultTupleSchemeFactory());
     }
 
-    public String success; // required
+    public YUser success; // required
 
     /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
     public enum _Fields implements org.apache.thrift.TFieldIdEnum {
@@ -676,16 +677,16 @@ public class HelloWorldService {
     static {
       Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
       tmpMap.put(_Fields.SUCCESS, new org.apache.thrift.meta_data.FieldMetaData("success", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+          new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, YUser.class)));
       metaDataMap = Collections.unmodifiableMap(tmpMap);
-      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(sayHello_result.class, metaDataMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(queryUserInfo_result.class, metaDataMap);
     }
 
-    public sayHello_result() {
+    public queryUserInfo_result() {
     }
 
-    public sayHello_result(
-      String success)
+    public queryUserInfo_result(
+      YUser success)
     {
       this();
       this.success = success;
@@ -694,14 +695,14 @@ public class HelloWorldService {
     /**
      * Performs a deep copy on <i>other</i>.
      */
-    public sayHello_result(sayHello_result other) {
+    public queryUserInfo_result(queryUserInfo_result other) {
       if (other.isSetSuccess()) {
-        this.success = other.success;
+        this.success = new YUser(other.success);
       }
     }
 
-    public sayHello_result deepCopy() {
-      return new sayHello_result(this);
+    public queryUserInfo_result deepCopy() {
+      return new queryUserInfo_result(this);
     }
 
     @Override
@@ -709,11 +710,11 @@ public class HelloWorldService {
       this.success = null;
     }
 
-    public String getSuccess() {
+    public YUser getSuccess() {
       return this.success;
     }
 
-    public sayHello_result setSuccess(String success) {
+    public queryUserInfo_result setSuccess(YUser success) {
       this.success = success;
       return this;
     }
@@ -739,7 +740,7 @@ public class HelloWorldService {
         if (value == null) {
           unsetSuccess();
         } else {
-          setSuccess((String)value);
+          setSuccess((YUser)value);
         }
         break;
 
@@ -772,12 +773,12 @@ public class HelloWorldService {
     public boolean equals(Object that) {
       if (that == null)
         return false;
-      if (that instanceof sayHello_result)
-        return this.equals((sayHello_result)that);
+      if (that instanceof queryUserInfo_result)
+        return this.equals((queryUserInfo_result)that);
       return false;
     }
 
-    public boolean equals(sayHello_result that) {
+    public boolean equals(queryUserInfo_result that) {
       if (that == null)
         return false;
 
@@ -799,7 +800,7 @@ public class HelloWorldService {
     }
 
     @Override
-    public int compareTo(sayHello_result other) {
+    public int compareTo(queryUserInfo_result other) {
       if (!getClass().equals(other.getClass())) {
         return getClass().getName().compareTo(other.getClass().getName());
       }
@@ -833,7 +834,7 @@ public class HelloWorldService {
 
     @Override
     public String toString() {
-      StringBuilder sb = new StringBuilder("sayHello_result(");
+      StringBuilder sb = new StringBuilder("queryUserInfo_result(");
       boolean first = true;
 
       sb.append("success:");
@@ -850,6 +851,9 @@ public class HelloWorldService {
     public void validate() throws org.apache.thrift.TException {
       // check for required fields
       // check for sub-struct validity
+      if (success != null) {
+        success.validate();
+      }
     }
 
     private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
@@ -868,15 +872,15 @@ public class HelloWorldService {
       }
     }
 
-    private static class sayHello_resultStandardSchemeFactory implements SchemeFactory {
-      public sayHello_resultStandardScheme getScheme() {
-        return new sayHello_resultStandardScheme();
+    private static class queryUserInfo_resultStandardSchemeFactory implements SchemeFactory {
+      public queryUserInfo_resultStandardScheme getScheme() {
+        return new queryUserInfo_resultStandardScheme();
       }
     }
 
-    private static class sayHello_resultStandardScheme extends StandardScheme<sayHello_result> {
+    private static class queryUserInfo_resultStandardScheme extends StandardScheme<queryUserInfo_result> {
 
-      public void read(org.apache.thrift.protocol.TProtocol iprot, sayHello_result struct) throws org.apache.thrift.TException {
+      public void read(org.apache.thrift.protocol.TProtocol iprot, queryUserInfo_result struct) throws org.apache.thrift.TException {
         org.apache.thrift.protocol.TField schemeField;
         iprot.readStructBegin();
         while (true)
@@ -887,8 +891,9 @@ public class HelloWorldService {
           }
           switch (schemeField.id) {
             case 0: // SUCCESS
-              if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
-                struct.success = iprot.readString();
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
+                struct.success = new YUser();
+                struct.success.read(iprot);
                 struct.setSuccessIsSet(true);
               } else { 
                 org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
@@ -905,13 +910,13 @@ public class HelloWorldService {
         struct.validate();
       }
 
-      public void write(org.apache.thrift.protocol.TProtocol oprot, sayHello_result struct) throws org.apache.thrift.TException {
+      public void write(org.apache.thrift.protocol.TProtocol oprot, queryUserInfo_result struct) throws org.apache.thrift.TException {
         struct.validate();
 
         oprot.writeStructBegin(STRUCT_DESC);
         if (struct.success != null) {
           oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
-          oprot.writeString(struct.success);
+          struct.success.write(oprot);
           oprot.writeFieldEnd();
         }
         oprot.writeFieldStop();
@@ -920,16 +925,16 @@ public class HelloWorldService {
 
     }
 
-    private static class sayHello_resultTupleSchemeFactory implements SchemeFactory {
-      public sayHello_resultTupleScheme getScheme() {
-        return new sayHello_resultTupleScheme();
+    private static class queryUserInfo_resultTupleSchemeFactory implements SchemeFactory {
+      public queryUserInfo_resultTupleScheme getScheme() {
+        return new queryUserInfo_resultTupleScheme();
       }
     }
 
-    private static class sayHello_resultTupleScheme extends TupleScheme<sayHello_result> {
+    private static class queryUserInfo_resultTupleScheme extends TupleScheme<queryUserInfo_result> {
 
       @Override
-      public void write(org.apache.thrift.protocol.TProtocol prot, sayHello_result struct) throws org.apache.thrift.TException {
+      public void write(org.apache.thrift.protocol.TProtocol prot, queryUserInfo_result struct) throws org.apache.thrift.TException {
         TTupleProtocol oprot = (TTupleProtocol) prot;
         BitSet optionals = new BitSet();
         if (struct.isSetSuccess()) {
@@ -937,16 +942,17 @@ public class HelloWorldService {
         }
         oprot.writeBitSet(optionals, 1);
         if (struct.isSetSuccess()) {
-          oprot.writeString(struct.success);
+          struct.success.write(oprot);
         }
       }
 
       @Override
-      public void read(org.apache.thrift.protocol.TProtocol prot, sayHello_result struct) throws org.apache.thrift.TException {
+      public void read(org.apache.thrift.protocol.TProtocol prot, queryUserInfo_result struct) throws org.apache.thrift.TException {
         TTupleProtocol iprot = (TTupleProtocol) prot;
         BitSet incoming = iprot.readBitSet(1);
         if (incoming.get(0)) {
-          struct.success = iprot.readString();
+          struct.success = new YUser();
+          struct.success.read(iprot);
           struct.setSuccessIsSet(true);
         }
       }

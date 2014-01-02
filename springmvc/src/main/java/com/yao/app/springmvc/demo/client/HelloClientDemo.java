@@ -9,8 +9,8 @@ import org.apache.thrift.transport.TSocket;
 import org.apache.thrift.transport.TTransport;
 import org.apache.thrift.transport.TTransportException;
 
-import com.yao.app.springmvc.thrift.HelloWorldService;
-import com.yao.app.springmvc.thrift.HelloWorldService.Client;
+import com.yao.app.springmvc.thrift.service.HelloWorldService;
+import com.yao.app.springmvc.thrift.service.HelloWorldService.Client;
 
 public class HelloClientDemo {
 

@@ -59,7 +59,7 @@ public class GreetingController {
         System.out.println("userId:" + userId);
         model.addAttribute("userId", userId);
 
-        System.out.println(service.fetchUserInfo(userId));
+        System.out.println(service.queryUserById(userId));
 
         return "user";
     }
