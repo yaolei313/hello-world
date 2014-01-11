@@ -47,7 +47,7 @@ public class HelloServerDemo {
      * TThreadPoolServer 服务模型
      * 线程池服务模型，使用标准的阻塞式IO，预先创建一组线程处理请求。
      */
-    public static void startService(){
+    public static void startService1(){
         try {
             System.out.println("HelloWorld TThreadPoolServer start ....");
 
