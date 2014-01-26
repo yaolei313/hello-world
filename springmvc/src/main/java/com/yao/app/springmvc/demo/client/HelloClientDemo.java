@@ -10,7 +10,6 @@ import org.apache.thrift.transport.TTransport;
 import org.apache.thrift.transport.TTransportException;
 
 import com.yao.app.springmvc.thrift.service.HelloWorldService;
-import com.yao.app.springmvc.thrift.service.HelloWorldService.Client;
 
 public class HelloClientDemo {
 
@@ -19,6 +18,10 @@ public class HelloClientDemo {
     public static final int TIMEOUT = 30000;
 
     public static void main(String[] args) {
+        sendServiceReq1();
+    }
+    
+    public static void sendServiceReq1(){
         TTransport transport = null;
         try {
             transport = new TSocket(SERVER_IP, SERVER_PORT, TIMEOUT);
@@ -40,7 +43,6 @@ public class HelloClientDemo {
                 transport.close();
             }
         }
-
     }
     
     public static void sendServiceReq2(){

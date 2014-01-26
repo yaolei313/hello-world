@@ -20,6 +20,10 @@ public class HelloServerDemo {
     public static final int SERVER_PORT = 8090;
 
     public static void main(String[] args) {
+        startService3();
+    }
+    
+    public static void startService1(){
         try {
             System.out.println("HelloWorld TSimpleServer start ....");
 
@@ -40,14 +44,13 @@ public class HelloServerDemo {
             System.out.println("Server start error!!!");
             e.printStackTrace();
         }
-
     }
     
     /**
      * TThreadPoolServer 服务模型
      * 线程池服务模型，使用标准的阻塞式IO，预先创建一组线程处理请求。
      */
-    public static void startService1(){
+    public static void startService2(){
         try {
             System.out.println("HelloWorld TThreadPoolServer start ....");
 
@@ -74,7 +77,7 @@ public class HelloServerDemo {
      * TNonblockingServer 服务模型
      * 使用非阻塞式IO，服务端和客户端需要指定 TFramedTransport 数据传输的方式。
      */
-    public static void startService2(){
+    public static void startService3(){
         try {
             System.out.println("HelloWorld TNonblockingServer start ....");
 
@@ -103,7 +106,7 @@ public class HelloServerDemo {
      * THsHaServer服务模型
      * 半同步半异步的服务端模型，需要指定为： TFramedTransport 数据传输的方式。
      */
-    public static void startService3(){
+    public static void startService4(){
         try {
             System.out.println("HelloWorld THsHaServer start ....");
 

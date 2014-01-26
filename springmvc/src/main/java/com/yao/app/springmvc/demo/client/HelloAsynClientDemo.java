@@ -12,7 +12,6 @@ import org.apache.thrift.transport.TNonblockingSocket;
 import org.apache.thrift.transport.TNonblockingTransport;
 
 import com.yao.app.springmvc.thrift.service.HelloWorldService;
-import com.yao.app.springmvc.thrift.service.HelloWorldService.AsyncClient;
 import com.yao.app.springmvc.thrift.service.HelloWorldService.AsyncClient.sayHello_call;
 
 public class HelloAsynClientDemo {
