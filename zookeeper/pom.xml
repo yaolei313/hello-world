@@ -12,20 +12,23 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<junit.version>4.11</junit.version>
+		<zookeeper.version>3.4.5</zookeeper.version>
 		<org.slf4j.version>1.7.5</org.slf4j.version>
+		<org.log4j.version>1.2.17</org.log4j.version>
 	</properties>
 
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.11</version>
+			<version>${junit.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.zookeeper</groupId>
 			<artifactId>zookeeper</artifactId>
-			<version>3.4.5</version>
+			<version>${zookeeper.version}</version>
 		</dependency>
 		
 		<!-- Logging -->
@@ -33,6 +36,7 @@
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
 			<version>${org.slf4j.version}</version>
+			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
@@ -43,7 +47,7 @@
 		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
-			<version>1.2.17</version>
+			<version>${org.log4j.version}</version>
 			<scope>runtime</scope>
 		</dependency>
 	</dependencies>
