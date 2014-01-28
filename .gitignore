@@ -2,9 +2,12 @@
 *.classpath
 *.project
 *.gitignore
+*.log
 
 .DS_Store
 
+*/logs
+*/logs/
 */.settings
 */.settings/*
 */target
