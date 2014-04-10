@@ -7,13 +7,9 @@
 .DS_Store
 
 */logs
-*/logs/
 */.settings
-*/.settings/*
 */target
-*/target/*
 */classes
-*/classes/*
 
 # Package Files #
 *.jar
