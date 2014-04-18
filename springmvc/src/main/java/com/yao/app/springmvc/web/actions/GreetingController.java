@@ -5,13 +5,15 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.annotation.Resource;
+
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.InitBinder;
@@ -21,13 +23,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.yao.app.springmvc.service.UserService;
 
 @Controller
 public class GreetingController {
 
-    @Autowired
+    @Resource(name = "db.user.service")
     private UserService service;
 
     @ModelAttribute
@@ -47,11 +50,19 @@ public class GreetingController {
     }
 
     @RequestMapping(value = "/greeting")
-    public String greeting(
+    public ModelAndView greeting(
             @RequestParam(value = "name", required = false, defaultValue = "World") String name,
             Model model) {
-        model.addAttribute("name", name);
-        return "greeting";
+        model.addAttribute("name2", name);
+        
+        ModelMap map = new ModelMap();
+        map.put("message", "qwqwqwqqw");
+        
+        ModelAndView mav = new ModelAndView();  
+        mav.addObject("message", "andy");  
+        mav.setViewName("greeting");  
+        
+        return mav;
     }
 
     @RequestMapping(value = "/users/{userId}", method = RequestMethod.GET)

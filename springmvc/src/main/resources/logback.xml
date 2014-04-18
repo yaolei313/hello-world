@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="120 seconds" debug="false">
+	<property name="LOG_BASE_PATH" value="/tmp/testlog"></property>
+
+	<appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%date{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+			<pattern>%-4relative [%thread] %-5level %logger{35} - %msg%n</pattern>   
+		</encoder>
+		<!-- 等同如下 -->
+		<!-- <layout class="ch.qos.logback.classic.PatternLayout"></layout> -->
+	</appender>
+
+	<appender name="sqlLog" class="ch.qos.logback.core.FileAppender">
+		<file>${LOG_BASE_PATH}/file/sql.log</file>
+		<append>true</append>
+		<encoder>
+			<pattern>%date{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+
+    <!-- service层之后的日志，包含dao和remote interface -->
+	<appender name="serviceLog"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<!-- 活动文件，可有可无 -->
+		<file>${LOG_BASE_PATH}/rolling/service.log</file>
+		<append>true</append>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!-- 归档文件 -->
+			<fileNamePattern>${LOG_BASE_PATH}/rolling/service.%d{yyyy-MM-dd}.log.zip
+			</fileNamePattern>
+			<!-- 保存7天的归档文件 -->
+			<maxHistory>7</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>%date{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n
+			</pattern>
+		</encoder>
+		<!-- triggeringPolicy SizeBasedTriggeringPolicy -->
+		<!-- <triggeringPolicy></triggeringPolicy> -->
+	</appender>
+
+	<!-- log4jdbc -->
+	<!-- additivity日志是否上级传递，默认true -->
+	<logger name="jdbc.connection" level="DEBUG" additivity="false">
+		<appender-ref ref="sqlLog" />
+	</logger>
+	<logger name="jdbc.sqlonly" level="DEBUG" additivity="false">
+		<appender-ref ref="sqlLog" />
+	</logger>
+	<logger name="jdbc.sqltiming" level="DEBUG" additivity="false">
+        <appender-ref ref="sqlLog" />
+    </logger>
+    
+	<logger name="jdbc.audit" level="OFF"></logger>
+	<logger name="jdbc.resultset" level="OFF"></logger>
+
+	<root level="DEBUG">
+		<appender-ref ref="console"></appender-ref>
+		<appender-ref ref="serviceLog"></appender-ref>
+	</root>
+</configuration>
