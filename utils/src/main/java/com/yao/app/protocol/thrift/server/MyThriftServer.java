@@ -19,7 +19,7 @@ import com.yao.app.protocol.thrift.service.UserService;
 import com.yao.app.protocol.thrift.service.impl.HelloWorldImpl;
 import com.yao.app.protocol.thrift.service.impl.UserServiceImpl;
 
-public class MyThriftServiceProvider {
+public class MyThriftServer {
 
     public static final int SERVER_PORT = 8091;
 
@@ -76,7 +76,7 @@ public class MyThriftServiceProvider {
     }
 
     public static void main(String[] args) throws Exception {
-        MyThriftServiceProvider thriftService = new MyThriftServiceProvider();
+        MyThriftServer thriftService = new MyThriftServer();
         try {
             // thriftService.provideService();
             thriftService.provideService2();

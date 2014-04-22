@@ -1,9 +1,7 @@
-package com.yao.app.springmvc.thrift.convertor;
+package com.yao.app.protocol.thrift.convertor;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
-
-import org.springframework.stereotype.Component;
 
 /**
  * thrift生成的bean和系统内bean的转换
@@ -11,14 +9,12 @@ import org.springframework.stereotype.Component;
  * @author summer
  * 
  */
-@Component
 public class TypeConverterRegistry {
 
     private Map<Class<?>, TypeConverter> beanConverterList = new LinkedHashMap<Class<?>, TypeConverter>();
 
     public TypeConverterRegistry() {
         register(new TimestampTypeConverter());
-        register(new UserTypeConverter());
     }
 
     public void register(TypeConverter typeConverter) {

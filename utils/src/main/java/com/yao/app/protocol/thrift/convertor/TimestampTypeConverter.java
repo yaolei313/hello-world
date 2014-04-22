@@ -1,9 +1,9 @@
-package com.yao.app.springmvc.thrift.convertor;
+package com.yao.app.protocol.thrift.convertor;
 
 import java.util.Calendar;
 import java.util.Date;
 
-import com.yao.app.springmvc.thrift.service.YTimestamp;
+import com.yao.app.protocol.thrift.service.YTimestamp;
 
 public class TimestampTypeConverter implements TypeConverter {
 

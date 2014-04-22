@@ -1,4 +1,4 @@
-package com.yao.app.springmvc.demo.client;
+package com.yao.app.protocol.thrift.client;
 
 import org.apache.thrift.TException;
 import org.apache.thrift.protocol.TBinaryProtocol;
@@ -9,7 +9,7 @@ import org.apache.thrift.transport.TSocket;
 import org.apache.thrift.transport.TTransport;
 import org.apache.thrift.transport.TTransportException;
 
-import com.yao.app.springmvc.thrift.service.HelloWorldService;
+import com.yao.app.protocol.thrift.service.HelloWorldService;
 
 public class HelloClientDemo {
 

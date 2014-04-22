@@ -1,4 +1,4 @@
-package com.yao.app.springmvc.demo.client;
+package com.yao.app.protocol.thrift.client;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
@@ -11,8 +11,8 @@ import org.apache.thrift.protocol.TProtocolFactory;
 import org.apache.thrift.transport.TNonblockingSocket;
 import org.apache.thrift.transport.TNonblockingTransport;
 
-import com.yao.app.springmvc.thrift.service.HelloWorldService;
-import com.yao.app.springmvc.thrift.service.HelloWorldService.AsyncClient.sayHello_call;
+import com.yao.app.protocol.thrift.service.HelloWorldService;
+import com.yao.app.protocol.thrift.service.HelloWorldService.AsyncClient.sayHello_call;
 
 public class HelloAsynClientDemo {
 

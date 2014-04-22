@@ -1,4 +1,4 @@
-package com.yao.app.springmvc.demo.server;
+package com.yao.app.protocol.thrift.server;
 
 import org.apache.thrift.TProcessor;
 import org.apache.thrift.protocol.TBinaryProtocol;
@@ -12,8 +12,8 @@ import org.apache.thrift.transport.TFramedTransport;
 import org.apache.thrift.transport.TNonblockingServerSocket;
 import org.apache.thrift.transport.TServerSocket;
 
-import com.yao.app.springmvc.thrift.service.HelloWorldService;
-import com.yao.app.springmvc.thrift.service.impl.HelloWorldImpl;
+import com.yao.app.protocol.thrift.service.HelloWorldService;
+import com.yao.app.protocol.thrift.service.impl.HelloWorldImpl;
 
 public class HelloServerDemo {
     
