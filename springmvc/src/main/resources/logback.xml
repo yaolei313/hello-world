@@ -57,7 +57,7 @@
 	<logger name="jdbc.resultset" level="OFF"></logger>
 
 	<root level="DEBUG">
-		<appender-ref ref="console"></appender-ref>
+		<appender-ref ref="stdout"></appender-ref>
 		<appender-ref ref="serviceLog"></appender-ref>
 	</root>
 </configuration>

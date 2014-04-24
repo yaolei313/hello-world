@@ -1,4 +1,4 @@
-package com.yao.app.springmvc.thrift.convertor;
+package com.yao.app.protocol.thrift.convertor;
 
 
 public interface TypeConverter {

@@ -3,7 +3,9 @@ package com.yao.app.springmvc.web.actions;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -73,6 +75,19 @@ public class GreetingController {
         System.out.println(service.queryUserById(userId));
 
         return "user";
+    }
+    
+    @RequestMapping(value = "/users/{userId}", method = RequestMethod.PUT, produces="application/json")
+    @ResponseBody
+    public Map<String,String> updateUser(@PathVariable String userId, @RequestParam String newEmail, Model model) {
+        System.out.println("userId:" + userId);
+        System.out.println("newEmail:" + newEmail);
+
+        Map<String,String> map = new HashMap<String,String>();
+        map.put("userId", userId);
+        map.put("newEmail", newEmail);
+        
+        return map;
     }
 
     @RequestMapping("/spring-web/{symbolicName:[a-z-]+}-{version:\\d\\.\\d\\.\\d}{extension:\\.[a-z]+}")
