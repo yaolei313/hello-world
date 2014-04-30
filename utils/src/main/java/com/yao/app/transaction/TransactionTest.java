@@ -52,8 +52,11 @@ public class TransactionTest {
             txManager.commit(ts);
         } catch (SQLException e) {
             e.printStackTrace();
+            ts.setRollbackOnly();
             txManager.rollback(ts);
         }
+        DataSourceUtils.releaseConnection(conn, ds);
+        
         context.close();
     }
 }
