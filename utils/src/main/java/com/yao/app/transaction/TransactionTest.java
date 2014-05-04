@@ -2,7 +2,6 @@ package com.yao.app.transaction;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.sql.DataSource;
@@ -56,7 +55,7 @@ public class TransactionTest {
             txManager.rollback(ts);
         }
         DataSourceUtils.releaseConnection(conn, ds);
-        
+
         context.close();
     }
 }

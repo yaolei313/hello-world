@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration scan="true" scanPeriod="120 seconds" debug="false">
-	<property name="LOG_BASE_PATH" value="/tmp/studylog"></property>
+	<property name="LOG_BASE_PATH" value="/tmp/utillog"></property>
 
 	<appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
 		<encoder>
@@ -55,6 +55,7 @@
     
 	<logger name="jdbc.audit" level="OFF"></logger>
 	<logger name="jdbc.resultset" level="OFF"></logger>
+	<logger name="log4jdbc.debug" level="OFF"></logger>
 
 	<root level="DEBUG">
 		<appender-ref ref="stdout"></appender-ref>

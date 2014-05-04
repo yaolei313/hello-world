@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.yao.app.springmvc.domain.UserBean;
 import com.yao.app.springmvc.service.UserService;
 
 @Controller
@@ -71,8 +72,10 @@ public class GreetingController {
     public String findUser(@PathVariable String userId, Model model) {
         System.out.println("userId:" + userId);
         model.addAttribute("userId", userId);
+        
+        UserBean user = service.queryUserById(userId);
 
-        System.out.println(service.queryUserById(userId));
+        System.out.println(user.getName());
 
         return "user";
     }
