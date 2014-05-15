@@ -16,7 +16,7 @@ import org.springframework.transaction.support.DefaultTransactionDefinition;
 public class TransactionTest {
 
     private static final String INSERT_SQL = "insert into users(id,name,email) values (?,?,?)";
-    private static final String SELECT_SQL = "select * from users where id=?";
+    // private static final String SELECT_SQL = "select * from users where id=?";
 
     public static void main(String[] args) {
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(

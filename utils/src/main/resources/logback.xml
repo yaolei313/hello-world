@@ -21,14 +21,19 @@
 	</appender>
 
     <!-- service层之后的日志，包含dao和remote interface -->
-	<appender name="serviceLog"
+	<appender name="serviceDebugLog"
 		class="ch.qos.logback.core.rolling.RollingFileAppender">
 		<!-- 活动文件，可有可无 -->
-		<file>${LOG_BASE_PATH}/rolling/service.log</file>
+		<file>${LOG_BASE_PATH}/rolling/debug.log</file>
 		<append>true</append>
+		<filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>DEBUG</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
 			<!-- 归档文件 -->
-			<fileNamePattern>${LOG_BASE_PATH}/rolling/service.%d{yyyy-MM-dd}.log.zip
+			<fileNamePattern>${LOG_BASE_PATH}/rolling/debug.%d{yyyy-MM-dd}.log.zip
 			</fileNamePattern>
 			<!-- 保存7天的归档文件 -->
 			<maxHistory>7</maxHistory>
@@ -37,9 +42,29 @@
 			<pattern>%date{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n
 			</pattern>
 		</encoder>
-		<!-- triggeringPolicy SizeBasedTriggeringPolicy -->
-		<!-- <triggeringPolicy></triggeringPolicy> -->
 	</appender>
+	
+	<!-- service层之后的日志，包含dao和remote interface -->
+    <appender name="serviceOtherLog"
+        class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- 活动文件，可有可无 -->
+        <file>${LOG_BASE_PATH}/rolling/info.log</file>
+        <append>true</append>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>INFO</level>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- 归档文件 -->
+            <fileNamePattern>${LOG_BASE_PATH}/rolling/info.%d{yyyy-MM-dd}.log.zip
+            </fileNamePattern>
+            <!-- 保存7天的归档文件 -->
+            <maxHistory>7</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%date{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n
+            </pattern>
+        </encoder>
+    </appender>
 
 	<!-- log4jdbc -->
 	<!-- additivity日志是否上级传递，默认true -->
@@ -59,6 +84,7 @@
 
 	<root level="DEBUG">
 		<appender-ref ref="stdout"></appender-ref>
-		<appender-ref ref="serviceLog"></appender-ref>
+		<appender-ref ref="serviceDebugLog"></appender-ref>
+		<appender-ref ref="serviceOtherLog"></appender-ref>
 	</root>
 </configuration>

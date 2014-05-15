@@ -16,8 +16,6 @@
 		<mybatis.version>3.2.3</mybatis.version>
 		<mybatis-spring.version>1.2.1</mybatis-spring.version>
 		<jackson.version>2.3.2</jackson.version>
-		<thrift.version>0.9.1</thrift.version>
-		<httpclient.version>4.2.5</httpclient.version>
 		<logback.version>1.1.2</logback.version>
 	</properties>
 	
@@ -45,11 +43,10 @@
 
 		<!-- db and datasource -->
 		<dependency>
-			<groupId>org.mariadb.jdbc</groupId>
-			<artifactId>mariadb-java-client</artifactId>
-			<version>1.1.5</version>
-			<scope>system</scope>
-			<systemPath>${HOME}/Local-repo/mariadb/mariadb-java-client-1.1.5.jar</systemPath>
+		    <groupId>org.mariadb.jdbc</groupId>
+		    <artifactId>mariadb-java-client</artifactId>
+		    <version>1.1.7</version>
+		    <scope>runtime</scope>
 		</dependency>
 		<dependency>
 			<groupId>commons-dbcp</groupId>
@@ -224,32 +221,6 @@
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-annotations</artifactId>
 			<version>${jackson.version}</version>
-		</dependency>
-
-        <!-- thrift -->
-		<dependency>
-			<groupId>org.apache.thrift</groupId>
-			<artifactId>libthrift</artifactId>
-			<version>${thrift.version}</version>
-		</dependency>
-		
-		<!-- htpp utils -->
-		<dependency>
-			<groupId>org.apache.httpcomponents</groupId>
-			<artifactId>httpclient</artifactId>
-			<version>${httpclient.version}</version>
-			<exclusions>
-				<!-- Exclude Commons Logging in favor of SLF4j -->
-				<exclusion>
-					<groupId>commons-logging</groupId>
-					<artifactId>commons-logging</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
-		    <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpcore</artifactId>
-            <version>${httpclient.version}</version>
 		</dependency>
 	</dependencies>
 	<build>
