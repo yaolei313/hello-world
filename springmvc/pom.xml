@@ -17,6 +17,7 @@
 		<mybatis-spring.version>1.2.1</mybatis-spring.version>
 		<jackson.version>2.3.2</jackson.version>
 		<logback.version>1.1.2</logback.version>
+		<cas.version>3.2.1</cas.version>
 	</properties>
 	
 	<!-- 等同于dependencies中得spring配置，但此次会引入所有spring的包 -->
@@ -222,6 +223,20 @@
 			<artifactId>jackson-annotations</artifactId>
 			<version>${jackson.version}</version>
 		</dependency>
+		
+		<!-- cas client -->
+		<dependency>
+		    <groupId>org.jasig.cas.client</groupId>
+		    <artifactId>cas-client-core</artifactId>
+		    <version>${cas.version}</version>
+		    <exclusions>
+				<!-- Exclude Commons Logging in favor of SLF4j -->
+				<exclusion>
+					<groupId>commons-logging</groupId>
+					<artifactId>commons-logging</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>
@@ -244,6 +259,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.1</version>
 				<configuration>
 					<source>1.6</source>
 					<target>1.6</target>
