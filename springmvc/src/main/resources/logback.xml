@@ -55,6 +55,8 @@
     
 	<logger name="jdbc.audit" level="OFF"></logger>
 	<logger name="jdbc.resultset" level="OFF"></logger>
+	
+	<logger name="org.jasig.cas.client" level="DEBUG" />
 
 	<root level="DEBUG">
 		<appender-ref ref="stdout"></appender-ref>

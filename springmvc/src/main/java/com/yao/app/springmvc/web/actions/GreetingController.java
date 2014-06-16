@@ -110,14 +110,22 @@ public class GreetingController {
         return result;
     }
 
-    @RequestMapping("/ajaxstring")
+    /**
+     * 内容协商，不涉及viewresolver
+     * @return
+     */
+    @RequestMapping("/ajaxObject")
     @ResponseBody
-    public String getUserName() {
-        String name = "李白路过";
+    public UserBean getUser() {
+    	UserBean user = new UserBean();
+    	user.setId("y00196907");
+    	user.setName("李白路过");
+    	user.setRegisterTime(new Date());
+    	user.setEmail("yaolei313@gmail.com");
 
-        return name;
+        return user;
     }
-
+    
     @RequestMapping("/testexp")
     public void testException() throws Exception {
         throw new Exception("自己的spring异常处理测试");
