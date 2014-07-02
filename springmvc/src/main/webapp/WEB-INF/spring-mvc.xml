@@ -162,7 +162,9 @@
         <property name="warnLogCategory" value="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver"></property>
     </bean>
     
+    <!-- 异常处理最好使用和非异常状态下相同的contentNegotiationManager和httpMessageResolver，这样行为一致，此处HttpMessageResolver偷懒下 -->
     <bean class="com.yao.app.springmvc.util.CustomHandlerExceptionResolver">
+    	<property name="contentNegotiationManager" ref="contentNegotiationManager"></property>
     	<property name="order" value="10"></property>
     </bean>
 </beans>
