@@ -161,4 +161,8 @@
         </property> -->
         <property name="warnLogCategory" value="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver"></property>
     </bean>
+    
+    <bean class="com.yao.app.springmvc.util.CustomHandlerExceptionResolver">
+    	<property name="order" value="10"></property>
+    </bean>
 </beans>

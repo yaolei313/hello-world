@@ -122,13 +122,19 @@ public class GreetingController {
     	user.setName("李白路过");
     	user.setRegisterTime(new Date());
     	user.setEmail("yaolei313@gmail.com");
-
+    	
         return user;
     }
     
     @RequestMapping("/testexp")
     public void testException() throws Exception {
-        throw new Exception("自己的spring异常处理测试");
+        throw new Exception("异常处理测试1，走SimpleMappingExceptionResolver");
+    }
+    
+    @RequestMapping("/testexp2")
+    @ResponseBody
+    public void testException2() throws Exception {
+        throw new Exception("异常处理测试2，走CustomHandlerExceptionResolver，使用了内容协商");
     }
 
     @InitBinder
@@ -145,7 +151,7 @@ public class GreetingController {
      * @param ex
      * @return
      */
-    @ExceptionHandler(Exception.class)
+    //@ExceptionHandler(Exception.class)
     public ResponseEntity<String> handleIOException(Exception ex) {
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.set("MyResponseHeader", "MyValue");
