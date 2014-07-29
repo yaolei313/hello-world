@@ -17,9 +17,6 @@
 		<context:exclude-filter type="annotation" expression="org.springframework.web.bind.annotation.ControllerAdvice" />
 	</context:component-scan>
 
-	<!-- placeholder -->
-	<context:property-placeholder location="classpath:jdbc.properties" ignore-resource-not-found="false" />
-
 	<!-- 国际化 -->
 	<bean id="messageSource"
 		class="org.springframework.context.support.ResourceBundleMessageSource">
@@ -72,4 +69,12 @@
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
         <property name="basePackage" value="com.yao.app.springmvc.persistence" />
     </bean>
+    
+    <beans profile="dev">
+		<context:property-placeholder location="classpath:jdbc-dev.properties" ignore-resource-not-found="false" />
+   	</beans>
+   	
+   	<beans profile="prod">
+		<context:property-placeholder location="classpath:jdbc-prod.properties" ignore-resource-not-found="false" />
+   	</beans>
 </beans>
