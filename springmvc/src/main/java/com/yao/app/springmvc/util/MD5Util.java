@@ -19,7 +19,9 @@ public class MD5Util {
             MessageDigest md = MessageDigest.getInstance("MD5");
             return hex(md.digest(message.getBytes("UTF-8")));
         } catch (NoSuchAlgorithmException e) {
+            // nothing to do
         } catch (UnsupportedEncodingException e) {
+            // nothing to do
         }
         return null;
     }
