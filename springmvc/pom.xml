@@ -252,18 +252,11 @@
 			<version>${jackson.version}</version>
 		</dependency>
 		
-		<!-- cas client -->
+		<!-- sitemesh -->
 		<dependency>
-		    <groupId>org.jasig.cas.client</groupId>
-		    <artifactId>cas-client-core</artifactId>
-		    <version>${cas.version}</version>
-		    <exclusions>
-				<!-- Exclude Commons Logging in favor of SLF4j -->
-				<exclusion>
-					<groupId>commons-logging</groupId>
-					<artifactId>commons-logging</artifactId>
-				</exclusion>
-			</exclusions>
+			<groupId>opensymphony</groupId>
+			<artifactId>sitemesh</artifactId>
+            <version>2.4.2</version>
 		</dependency>
 	</dependencies>
 	<build>
