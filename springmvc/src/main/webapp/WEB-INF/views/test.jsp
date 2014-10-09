@@ -1,7 +1,7 @@
 <%@page isELIgnored="false"%>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="author" content="yaolei313@gmail.com">
 <title>Hello world</title>
 </head>
 <body>

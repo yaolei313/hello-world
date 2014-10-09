@@ -1,0 +1,21 @@
+<sitemesh>
+  <property name="decorators-file" value="/WEB-INF/decorators.xml" />
+  <excludes file="${decorators-file}" />
+
+  <page-parsers>
+    <parser content-type="text/html" class="com.opensymphony.module.sitemesh.parser.HTMLPageParser" />
+  </page-parsers>
+
+  <!-- For each request, the first mapper in the chain is asked which decorator should be used. 
+  It is passed across a reference to the Page object and HttpServletRequest. It returns either a Decorator object, 
+  if it knows which decorator to be used, or null. 
+  If null is returned, the next mapper in the chain is queried. 
+  This whole process is repeated until there are no more mappers in the chain, or one of the mappers returns a valid decorator. 
+  If no mappers return a decorator, the page is not decorated at all and served in its original state. -->
+  <!-- 剪短默认mapper chain的长度 -->
+  <decorator-mappers>
+    <mapper class="com.opensymphony.module.sitemesh.mapper.ConfigDecoratorMapper">
+      <param name="config" value="${decorators-file}" />
+    </mapper>
+  </decorator-mappers>
+</sitemesh>

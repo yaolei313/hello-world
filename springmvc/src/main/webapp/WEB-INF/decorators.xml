@@ -4,11 +4,10 @@
 		<pattern>/static/*</pattern>
 		<pattern>/cxf/*</pattern>
 		<pattern>/api/*</pattern>
-		<pattern>/javasimon/*</pattern>
 	</excludes>
 	
     <!-- 上边配置了defaultdir,会到这里边找default.jsp -->
 	<decorator name="default" page="default.jsp">
-		<pattern>/*</pattern>
+		<pattern>/test</pattern>
 	</decorator>
 </decorators>
