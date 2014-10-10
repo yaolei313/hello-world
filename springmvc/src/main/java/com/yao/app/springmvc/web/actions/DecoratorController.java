@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class DecoratorController {
     @RequestMapping("test")
     public String test(){
+        // fixbug-1010 git practice
         return "test";
     }
 }
