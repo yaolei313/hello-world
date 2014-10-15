@@ -1,16 +1,29 @@
 package com.yao.app.http;
 
 import java.io.IOException;
-import java.net.URI;
+import java.net.URL;
+import java.security.KeyManagementException;
+import java.security.KeyStore;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
 import java.util.List;
+
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLException;
+import javax.net.ssl.SSLSession;
+import javax.net.ssl.SSLSocket;
 
 import org.apache.http.Consts;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpHost;
 import org.apache.http.NameValuePair;
+import org.apache.http.ParseException;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.AuthCache;
+import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.CookieStore;
 import org.apache.http.client.CredentialsProvider;
 import org.apache.http.client.config.CookieSpecs;
@@ -20,6 +33,15 @@ import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.protocol.HttpClientContext;
+import org.apache.http.config.Registry;
+import org.apache.http.config.RegistryBuilder;
+import org.apache.http.conn.socket.ConnectionSocketFactory;
+import org.apache.http.conn.socket.PlainConnectionSocketFactory;
+import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
+import org.apache.http.conn.ssl.SSLContextBuilder;
+import org.apache.http.conn.ssl.SSLContexts;
+import org.apache.http.conn.ssl.TrustStrategy;
+import org.apache.http.conn.ssl.X509HostnameVerifier;
 import org.apache.http.cookie.Cookie;
 import org.apache.http.impl.auth.BasicScheme;
 import org.apache.http.impl.client.BasicAuthCache;
@@ -27,121 +49,169 @@ import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
+import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.util.Assert;
 
 public class HttpUtils {
 
-    protected static final Logger log = LoggerFactory.getLogger(HttpUtils.class);
+    private static Logger log = LoggerFactory.getLogger(HttpUtils.class);
 
     /**
-     * 以http basic抢先认证的方式获取json数据 httpclient 4.3写法
+     * 支持http，https(所有证书均有效),返回的client需复用
      * 
-     * @param url
-     * @param username
-     * @param password
      * @return
-     * @throws Exception
+     * @throws KeyStoreException
+     * @throws NoSuchAlgorithmException
+     * @throws KeyManagementException
      */
-    public static String getContentByPreemptiveAuthentication(String url, String username, String password)
-            throws Exception {
-        URI uri = new URI(url);
-        HttpHost target = new HttpHost(uri.getHost(), uri.getPort(), "http");
-        CredentialsProvider credsProvider = new BasicCredentialsProvider();
-        credsProvider.setCredentials(new AuthScope(target.getHostName(), target.getPort()),
-                new UsernamePasswordCredentials(username, password));
-        CloseableHttpClient httpclient = HttpClients.custom().setDefaultCredentialsProvider(credsProvider).build();
-        try {
+    public static CloseableHttpClient getHttpClient(KeyStore keyStore, List<Cookie> globalCookies)
+            throws NoSuchAlgorithmException, KeyStoreException, KeyManagementException {
+        SSLContextBuilder builder = SSLContexts.custom();
+        builder.loadTrustMaterial(keyStore, new TrustStrategy() {
 
-            // Create AuthCache instance
-            AuthCache authCache = new BasicAuthCache();
-            // Generate BASIC scheme object and add it to the local
-            // auth cache
-            BasicScheme basicAuth = new BasicScheme();
-            authCache.put(target, basicAuth);
-
-            // Add AuthCache to the execution context
-            HttpClientContext localContext = HttpClientContext.create();
-            localContext.setAuthCache(authCache);
-
-            HttpGet httpget = new HttpGet(url);
-
-            System.out.println("Executing request " + httpget.getRequestLine() + " to target " + target);
-
-            CloseableHttpResponse response = httpclient.execute(target, httpget, localContext);
-            try {
-                String result = EntityUtils.toString(response.getEntity(), "UTF-8");
-                EntityUtils.consume(response.getEntity());
-
-                return result;
-            } finally {
-                response.close();
+            @Override
+            public boolean isTrusted(X509Certificate[] chain, String authType) throws CertificateException {
+                return true;
             }
-        } catch (Exception e) {
-            throw e;
-        } finally {
-            httpclient.close();
-        }
 
-    }
+        });
+        SSLContext sslContext = builder.build();
+        SSLConnectionSocketFactory sslsf = new SSLConnectionSocketFactory(sslContext, new X509HostnameVerifier() {
 
-    public static String getContent(String url, boolean isPost, List<NameValuePair> nvpList, Cookie cookie)
-            throws IOException {
-        Assert.hasText(url, "url must not be empty");
+            @Override
+            public boolean verify(String arg0, SSLSession arg1) {
+                return true;
+            }
+
+            @Override
+            public void verify(String host, SSLSocket ssl) throws IOException {}
+
+            @Override
+            public void verify(String host, X509Certificate cert) throws SSLException {}
+
+            @Override
+            public void verify(String host, String[] cns, String[] subjectAlts) throws SSLException {}
+
+        });
+
+        Registry<ConnectionSocketFactory> socketFactoryRegistry =
+                RegistryBuilder.<ConnectionSocketFactory>create().register("https", sslsf)
+                        .register("http", PlainConnectionSocketFactory.getSocketFactory()).build();
+        PoolingHttpClientConnectionManager cm = new PoolingHttpClientConnectionManager(socketFactoryRegistry);
+        cm.setMaxTotal(100);
+        // end
+
         RequestConfig globalConfig = RequestConfig.custom().setCookieSpec(CookieSpecs.BEST_MATCH).build();
 
         CookieStore globalCookieStore = new BasicCookieStore();
-        globalCookieStore.addCookie(cookie);
+        if (globalCookies != null) {
+            for (Cookie cookie : globalCookies)
+                globalCookieStore.addCookie(cookie);
+        }
 
-        CloseableHttpClient httpclient = HttpClients.custom().setDefaultRequestConfig(globalConfig)
-                .setDefaultCookieStore(globalCookieStore).build();
+        CloseableHttpClient httpclient =
+                HttpClients.custom().setConnectionManager(cm).setDefaultRequestConfig(globalConfig)
+                        .setDefaultCookieStore(globalCookieStore).build();
+
+        return httpclient;
+    }
+
+    public static String getContentByPreemptiveAuthentication(CloseableHttpClient httpClient, String url,
+            String username, String password, List<NameValuePair> nvpList, List<Cookie> cookies, boolean isPost)
+            throws ParseException, IOException {
+        HttpClientContext localContext = HttpClientContext.create();
+
+        // 添加cookies
+        if (cookies != null && !cookies.isEmpty()) {
+            CookieStore cookieStore = new BasicCookieStore();
+            for (Cookie cookie : cookies)
+                cookieStore.addCookie(cookie);
+            localContext.setCookieStore(cookieStore);
+        }
+
+        // http抢先认证
+        CredentialsProvider credentialsProvider = new BasicCredentialsProvider();
+
+        URL turl = new URL(url);
+        HttpHost target = new HttpHost(turl.getHost(), turl.getPort(), turl.getProtocol());
+
+        credentialsProvider.setCredentials(new AuthScope(target.getHostName(), target.getPort()),
+                new UsernamePasswordCredentials(username, password));
+        localContext.setCredentialsProvider(credentialsProvider);
+        // Create AuthCache instance
+        AuthCache authCache = new BasicAuthCache();
+        BasicScheme basicAuth = new BasicScheme();
+        authCache.put(target, basicAuth);
+
+        // Add AuthCache to the execution context
+        localContext.setAuthCache(authCache);
+
+        return getHttpResonse(httpClient, url, nvpList, isPost, localContext);
+    }
+
+    public static String getContent(CloseableHttpClient httpClient, String url, List<NameValuePair> nvpList,
+            List<Cookie> cookies, boolean isPost) throws ClientProtocolException, IOException {
+        HttpClientContext localContext = HttpClientContext.create();
+
+        // 添加cookies
+        if (cookies != null && !cookies.isEmpty()) {
+            CookieStore cookieStore = new BasicCookieStore();
+            for (Cookie cookie : cookies)
+                cookieStore.addCookie(cookie);
+            localContext.setCookieStore(cookieStore);
+        }
+
+        return getHttpResonse(httpClient, url, nvpList, isPost, localContext);
+    }
+
+    private static String getHttpResonse(CloseableHttpClient httpClient, String url, List<NameValuePair> nvpList,
+            boolean isPost, HttpClientContext localContext) throws ClientProtocolException, IOException {
+        CloseableHttpResponse response = null;
+        if (isPost) {
+            log.debug("post url is {}", url);
+
+            HttpPost post = new HttpPost(url);
+            if (nvpList != null && !nvpList.isEmpty()) {
+                post.setEntity(new UrlEncodedFormEntity(nvpList, Consts.UTF_8));
+            }
+
+            response = httpClient.execute(post, localContext);
+
+        } else {
+            String targetUrl = url;
+            if (nvpList != null && !nvpList.isEmpty()) {
+                String strParams = EntityUtils.toString(new UrlEncodedFormEntity(nvpList, Consts.UTF_8));
+                if (url.contains("?")) {
+                    targetUrl = targetUrl + "&" + strParams;
+                } else {
+                    targetUrl = targetUrl + "?" + strParams;
+                }
+            }
+
+            log.debug("get url is {}", targetUrl);
+
+            HttpGet get = new HttpGet(targetUrl);
+            response = httpClient.execute(get, localContext);
+        }
+
         try {
+            HttpEntity rspEntity = response.getEntity();
 
-            CloseableHttpResponse response = null;
+            String respContent = EntityUtils.toString(rspEntity, Consts.UTF_8).trim();
+            EntityUtils.consume(rspEntity);
 
-            if (isPost) {
-                log.debug("post url is {}", url);
-
-                HttpPost post = new HttpPost(url);
-                if (nvpList != null && !nvpList.isEmpty()) {
-                    post.setEntity(new UrlEncodedFormEntity(nvpList, Consts.UTF_8));
-                }
-
-                response = httpclient.execute(post);
-
-            } else {
-                String targetUrl = url;
-                if (nvpList != null && !nvpList.isEmpty()) {
-                    String strParams = EntityUtils.toString(new UrlEncodedFormEntity(nvpList, Consts.UTF_8));
-                    if (url.contains("?")) {
-                        targetUrl = targetUrl + "&" + strParams;
-                    } else {
-                        targetUrl = targetUrl + "?" + strParams;
-                    }
-                }
-
-                log.debug("get url is {}", targetUrl);
-
-                HttpGet get = new HttpGet(targetUrl);
-                response = httpclient.execute(get);
-            }
-
-            try {
-                HttpEntity rspEntity = response.getEntity();
-
-                String respContent = EntityUtils.toString(rspEntity, Consts.UTF_8).trim();
-                EntityUtils.consume(rspEntity);
-
-                return respContent;
-            } finally {
-                response.close();
-            }
-        } catch (Exception e) {
-            throw e;
+            return respContent;
         } finally {
-            httpclient.close();
+            response.close();
+        }
+    }
+
+    public static void destoryHttpClient(CloseableHttpClient httpClient) {
+        try {
+            httpClient.close();
+        } catch (IOException e) {
         }
     }
 }
