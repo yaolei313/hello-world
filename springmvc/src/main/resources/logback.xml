@@ -2,43 +2,55 @@
 <configuration scan="true" scanPeriod="120 seconds" debug="false">
 	<property name="LOG_BASE_PATH" value="/tmp/studylog"></property>
 
+    <!-- 
+    appender属性包含name，class
+        具体实现有ConsoleAppender，FileAppender，RollingFileAppender
+     -->
 	<appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+        <!-- encoder负责：1把日志信息转成字节数组，2把字节数组写入到输出流,对应PatternLayoutEncoder
+          -->
 		<encoder>
 			<pattern>%date{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
-			<pattern>%-4relative [%thread] %-5level %logger{35} - %msg%n</pattern>   
+			<!-- <pattern>%-4relative [%thread] %-5level %logger{35} - %msg%n</pattern>   --> 
 		</encoder>
-		<!-- 等同如下 -->
-		<!-- <layout class="ch.qos.logback.classic.PatternLayout"></layout> -->
 	</appender>
 
 	<appender name="sqlLog" class="ch.qos.logback.core.FileAppender">
-		<file>${LOG_BASE_PATH}/file/sql.log</file>
-		<append>true</append>
+		<file>${LOG_BASE_PATH}/sql.log</file>
+		<append>false</append>
 		<encoder>
-			<pattern>%date{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n
-			</pattern>
+			<pattern>%date{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
 		</encoder>
 	</appender>
 
     <!-- service层之后的日志，包含dao和remote interface -->
 	<appender name="serviceLog"
 		class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<!-- 活动文件，可有可无 -->
-		<file>${LOG_BASE_PATH}/rolling/service.log</file>
+		<!-- 当前日志记录到的文件(活动文件)，可有可无，可以通过设置此属性，将活动文件和归档文件分开 -->
+		<file>${LOG_BASE_PATH}/service.log</file>
 		<append>true</append>
+        <encoder>
+            <pattern>%date{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+        <!-- 
+                发生滚动时，决定RollingFileAppender的行为，涉及文件移动及重命名
+                包含TimeBasedRollingPolicy:
+        FixedWindowRollingPolicy(固定窗口算法):
+        <maxIndex>,<minIndex>,<fileNamePattern>,其中命名必须包含%i) 
+                假设最小值和最大值分别为1和2，命名模式为 mylog%i.log,会产生归档文件mylog1.log和mylog2.log。还可以指定文件压缩选项，例如，mylog%i.log.gz 或者 没有log%i.log.zip
+         -->
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<!-- 归档文件 -->
+			<!-- 归档文件，必须包含文件名及%d转换符，且%d可以包含一个java.text.SimpleDateFormat指定的时间格式。 -->
 			<fileNamePattern>${LOG_BASE_PATH}/rolling/service.%d{yyyy-MM-dd}.log.zip
 			</fileNamePattern>
-			<!-- 保存7天的归档文件 -->
+			<!-- 保存归档文件数量，此处保留7次滚动文件 -->
 			<maxHistory>7</maxHistory>
 		</rollingPolicy>
-		<encoder>
-			<pattern>%date{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n
-			</pattern>
-		</encoder>
-		<!-- triggeringPolicy SizeBasedTriggeringPolicy -->
-		<!-- <triggeringPolicy></triggeringPolicy> -->
+		<!-- 决定RollingFileAppender的何时滚动 -->
+		<!-- SizeBasedTriggeringPolicy与FixedWindowRollingPolicy合用
+		<triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy"> 
+            <maxFileSize>5MB</maxFileSize> 
+        </triggeringPolicy>  -->
 	</appender>
 
 	<!-- log4jdbc -->
@@ -57,6 +69,10 @@
 	<logger name="jdbc.resultset" level="OFF"></logger>
 	
 	<logger name="org.jasig.cas.client" level="DEBUG" />
+    <!-- 
+    logger用来设置某个包或某个具体类(name)的日志打印级别(level),以及指定多个appender-ref元素。
+    root节点为根logger
+     -->
 
 	<root level="DEBUG">
 		<appender-ref ref="stdout"></appender-ref>

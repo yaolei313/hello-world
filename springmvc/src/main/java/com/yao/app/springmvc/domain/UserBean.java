@@ -18,74 +18,88 @@ import com.yao.app.springmvc.util.CustomDateAdapter;
 @XmlAccessorType
 public class UserBean implements Serializable {
 
-	/**
+    /**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private String id;
+    private String id;
 
-	/**
-	 * 注册用户名
-	 */
-	private String name;
+    /**
+     * 注册用户名
+     */
+    private String name;
 
-	/**
-	 * 注册邮箱
-	 */
-	private String email;
+    /**
+     * 注册邮箱
+     */
+    private String email;
 
-	/**
-	 * gravatar邮件地址
-	 */
-	private String gravatarMail;
+    /**
+     * 性别
+     */
+    private String sex;
 
-	/**
-	 * 注册时间
-	 */
-	private Date registerTime;
+    /**
+     * gravatar邮件地址
+     */
 
-	public String getId() {
-		return id;
-	}
+    // 需要占位时加上
+    // @XmlElement(nillable=true)
+    private String gravatarMail;
 
-	public void setId(String id) {
-		this.id = id;
-	}
+    /**
+     * 注册时间
+     */
+    @XmlJavaTypeAdapter(CustomDateAdapter.class)
+    private Date registerTime;
 
-	public String getName() {
-		return name;
-	}
+    public String getId() {
+        return id;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setId(String id) {
+        this.id = id;
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	// 需要占位时加上
-	// @XmlElement(nillable=true)
-	public String getGravatarMail() {
-		return gravatarMail;
-	}
+    public String getEmail() {
+        return email;
+    }
 
-	public void setGravatarMail(String gravatarMail) {
-		this.gravatarMail = gravatarMail;
-	}
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-	@XmlJavaTypeAdapter(CustomDateAdapter.class)
-	public Date getRegisterTime() {
-		return registerTime;
-	}
+    public String getSex() {
+        return sex;
+    }
 
-	public void setRegisterTime(Date registerTime) {
-		this.registerTime = registerTime;
-	}
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
+
+    public String getGravatarMail() {
+        return gravatarMail;
+    }
+
+    public void setGravatarMail(String gravatarMail) {
+        this.gravatarMail = gravatarMail;
+    }
+
+    public Date getRegisterTime() {
+        return registerTime;
+    }
+
+    public void setRegisterTime(Date registerTime) {
+        this.registerTime = registerTime;
+    }
 
 }
