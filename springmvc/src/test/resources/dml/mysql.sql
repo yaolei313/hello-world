@@ -6,4 +6,8 @@ CREATE TABLE `users` (
   `gravatarMail` varchar(64) DEFAULT NULL,
   `registerTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+INSERT INTO `study`.`users` (`id`, `name`, `email`, `sex`, `gravatarMail`, `registerTime`) VALUES ('l00190940', 'lvxuguang', 'lvxuguang@huawei.com', 'M', NULL, '2014-09-18 19:19:25');
+INSERT INTO `study`.`users` (`id`, `name`, `email`, `sex`, `gravatarMail`, `registerTime`) VALUES ('y00196907', 'yaolei', 'yaolei313@gmail.com', 'M', NULL, '2014-09-18 19:19:25');

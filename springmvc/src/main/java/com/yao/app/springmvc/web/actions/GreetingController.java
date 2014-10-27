@@ -17,7 +17,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -60,14 +59,24 @@ public class GreetingController {
             Model model) {
         model.addAttribute("name2", name);
 
-        ModelMap map = new ModelMap();
-        map.put("message", "qwqwqwqqw");
-
+        //ModelMap map = new ModelMap();
+        //map.put("message", "qwqwqwqqw");   
         ModelAndView mav = new ModelAndView();
         mav.addObject("message", "andy");
+        mav.addObject("umessage", "<b>哈哈</b>");
         mav.setViewName("greeting");
 
         return mav;
+    }
+    
+    @RequestMapping(value = "/users", method = RequestMethod.GET)
+    public String listUsers(Model model){
+        LOG.info("query user list");
+        List<UserBean> users = service.queryUsers();
+        model.addAttribute("users", users);
+        
+        
+        return "user/list";
     }
 
     @RequestMapping(value = "/users/{userId}", method = RequestMethod.GET)
@@ -76,6 +85,7 @@ public class GreetingController {
         model.addAttribute("userId", userId);
 
         UserBean user = service.queryUserById(userId);
+        model.addAttribute("user",user);
 
         LOG.info(user.getName());
 
