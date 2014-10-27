@@ -109,21 +109,23 @@
     
     <bean id="templateResolver"
         class="org.thymeleaf.templateresolver.ServletContextTemplateResolver">
-        <property name="prefix" value="/WEB-INF/thymeleaf/" />
+        <property name="prefix" value="/WEB-INF/templates/" />
         <property name="suffix" value=".html" />
         <property name="templateMode" value="HTML5" />
+        <!-- 是否缓存parse后的模板 -->
         <property name="cacheable" value="false" />
     </bean>
     
-    <bean id="templateEngine" class="org.thymeleaf.spring3.SpringTemplateEngine">
+    <bean id="templateEngine" class="org.thymeleaf.spring4.SpringTemplateEngine">
         <property name="templateResolver" ref="templateResolver" />
     </bean>
     
-    <bean class="org.thymeleaf.spring3.view.ThymeleafViewResolver">
+    <bean class="org.thymeleaf.spring4.view.ThymeleafViewResolver">
+        <!-- 是否缓存view,方便debug时改为false -->
+        <property name="cache" value="true" />
         <property name="templateEngine" ref="templateEngine" />
         <property name="order" value="1" />
-        <property name="viewNames" value="*.html" />
-        <property name="characterEncoding" value="UTF-8"></property>
+        <property name="characterEncoding" value="UTF-8" />
     </bean>
     
     <!-- 静态资源使用httpd或nginx处理最好-->

@@ -1,0 +1,65 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head> 
+    <title th:inline="text">Welcome -- [[#{list.title}]]</title> 
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<p th:text="'total size :'+${users?.size()}"></p>
+    <ul th:each="user,st : ${users}" th:class="${st.odd}?'odd'">
+    	<li th:text="${st.count}">计数</li>
+    	<li th:text="${user.id}">ID</li>
+    	<li th:text="${user.name}">名字</li>
+    	<li th:text="${user.sex} == 'M'?'男':'女'">性别</li>
+    	<li th:text="${user.email}">邮件地址</li>
+    	<li th:test="${#calendars.format(user.registerTime,'yyyy-MM-dd')}">注册时间</li>
+    	<li><a href="detail.html" th:href="@{/users/}+${user.id}">查看详情</a></li>
+    	<li>
+    		<a href="modifyGravatar.html" th:if="${user.gravatarMail == null || #strings.length(user.gravatarMail)=='0'}">设置Gravatar头像</a>
+    	</li>
+    </ul>
+    <ul th:remove="all">
+    	<li>test show 1</li>
+    	<li>ID</li>
+    	<li>名字</li>
+    	<li>性别</li>
+    	<li>邮件地址</li>
+    	<li>注册时间</li>
+    	<li><a href="detail.html">查看详情</a></li>
+    	<li>
+    		<a href="modifyGravatar.html">设置Gravatar头像</a>
+    	</li>
+    </ul>
+    <hr/>
+    <div>
+    	<label>第一个用户</label>
+    	<ul th:with="firstPerson=${users[0]}">
+    		<li th:inline="text">你的名字:[[${firstPerson.name}]]</li>
+    		<li th:text="#{list.welcome(${firstPerson.name})}"></li>
+    	</ul>
+    </div>
+    <hr/>
+    <!-- html comments -->
+    <!--/* thymeleaf parser-level comments 静态打开有，转换时会被移除*/-->
+    <!-- thymeleaf prototype-only comments 静态打开有，转换时不会被移除，仅移除外出注释标签-->
+    <span>hello!</span>
+	<!--/*/
+		<div th:text="${users[0].name}">
+		</div>
+	/*/-->
+	<span>goodbye!</span>
+	
+	<script src="//code.jquery.com/jquery-2.1.1.js"></script>
+	<script type="text/javascript" th:inline="javascript">
+	$(document).ready(function(){
+		var username = /*[[${users[1].name}]]*/ TestName;
+		alert("第二个人名字："+username);
+		
+		// 对象中包含日期格式时不能处理
+		//var user = /*[[${users[1]}]]*/ null;
+		//alert("第二个人有限："+user.email);
+	});
+	</script>
+</body>
+
+</html>
