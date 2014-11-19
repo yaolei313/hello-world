@@ -25,7 +25,17 @@ public class DozerTest {
         System.out.println(stuDto.getId());
         System.out.println(stuDto.getStuName());
         
+        // -------------------------------
         
+        Student stu2 = new Student();
+        stu2.setId(196907);
+        
+        StudentDTO stuDto2 = new StudentDTO();
+        stuDto2.setStuName("李白");
+        beanMapper.map(stu2, stuDto2);
+        
+        System.out.println(stuDto2.getId());
+        System.out.println(stuDto2.getStuName());
     }
 
 }

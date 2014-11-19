@@ -101,29 +101,10 @@
     -->
     
     <!-- 视图解释类，定义跳转的文件的前后缀 -->
-    <!-- <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/views/"/>
         <property name="suffix" value=".jsp"/>
         <property name="order" value="1"></property>
-    </bean> -->
-    
-    <bean id="templateResolver"
-        class="org.thymeleaf.templateresolver.ServletContextTemplateResolver">
-        <property name="prefix" value="/WEB-INF/thymeleaf/" />
-        <property name="suffix" value=".html" />
-        <property name="templateMode" value="HTML5" />
-        <property name="cacheable" value="false" />
-    </bean>
-    
-    <bean id="templateEngine" class="org.thymeleaf.spring3.SpringTemplateEngine">
-        <property name="templateResolver" ref="templateResolver" />
-    </bean>
-    
-    <bean class="org.thymeleaf.spring3.view.ThymeleafViewResolver">
-        <property name="templateEngine" ref="templateEngine" />
-        <property name="order" value="1" />
-        <property name="viewNames" value="*.html" />
-        <property name="characterEncoding" value="UTF-8"></property>
     </bean>
     
     <!-- 静态资源使用httpd或nginx处理最好-->
@@ -149,15 +130,7 @@
         </mvc:interceptor>
     </mvc:interceptors>
     
-    <!-- 将Controller抛出的异常转到特定View, 保持SiteMesh的装饰效果 -->
-    <!-- <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">  
-        <property name="exceptionMappings">  
-            <props>  
-                <prop key="java.lang.Throwable">error/500</prop>
-            </props>  
-        </property>  
-    </bean> -->
-    
+    <!-- 将Controller抛出的异常转到特定View, 保持SiteMesh的装饰效果 -->   
     <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
         <!-- 定义默认的异常处理页面，当该异常类型的注册时使用 -->
         <property name="defaultErrorView" value="error"></property>
