@@ -91,6 +91,16 @@ public class GreetingController {
 
         return "user";
     }
+    
+    @RequestMapping(value = "/api/users/{userId}", method = RequestMethod.GET)
+    @ResponseBody
+    public UserBean findUserForAjax(@PathVariable String userId) {
+        LOG.info("userId:" + userId);
+        UserBean user = service.queryUserById(userId);
+        LOG.info(user.getName());
+
+        return user;
+    }
 
     @RequestMapping(value = "/users/{userId}", method = RequestMethod.PUT, produces = "application/json")
     @ResponseBody
@@ -110,7 +120,7 @@ public class GreetingController {
         LOG.info("test");
     }
 
-    @RequestMapping("/ajax")
+    @RequestMapping("/api/test")
     @ResponseBody
     public List<String> getUserList() {
         List<String> result = new ArrayList<String>();

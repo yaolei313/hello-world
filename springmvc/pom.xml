@@ -19,6 +19,7 @@
 		<logback.version>1.1.2</logback.version>
 		<cas.version>3.2.1</cas.version>
 		<xstream.version>1.4.7</xstream.version>
+        <metrics.version>3.1.0</metrics.version>
 	</properties>
 	
 	<!-- 等同于dependencies中得spring配置，但此次会引入所有spring的包 -->
@@ -258,6 +259,12 @@
 			<artifactId>sitemesh</artifactId>
             <version>2.4.2</version>
 		</dependency>
+    
+        <dependency>
+            <groupId>io.dropwizard.metrics</groupId>
+            <artifactId>metrics-core</artifactId>
+            <version>${metrics.version}</version>
+        </dependency>
 	</dependencies>
 	<build>
 		<finalName>springmvc</finalName>
