@@ -47,16 +47,16 @@ public class Client {
 
             // Create SimpleStandard MBean
             //
-            ObjectName stdMBeanName = new ObjectName(domain + ":type=SimpleStandard,name=2");
+            ObjectName stdMBeanName = new ObjectName(domain + ":type=com.yao.app.jmx.basic.SimpleStandard,name=2");
             echo("\nCreate SimpleStandard MBean...");
-            mbsc.createMBean("SimpleStandard", stdMBeanName, null, null);
+            mbsc.createMBean("com.yao.app.jmx.basic.SimpleStandard", stdMBeanName, null, null);
             waitForEnterPressed();
 
             // Create SimpleDynamic MBean
             //
-            ObjectName dynMBeanName = new ObjectName(domain + ":type=SimpleDynamic,name=2");
+            ObjectName dynMBeanName = new ObjectName(domain + ":type=com.yao.app.jmx.basic.SimpleDynamic,name=2");
             echo("\nCreate SimpleDynamic MBean...");
-            mbsc.createMBean("SimpleDynamic", dynMBeanName, null, null);
+            mbsc.createMBean("com.yao.app.jmx.basic.SimpleDynamic", dynMBeanName, null, null);
             waitForEnterPressed();
 
             // Get MBean count
@@ -91,6 +91,8 @@ public class Client {
             // dedicated proxy instead of going directly through the MBean
             // server connection
             //
+            
+            // MBean proxies允许通过Java interface来访问MBean, 通过接口调用而不是代码中直接书写属性或操作名。
             SimpleStandardMBean proxy = JMX.newMBeanProxy(mbsc, stdMBeanName, SimpleStandardMBean.class, true);
             echo("\nState = " + proxy.getState());
 

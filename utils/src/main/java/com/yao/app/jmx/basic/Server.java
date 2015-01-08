@@ -1,6 +1,8 @@
 package com.yao.app.jmx.basic;
 
 import java.io.IOException;
+import java.rmi.registry.LocateRegistry;
+
 import javax.management.Attribute;
 import javax.management.MBeanAttributeInfo;
 import javax.management.MBeanConstructorInfo;
@@ -39,7 +41,7 @@ public class Server {
 
             // Create and register the SimpleStandard MBean
             //
-            String mbeanClassName = "SimpleStandard";
+            String mbeanClassName = "com.yao.app.jmx.basic.SimpleStandard";
             String mbeanObjectNameStr = domain + ":type=" + mbeanClassName + ",name=1";
             ObjectName mbeanObjectName = createSimpleMBean(mbs, mbeanClassName, mbeanObjectNameStr);
             waitForEnterPressed();
@@ -57,7 +59,7 @@ public class Server {
 
             // Create and register the SimpleDynamic MBean
             //
-            mbeanClassName = "SimpleDynamic";
+            mbeanClassName = "com.yao.app.jmx.basic.SimpleDynamic";
             mbeanObjectNameStr = domain + ":type=" + mbeanClassName + ",name=1";
             mbeanObjectName = createSimpleMBean(mbs, mbeanClassName, mbeanObjectNameStr);
             waitForEnterPressed();
