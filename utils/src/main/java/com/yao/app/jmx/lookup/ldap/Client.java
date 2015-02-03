@@ -29,7 +29,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */ 
 
-package jndi;
+package com.yao.app.jmx.lookup.ldap;
 
 import javax.naming.InitialContext;
 import javax.naming.Context;
