@@ -36,6 +36,11 @@ public class DozerTest {
         
         System.out.println(stuDto2.getId());
         System.out.println(stuDto2.getStuName());
+        
+        // -----------
+        Student2 t2 = beanMapper.map(stu, Student2.class);
+        System.out.println(t2.getId());
+        System.out.println(t2.getName());
     }
 
 }

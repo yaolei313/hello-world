@@ -5,7 +5,7 @@
     <configuration>
         <date-format>yyyy-MM-dd hh:mm:ss</date-format>
         <wildcard>true</wildcard>
-        <relationship-type></relationship-type>
+        <!-- <relationship-type></relationship-type> -->
     </configuration>
     
     <mapping map-null="false">
