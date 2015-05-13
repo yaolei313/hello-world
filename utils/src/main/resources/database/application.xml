@@ -11,7 +11,7 @@
     http://www.springframework.org/schema/context  
     http://www.springframework.org/schema/context/spring-context-4.0.xsd ">
     
-    <context:property-placeholder location="classpath*:transaction/jdbc.properties" ignore-resource-not-found="true" />
+    <context:property-placeholder location="classpath*:database/jdbc.properties" ignore-resource-not-found="false" />
     
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
         <property name="driverClassName" value="${jdbc.driverClassName}" />

@@ -1,4 +1,4 @@
-package com.yao.app.transaction;
+package com.yao.app.database.transaction;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -20,7 +20,7 @@ public class TransactionTest {
 
     public static void main(String[] args) {
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(
-                "classpath*:transaction/application.xml");
+                "classpath*:database/application.xml");
         PlatformTransactionManager txManager = context.getBean("transactionManager", PlatformTransactionManager.class);
         DataSource ds = context.getBean("dataSource", DataSource.class);
 

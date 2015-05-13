@@ -29,6 +29,9 @@ public class Client1 {
             os.write("eof\n");
             os.flush();
 
+            // 设置读取超时时间
+            client.setSoTimeout(10*1000);  
+            
             BufferedReader br =
                     new BufferedReader(new InputStreamReader(client.getInputStream(), Constants.DEFAULT_CHAR));
 
@@ -41,9 +44,12 @@ public class Client1 {
                 }
                 line = br.readLine();
             }
+            
             br.close();
             //bw.close();
             os.close();
+            
+            
 
             System.out.println("from server:" + sb.toString());
 
