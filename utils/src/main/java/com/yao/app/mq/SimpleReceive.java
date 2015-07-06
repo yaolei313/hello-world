@@ -13,8 +13,6 @@ import com.rabbitmq.client.ShutdownSignalException;
 public class SimpleReceive {
 
     public static void main(String[] args) {
-        final String QUEUE_NAME = "hello";
-
         ConnectionFactory factory = new ConnectionFactory();
         factory.setHost("10.86.142.123");
         factory.setUsername("guest");
@@ -26,17 +24,25 @@ public class SimpleReceive {
             conn = factory.newConnection();
 
             channel = conn.createChannel();
-
-            channel.queueDeclare(QUEUE_NAME, false, false, false, null);
+            
+            // 给服务器发了某些参数，未收到ack前，阻塞frame的读。
+            channel.basicQos(1);
+            
+            //final String QUEUE_NAME = "hello";
+            final String QUEUE_NAME = "task_queue";
+            boolean durable = true;// 确保queue不会丢失
+            channel.queueDeclare(QUEUE_NAME, durable, false, false, null);
             
             QueueingConsumer consumer = new QueueingConsumer(channel);
-            channel.basicConsume(QUEUE_NAME, true, consumer);
+            boolean autoAck = false;
+            channel.basicConsume(QUEUE_NAME, autoAck, consumer);
             
             while(true){
                 QueueingConsumer.Delivery delivery = consumer.nextDelivery();
                 String message = new String(delivery.getBody());
+                Thread.sleep(1000);
                 System.out.println("Received "+ message);
-                //channel.basicAck(delivery.getEnvelope().getDeliveryTag(), false);
+                channel.basicAck(delivery.getEnvelope().getDeliveryTag(), false);
             }
 
         } catch (IOException | TimeoutException | ShutdownSignalException | ConsumerCancelledException | InterruptedException e) {

@@ -6,11 +6,12 @@ import java.util.concurrent.TimeoutException;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
+import com.rabbitmq.client.MessageProperties;
 
 public class SimpleSend {
 
     public static void main(String[] args) {
-        final String QUEUE_NAME = "hello";
+        
         
         ConnectionFactory factory= new ConnectionFactory();
         factory.setHost("10.86.142.123");
@@ -24,11 +25,22 @@ public class SimpleSend {
             
             channel = conn.createChannel();
             
-            channel.queueDeclare(QUEUE_NAME, false, false, false, null);
+            // final String QUEUE_NAME = "hello";
+            // channel.queueDeclare(QUEUE_NAME, false, false, false, null);
             
-            String message = "Hello world";
+            final String QUEUE_NAME = "task_queue";
+            boolean durable = true;// 确保queue不会丢失
+            channel.queueDeclare(QUEUE_NAME, durable, false, false, null);
             
-            channel.basicPublish("", QUEUE_NAME, null, message.getBytes());
+            for(int i=1;i<=5;i++){
+                String message = i + "th message.";
+                
+                // MessageProperties.PERSISTENT_TEXT_PLAIN 确保message不会丢失
+                channel.basicPublish("", QUEUE_NAME, MessageProperties.PERSISTENT_TEXT_PLAIN, message.getBytes());
+            }
+            //String message = "Hello world";
+            
+            //channel.basicPublish("", QUEUE_NAME, null, message.getBytes());
             
         } catch (IOException | TimeoutException e) {
             e.printStackTrace();
