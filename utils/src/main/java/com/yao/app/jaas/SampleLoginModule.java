@@ -27,12 +27,16 @@ public class SampleLoginModule implements LoginModule {
 			.getLogger(SampleLoginModule.class);
 
 	// configurable options
-	private boolean debug = false;
+	@SuppressWarnings("unused")
+    private boolean debug = false;
 
 	// initial state
 	private Subject subject;
 	private CallbackHandler callbackHandler;
-	private Map<String, Object> sharedState;
+	
+	// 可以比着FileLoginModule来，存储username和password
+	@SuppressWarnings("unused")
+    private Map<String, Object> sharedState;
 	private Map<String, ?> options;
 
 	// the user
