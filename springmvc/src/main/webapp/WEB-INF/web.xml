@@ -32,6 +32,11 @@
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
 	
+	<!-- 向servletcontext中增加了attribute key为EnvironmentLoader.class.getName() + ".ENVIRONMENT_ATTRIBUTE_KEY",value为WebEnvironment对象 -->
+	<listener>
+	    <listener-class>org.apache.shiro.web.env.EnvironmentLoaderListener</listener-class>
+	</listener>
+	
 	<filter>
         <filter-name>encodingFilter</filter-name>
         <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
@@ -56,8 +61,12 @@
 	        from classpath:shiro.ini --> 
 	</filter>
 	<filter-mapping>
-	     <filter-name>ShiroFilter</filter-name>
-	     <url-pattern>/*</url-pattern>
+	    <filter-name>ShiroFilter</filter-name>
+	    <url-pattern>/*</url-pattern>
+	    <dispatcher>REQUEST</dispatcher>
+	    <dispatcher>FORWARD</dispatcher>
+	    <dispatcher>INCLUDE</dispatcher>
+	    <dispatcher>ERROR</dispatcher>
 	</filter-mapping>
     
     <filter>
@@ -160,7 +169,7 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>application</servlet-name>
-		<url-pattern>/</url-pattern>
+		<url-pattern>/*</url-pattern>
 	</servlet-mapping>
 	
 	<welcome-file-list>
