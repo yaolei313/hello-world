@@ -2,7 +2,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.yao.app</groupId>
-	<artifactId>springmvc</artifactId>
+	<artifactId>Nebula</artifactId>
 	<packaging>war</packaging>
 	<version>1.0-SNAPSHOT</version>
 	<name>SpringMVC Maven Webapp</name>
@@ -21,6 +21,7 @@
 		<xstream.version>1.4.7</xstream.version>
         <metrics.version>3.1.0</metrics.version>
         <shiro.version>1.2.3</shiro.version>
+        <stormpath.version>1.0.RC4.5</stormpath.version>
 	</properties>
 	
 	<!-- 等同于dependencies中得spring配置，但此次会引入所有spring的包 -->
@@ -53,14 +54,14 @@
 		    <scope>runtime</scope>
 		</dependency>
 		<dependency>
-			<groupId>commons-dbcp</groupId>
-			<artifactId>commons-dbcp</artifactId>
-			<version>1.4</version>
+		    <groupId>org.apache.tomcat</groupId>
+		    <artifactId>tomcat-jdbc</artifactId>
+		    <version>8.0.24</version>
 		</dependency>
 		<dependency>
-			<groupId>commons-pool</groupId>
-			<artifactId>commons-pool</artifactId>
-			<version>1.5.4</version>
+		    <groupId>org.apache.tomcat</groupId>
+		    <artifactId>tomcat-juli</artifactId>
+		    <version>8.0.24</version>
 		</dependency>
 
 		<!-- spring -->
@@ -289,6 +290,26 @@
 		  	<version>${shiro.version}</version>
 		</dependency>
 
+		<!-- stormpath realm-->
+		<dependency>
+		    <groupId>com.stormpath.sdk</groupId>
+		    <artifactId>stormpath-sdk-api</artifactId>
+		    <version>${stormpath.version}</version>
+		</dependency>
+		<dependency>
+		    <groupId>com.stormpath.sdk</groupId>
+		    <artifactId>stormpath-sdk-httpclient</artifactId>
+		    <version>${stormpath.version}</version>
+		    <scope>runtime</scope>
+		</dependency>
+		<!-- This next runtime dependency is only necessary if you have
+		     a REST API and you want to secure it with OAuth: -->
+		<dependency>
+		    <groupId>com.stormpath.sdk</groupId>
+		    <artifactId>stormpath-sdk-oauth</artifactId>
+		    <version>${stormpath.version}</version>
+		    <scope>runtime</scope>
+		</dependency>
 	</dependencies>
 	<build>
 		<finalName>springmvc</finalName>
