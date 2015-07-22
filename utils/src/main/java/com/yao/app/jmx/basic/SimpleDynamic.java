@@ -45,6 +45,7 @@ public class SimpleDynamic extends NotificationBroadcasterSupport implements Dyn
     /**
      * Allows the value of the specified attribute of the Dynamic MBean to be obtained.
      */
+    @Override
     public Object getAttribute(String attribute_name) throws AttributeNotFoundException, MBeanException,
             ReflectionException {
 
@@ -73,6 +74,7 @@ public class SimpleDynamic extends NotificationBroadcasterSupport implements Dyn
     /**
      * Sets the value of the specified attribute of the Dynamic MBean.
      */
+    @Override
     public void setAttribute(Attribute attribute) throws AttributeNotFoundException, InvalidAttributeValueException,
             MBeanException, ReflectionException {
 
@@ -127,6 +129,7 @@ public class SimpleDynamic extends NotificationBroadcasterSupport implements Dyn
     /**
      * Enables the to get the values of several attributes of the Dynamic MBean.
      */
+    @Override
     public AttributeList getAttributes(String[] attributeNames) {
 
         // Check attributeNames is not null to avoid NullPointerException
@@ -160,6 +163,7 @@ public class SimpleDynamic extends NotificationBroadcasterSupport implements Dyn
      * Sets the values of several attributes of the Dynamic MBean, and returns the list of
      * attributes that have been set.
      */
+    @Override
     public AttributeList setAttributes(AttributeList attributes) {
 
         // Check attributes is not null to avoid NullPointerException later on
@@ -196,6 +200,7 @@ public class SimpleDynamic extends NotificationBroadcasterSupport implements Dyn
     /**
      * Allows an operation to be invoked on the Dynamic MBean.
      */
+    @Override
     public Object invoke(String operationName, Object params[], String signature[]) throws MBeanException,
             ReflectionException {
 
@@ -224,6 +229,7 @@ public class SimpleDynamic extends NotificationBroadcasterSupport implements Dyn
      * This method provides the exposed attributes and operations of the Dynamic MBean. It provides
      * this information using an MBeanInfo object.
      */
+    @Override
     public MBeanInfo getMBeanInfo() {
 
         // Return the information we want to expose for management:
@@ -301,12 +307,12 @@ public class SimpleDynamic extends NotificationBroadcasterSupport implements Dyn
                 new MBeanAttributeInfo("NbChanges", "java.lang.Integer", "Number of times the "
                         + "State string has been changed.", true, false, false);
 
-        Constructor[] constructors = this.getClass().getConstructors();
-        dConstructors[0] = new MBeanConstructorInfo("Constructs a " + "SimpleDynamic object", constructors[0]);
+        Constructor<?>[] constructors = this.getClass().getConstructors();
+        dConstructors[0] = new MBeanConstructorInfo("Constructs a SimpleDynamic object", constructors[0]);
 
         MBeanParameterInfo[] params = null;
         dOperations[0] =
-                new MBeanOperationInfo("reset", "reset State and NbChanges " + "attributes to their initial values",
+                new MBeanOperationInfo("reset", "reset State and NbChanges attributes to their initial values",
                         params, "void", MBeanOperationInfo.ACTION);
 
         dNotifications[0] =

@@ -2,11 +2,11 @@ package com.yao.app.jaas;
 
 import java.security.Principal;
 
-public class SamplePrincipal implements Principal {
+public class SimplePrincipal implements Principal {
 
     private String name;
     
-	public SamplePrincipal(String name) {
+	public SimplePrincipal(String name) {
         super();
         this.name = name;
     }

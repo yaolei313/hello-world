@@ -21,10 +21,10 @@ import org.slf4j.LoggerFactory;
  * @author lei.yao
  *
  */
-public class SampleLoginModule implements LoginModule {
+public class SimpleLoginModule implements LoginModule {
 
 	protected final Logger log = LoggerFactory
-			.getLogger(SampleLoginModule.class);
+			.getLogger(SimpleLoginModule.class);
 
 	// configurable options
 	@SuppressWarnings("unused")
@@ -40,7 +40,7 @@ public class SampleLoginModule implements LoginModule {
 	private Map<String, ?> options;
 
 	// the user
-	private SamplePrincipal user;
+	private SimplePrincipal user;
 
 	// Authentication status
 	private boolean succeeded = false;
@@ -78,7 +78,7 @@ public class SampleLoginModule implements LoginModule {
 			} else {
 				throw new LoginException("user or password is wrong");
 			}
-			user = new SamplePrincipal(username);
+			user = new SimplePrincipal(username);
 			succeeded = true;
 		} catch (IOException e) {
 			throw new LoginException("no such user");
