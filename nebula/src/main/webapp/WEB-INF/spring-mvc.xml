@@ -92,7 +92,7 @@
 			<bean class="org.springframework.oxm.xstream.XStreamMarshaller">
 				<property name="aliases">
 					<map>
-						<entry key="user" value="com.yao.app.springmvc.domain.UserBean"></entry>
+						<entry key="user" value="com.yao.app.nebula.domain.UserBean"></entry>
 					</map>
 				</property>
 			</bean>
@@ -123,10 +123,10 @@
         <bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
             <property name="paramName" value="language" />
         </bean>
-        <bean class="com.yao.app.springmvc.web.interceptors.TimeBasedAccessInterceptor"></bean>
+        <bean class="com.yao.app.nebula.web.interceptors.TimeBasedAccessInterceptor"></bean>
         <mvc:interceptor>
             <mvc:mapping path="/users/*"/>
-            <bean class="com.yao.app.springmvc.web.interceptors.MyMappedInterceptor"></bean>
+            <bean class="com.yao.app.nebula.web.interceptors.MyMappedInterceptor"></bean>
         </mvc:interceptor>
     </mvc:interceptors>
     
@@ -147,7 +147,7 @@
     </bean>
     
     <!-- 异常处理最好使用和非异常状态下相同的contentNegotiationManager和httpMessageResolver，这样行为一致，此处HttpMessageResolver偷懒下 -->
-    <bean class="com.yao.app.springmvc.util.CustomHandlerExceptionResolver">
+    <bean class="com.yao.app.nebula.util.CustomHandlerExceptionResolver">
     	<property name="contentNegotiationManager" ref="contentNegotiationManager"></property>
     	<property name="order" value="10"></property>
     </bean>

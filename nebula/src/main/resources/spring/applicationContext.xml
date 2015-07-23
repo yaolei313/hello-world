@@ -32,6 +32,7 @@
         <property name="username" value="${jdbc.username}" />
         <property name="password" value="${jdbc.password}" />
         
+        <property name="maxIdle" value="10" />
         <property name="maxActive" value="10" /> 
     	<property name="initialSize" value="5" />
     	
@@ -68,7 +69,7 @@
 
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource" />
-        <property name="typeAliasesPackage" value="com.yao.app.springmvc.domain"></property>
+        <property name="typeAliasesPackage" value="com.yao.app.nebula.domain"></property>
         <!-- <property name="configLocation" value="classpath:mybatis-config.xml"></property> -->
         <!-- 可以在mybatis-config.xml中配置 -->
         <!-- <property name="mapperLocations" value="classpath*:sample/config/mappers/**/*.xml" /> -->
@@ -76,7 +77,7 @@
 
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
-        <property name="basePackage" value="com.yao.app.springmvc.persistence" />
+        <property name="basePackage" value="com.yao.app.nebula.persistence" />
     </bean>
     
     <beans profile="dev">

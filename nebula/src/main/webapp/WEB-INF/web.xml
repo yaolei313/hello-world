@@ -3,7 +3,7 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	version="2.5">
     
-	<display-name>SpringMVC</display-name>
+	<display-name>nebula</display-name>
 
 	<!-- 
 	此处也配置的话会形成父上下文
@@ -71,7 +71,7 @@
     
     <filter>
         <filter-name>myFilter</filter-name>
-        <filter-class>com.yao.app.springmvc.web.filter.MyFilter</filter-class>
+        <filter-class>com.yao.app.nebula.web.filter.MyFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>myFilter</filter-name>
