@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.yao.app.nebula.domain.UserBean;
 import com.yao.app.nebula.persistence.UserMapper;
 import com.yao.app.nebula.service.UserService;
+import com.yao.app.nebula.util.TraceAvailable;
 
 @Service("db.user.service")
 public class UserServiceImpl implements UserService {
@@ -16,6 +17,7 @@ public class UserServiceImpl implements UserService {
     private UserMapper userMapper;
 
     @Override
+    @TraceAvailable
     public UserBean queryUserById(String id) {
         return userMapper.findUser(id);
     }

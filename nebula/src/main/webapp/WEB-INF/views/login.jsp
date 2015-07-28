@@ -12,7 +12,7 @@
 		<section id="marquee">
 			<div class="contentpanel details">
 				<!-- When a form does not have an action value, the browser will submit the form request to the same URL.  -->
-				<form id="command" action="" method="post">
+				<form id="command" method="post">
 					<div>
 						<label for="email">Email</label>
 						<input id="email" name="username" tabindex="1" class="field" type="text" value="" />
@@ -33,4 +33,12 @@
 		</section>
 	</div>
 </body>
+<script src="//cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+  	$("#loginbutton").click(function(){
+  		$("#command").submit();
+  	});
+});
+</script>
 </html>

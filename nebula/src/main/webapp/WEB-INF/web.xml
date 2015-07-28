@@ -33,9 +33,9 @@
 	</listener>
 	
 	<!-- 向servletcontext中增加了attribute key为EnvironmentLoader.class.getName() + ".ENVIRONMENT_ATTRIBUTE_KEY",value为WebEnvironment对象 -->
-	<listener>
+	<!-- <listener>
 	    <listener-class>org.apache.shiro.web.env.EnvironmentLoaderListener</listener-class>
-	</listener>
+	</listener> -->
 	
 	<filter>
         <filter-name>encodingFilter</filter-name>
@@ -54,11 +54,11 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>
     
-    <filter>
+    <!-- <filter>
 	    <filter-name>ShiroFilter</filter-name>
 	    <filter-class>org.apache.shiro.web.servlet.ShiroFilter</filter-class>
-	    <!-- no init-param means load the INI config
-	        from classpath:shiro.ini --> 
+	    no init-param means load the INI config
+	        from classpath:shiro.ini 
 	</filter>
 	<filter-mapping>
 	    <filter-name>ShiroFilter</filter-name>
@@ -67,7 +67,7 @@
 	    <dispatcher>FORWARD</dispatcher>
 	    <dispatcher>INCLUDE</dispatcher>
 	    <dispatcher>ERROR</dispatcher>
-	</filter-mapping>
+	</filter-mapping> -->
     
     <filter>
         <filter-name>myFilter</filter-name>

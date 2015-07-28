@@ -61,7 +61,8 @@
         </tx:attributes>
     </tx:advice>
 
-    <aop:config>
+    <!-- proxy-target-class默认为false，即使用java的动态代理 -->
+    <aop:config proxy-target-class="false">
         <aop:pointcut id="serviceOperation"
             expression="execution(* com.yao.app..service.impl.*.*(..))" />
         <aop:advisor advice-ref="txAdvice" pointcut-ref="serviceOperation" order="2"/>
@@ -79,6 +80,9 @@
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
         <property name="basePackage" value="com.yao.app.nebula.persistence" />
     </bean>
+    
+    <bean class="com.yao.app.nebula.util.TraceAdvice" /> 
+    <aop:aspectj-autoproxy />
     
     <beans profile="dev">
 		<context:property-placeholder location="classpath:jdbc-dev.properties" ignore-resource-not-found="false" />
