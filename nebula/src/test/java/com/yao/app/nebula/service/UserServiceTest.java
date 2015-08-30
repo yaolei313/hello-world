@@ -1,5 +1,7 @@
 package com.yao.app.nebula.service;
 
+import static org.assertj.core.api.Assertions.*;
+
 import javax.annotation.Resource;
 
 import org.junit.Test;
@@ -15,8 +17,10 @@ public class UserServiceTest extends AbstractTest {
     
     @Test
     public void getTest(){
-        UserBean user = service.queryUserById("y00196907");
+        UserBean user = service.queryUserByUsername("y00196907");
         
-        System.out.println(user.getName());
+        
+        assertThat(user.getNickname()).isEqualTo("李白");
+        System.out.println(user.getNickname());
     }
 }

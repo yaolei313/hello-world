@@ -18,88 +18,101 @@ import com.yao.app.nebula.util.CustomDateAdapter;
 @XmlAccessorType
 public class UserBean implements Serializable {
 
-    /**
+	/**
 	 * 
 	 */
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    private String id;
+	private Long id;
 
-    /**
-     * 注册用户名
-     */
-    private String name;
+	/**
+	 * 注册用户名
+	 */
+	private String username;
 
-    /**
-     * 注册邮箱
-     */
-    private String email;
+	/**
+	 * 注册邮箱
+	 */
+	private String email;
 
-    /**
-     * 性别
-     */
-    private String sex;
+	/**
+	 * 昵称
+	 */
+	private String nickname;
 
-    /**
-     * gravatar邮件地址
-     */
+	/**
+	 * 性别
+	 */
+	private String sex;
 
-    // 需要占位时加上
-    // @XmlElement(nillable=true)
-    private String gravatarMail;
+	/**
+	 * gravatar邮件地址
+	 */
 
-    /**
-     * 注册时间
-     */
-    @XmlJavaTypeAdapter(CustomDateAdapter.class)
-    private Date registerTime;
+	// 需要占位时加上
+	// @XmlElement(nillable=true)
+	private String gravatarMail;
 
-    public String getId() {
-        return id;
-    }
+	/**
+	 * 注册时间
+	 */
+	@XmlJavaTypeAdapter(CustomDateAdapter.class)
+	private Date registerTime;
 
-    public void setId(String id) {
-        this.id = id;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public String getUsername() {
+		return username;
+	}
 
-    public String getEmail() {
-        return email;
-    }
+	public void setUsername(String username) {
+		this.username = username;
+	}
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+	public String getEmail() {
+		return email;
+	}
 
-    public String getSex() {
-        return sex;
-    }
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
-    public void setSex(String sex) {
-        this.sex = sex;
-    }
+	public String getNickname() {
+		return nickname;
+	}
 
-    public String getGravatarMail() {
-        return gravatarMail;
-    }
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
 
-    public void setGravatarMail(String gravatarMail) {
-        this.gravatarMail = gravatarMail;
-    }
+	public String getSex() {
+		return sex;
+	}
 
-    public Date getRegisterTime() {
-        return registerTime;
-    }
+	public void setSex(String sex) {
+		this.sex = sex;
+	}
 
-    public void setRegisterTime(Date registerTime) {
-        this.registerTime = registerTime;
-    }
+	public String getGravatarMail() {
+		return gravatarMail;
+	}
+
+	public void setGravatarMail(String gravatarMail) {
+		this.gravatarMail = gravatarMail;
+	}
+
+	public Date getRegisterTime() {
+		return registerTime;
+	}
+
+	public void setRegisterTime(Date registerTime) {
+		this.registerTime = registerTime;
+	}
 
 }

@@ -4,10 +4,10 @@
 
 <mapper namespace="com.yao.app.nebula.persistence.UserMapper">
 	<select id="findUser" parameterType="string" resultType="UserBean">
-		select id,name,email,sex,gravatarMail,registerTime from users where id =#{id}
+		select id,username,email,nickname,sex,gravatar_mail as gravatarMail,register_time as registerTime from users where username =#{username}
 	</select>
   
     <select id="queryUsers" resultType="UserBean">
-        select id,name,email,sex,gravatarMail,registerTime from users
+        select id,username,email,nickname,sex,gravatar_mail as gravatarMail,register_time as registerTime from users
     </select>
 </mapper>

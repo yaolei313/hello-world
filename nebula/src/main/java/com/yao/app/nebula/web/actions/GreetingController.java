@@ -84,10 +84,10 @@ public class GreetingController {
         LOG.info("userId:" + userId);
         model.addAttribute("userId", userId);
 
-        UserBean user = service.queryUserById(userId);
+        UserBean user = service.queryUserByUsername(userId);
         model.addAttribute("user",user);
 
-        LOG.info(user.getName());
+        LOG.info(user.getUsername());
 
         return "user";
     }
@@ -96,8 +96,8 @@ public class GreetingController {
     @ResponseBody
     public UserBean findUserForAjax(@PathVariable String userId) {
         LOG.info("userId:" + userId);
-        UserBean user = service.queryUserById(userId);
-        LOG.info(user.getName());
+        UserBean user = service.queryUserByUsername(userId);
+        LOG.info(user.getUsername());
 
         return user;
     }
@@ -140,8 +140,8 @@ public class GreetingController {
     @ResponseBody
     public UserBean getUser() {
         UserBean user = new UserBean();
-        user.setId("y00196907");
-        user.setName("李白路过");
+        user.setUsername("y00196907");
+        user.setNickname("李白路过");
         user.setRegisterTime(new Date());
         user.setEmail("yaolei313@gmail.com");
 

@@ -18,8 +18,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @TraceAvailable
-    public UserBean queryUserById(String id) {
-        return userMapper.findUser(id);
+    public UserBean queryUserByUsername(String username) {
+        return userMapper.findUser(username);
     }
 
     @Override

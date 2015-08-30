@@ -5,7 +5,7 @@ import java.util.List;
 import com.yao.app.nebula.domain.UserBean;
 
 public interface UserService {
-    UserBean queryUserById(String id);
+    UserBean queryUserByUsername(String username);
     
     List<UserBean> queryUsers();
 }
