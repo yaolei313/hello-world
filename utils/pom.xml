@@ -14,15 +14,16 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<junit.version>4.11</junit.version>
 
-		<mariadb.version>1.1.7</mariadb.version>
-		<commons-dbcp.version>1.4</commons-dbcp.version>
-		<commons-pool.version>1.5.4</commons-pool.version>
+		<mariadb.version>1.2.3</mariadb.version>
+		<tomcat-jdbc.version>8.0.27</tomcat-jdbc.version>
+		<!-- <commons-dbcp.version>1.4</commons-dbcp.version>
+		<commons-pool.version>1.5.4</commons-pool.version> -->
 
-		<spring.version>4.0.5.RELEASE</spring.version>
-		<aspectj.version>1.7.4</aspectj.version>
+		<spring.version>4.2.1.RELEASE</spring.version>
+		<aspectj.version>1.8.7</aspectj.version>
 
-		<slf4j.version>1.7.6</slf4j.version>
-		<logback.version>1.1.2</logback.version>
+		<slf4j.version>1.7.12</slf4j.version>
+		<logback.version>1.1.3</logback.version>
 		<log4jdbc.version>1.2</log4jdbc.version>
 
 		<poi.version>3.10-FINAL</poi.version>
@@ -32,7 +33,7 @@
 		<commons-io.version>2.4</commons-io.version>
 		<commons-codec.version>1.9</commons-codec.version>
 		<commons-beanutils.version>1.9.1</commons-beanutils.version>
-		<guava.version>16.0.1</guava.version>
+		<guava.version>18.0</guava.version>
 		<joda-time.version>2.3</joda-time.version>
 		<joda-time-jsptags.version>1.1.1</joda-time-jsptags.version>
         <metrics.version>3.1.0</metrics.version>
@@ -56,19 +57,26 @@
 
 		<!-- db and datasource -->
 		<dependency>
-			<groupId>org.mariadb.jdbc</groupId>
-			<artifactId>mariadb-java-client</artifactId>
-			<version>${mariadb.version}</version>
+		    <groupId>org.mariadb.jdbc</groupId>
+		    <artifactId>mariadb-java-client</artifactId>
+		    <version>${mariadb.version}</version>
+		    <scope>runtime</scope>
+            <exclusions>
+              <exclusion>
+                <groupId>commons-dbcp</groupId>
+                <artifactId>commons-dbcp</artifactId>
+              </exclusion>
+            </exclusions>
 		</dependency>
 		<dependency>
-			<groupId>commons-dbcp</groupId>
-			<artifactId>commons-dbcp</artifactId>
-			<version>${commons-dbcp.version}</version>
+		    <groupId>org.apache.tomcat</groupId>
+		    <artifactId>tomcat-jdbc</artifactId>
+		    <version>${tomcat-jdbc.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>commons-pool</groupId>
-			<artifactId>commons-pool</artifactId>
-			<version>${commons-pool.version}</version>
+		    <groupId>org.apache.tomcat</groupId>
+		    <artifactId>tomcat-juli</artifactId>
+		    <version>${tomcat-jdbc.version}</version>
 		</dependency>
 
 		<!-- spring -->

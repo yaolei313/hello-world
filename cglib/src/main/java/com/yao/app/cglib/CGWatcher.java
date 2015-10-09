@@ -19,9 +19,11 @@ public class CGWatcher implements MethodInterceptor {
 			MethodProxy proxy) throws Throwable {
 		System.out.println(obj.getClass());
 		
-		System.out.println("watching before method execute");
+		//System.out.println("watching before method execute");
+		System.out.println("鼓掌 pa pa pa");
 		Object result = method.invoke(target, args);
-		System.out.println("watching after method execute");
+		//System.out.println("watching after method execute");
+		System.out.println("鼓掌 pa pa pa");
 
 		return result;
 	}

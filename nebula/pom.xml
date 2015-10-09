@@ -10,18 +10,29 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<spring.version>4.0.5.RELEASE</spring.version>
-		<aspectj.version>1.7.4</aspectj.version>
-		<slf4j.version>1.7.6</slf4j.version>
+		
+		<mariadb.version>1.2.3</mariadb.version>
+		<tomcat-jdbc.version>8.0.27</tomcat-jdbc.version>
+		
+		<slf4j.version>1.7.12</slf4j.version>
+		<logback.version>1.1.3</logback.version>
+		<log4jdbc.version>1.2</log4jdbc.version>
+		
+		<spring.version>4.2.1.RELEASE</spring.version>
+		<aspectj.version>1.8.7</aspectj.version>
 		<mybatis.version>3.2.3</mybatis.version>
 		<mybatis-spring.version>1.2.1</mybatis-spring.version>
+
+		<validation.version>1.1.0.Final</validation.version>
+		<hibernate-validation.version>5.2.2.Final</hibernate-validation.version>
 		<jackson.version>2.3.2</jackson.version>
-		<logback.version>1.1.2</logback.version>
-		<cas.version>3.2.1</cas.version>
+		<!-- <cas.version>3.2.1</cas.version> -->
 		<xstream.version>1.4.7</xstream.version>
         <metrics.version>3.1.0</metrics.version>
         <shiro.version>1.2.3</shiro.version>
         <stormpath.version>1.0.RC4.5</stormpath.version>
+        <jetty.version>9.3.3.v20150827</jetty.version>
+        <sitemesh.version>2.4.2</sitemesh.version>
 	</properties>
 	
 	<!-- 等同于dependencies中得spring配置，但此次会引入所有spring的包 -->
@@ -46,11 +57,12 @@
 			<scope>test</scope>
 		</dependency>
 		
+		<!-- assert for test -->
 		<dependency>
 		  	<groupId>org.assertj</groupId>
 		  	<artifactId>assertj-core</artifactId>
 		  	<!-- use 3.1.0 for Java 8 projects -->
-		  	<version>3.1.0</version>
+		  	<version>3.2.0</version>
 		  	<scope>test</scope>
 		</dependency>
 
@@ -58,7 +70,7 @@
 		<dependency>
 		    <groupId>org.mariadb.jdbc</groupId>
 		    <artifactId>mariadb-java-client</artifactId>
-		    <version>1.1.9</version>
+		    <version>${mariadb.version}</version>
 		    <scope>runtime</scope>
             <exclusions>
               <exclusion>
@@ -70,12 +82,12 @@
 		<dependency>
 		    <groupId>org.apache.tomcat</groupId>
 		    <artifactId>tomcat-jdbc</artifactId>
-		    <version>8.0.24</version>
+		    <version>${tomcat-jdbc.version}</version>
 		</dependency>
 		<dependency>
 		    <groupId>org.apache.tomcat</groupId>
 		    <artifactId>tomcat-juli</artifactId>
-		    <version>8.0.24</version>
+		    <version>${tomcat-jdbc.version}</version>
 		</dependency>
 
 		<!-- spring -->
@@ -132,6 +144,11 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-aop</artifactId>
 			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-aspects</artifactId>
+		    <version>${spring.version}</version>
 		</dependency>
 		<dependency>
 		    <groupId>org.springframework</groupId>
@@ -204,7 +221,7 @@
 		<dependency>
 			<groupId>com.googlecode.log4jdbc</groupId>
 			<artifactId>log4jdbc</artifactId>
-			<version>1.2</version>
+			<version>${log4jdbc.version}</version>
 			<scope>runtime</scope>
 		</dependency>
 		<!-- Logging End -->
@@ -213,31 +230,12 @@
 		<dependency>
             <groupId>javax.validation</groupId>
             <artifactId>validation-api</artifactId> 
-		    <version>1.1.0.Final</version>
+		    <version>${validation.version}</version>
         </dependency>
         <dependency>
             <groupId>org.hibernate</groupId> 
 			<artifactId>hibernate-validator</artifactId>
-            <version>5.1.2.Final</version> 
-		</dependency>
-
-		<!-- Servlet -->
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>servlet-api</artifactId>
-			<version>2.5</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>javax.servlet.jsp</groupId>
-			<artifactId>jsp-api</artifactId>
-			<version>2.1</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>jstl</artifactId>
-			<version>1.2</version>
+            <version>${hibernate-validation.version}</version> 
 		</dependency>
 
 		<!-- mybatis -->
@@ -273,7 +271,7 @@
 		<dependency>
 			<groupId>opensymphony</groupId>
 			<artifactId>sitemesh</artifactId>
-            <version>2.4.2</version>
+            <version>${sitemesh.version}</version>
 		</dependency>
     
         <dependency>
@@ -331,6 +329,48 @@
           <artifactId>stormpath-shiro-core</artifactId>
           <version>0.6.0</version>
         </dependency>
+        
+        <!-- Servlet -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>3.1.0</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet.jsp</groupId>
+			<artifactId>javax.servlet.jsp-api</artifactId>
+			<version>2.3.2-b02</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jstl</artifactId>
+			<version>1.2</version>
+		</dependency>
+
+		<!-- embedded jetty -->
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-webapp</artifactId>
+			<version>${jetty.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-annotations</artifactId>
+			<version>${jetty.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>apache-jsp</artifactId>
+			<version>${jetty.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>apache-jstl</artifactId>
+			<version>${jetty.version}</version>
+		</dependency>
     
 	</dependencies>
 	<build>
@@ -339,11 +379,11 @@
 			<plugin>
 				<groupId>org.mortbay.jetty</groupId>
 				<artifactId>maven-jetty-plugin</artifactId>
-				<version>8.1.5.v20120716</version>
+				<version>9.3.3.v20150827</version>
 				<configuration>
 					<contextPath>/</contextPath>
 					<connectors>
-						<connector implementation="org.mortbay.jetty.nio.SelectChannelConnector">
+						<connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
 							<port>8080</port>
 						</connector>
 					</connectors>

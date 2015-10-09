@@ -1,5 +1,11 @@
 package com.yao.app.java;
 
+/**
+ * volatile是复制一个副本到的自己的线程内存中，修改完成，写回公共内存区。因此不是原子的
+ * 
+ * @author yaolei
+ *
+ */
 public class VolatileStudy {
 
     public volatile int count = 0;

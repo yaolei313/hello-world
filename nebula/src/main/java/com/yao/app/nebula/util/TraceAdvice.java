@@ -15,6 +15,26 @@ public class TraceAdvice implements Ordered{
 
     @Pointcut("within(com.yao.app.nebula.service..*) && @annotation(com.yao.app.nebula.util.TraceAvailable)")
     private void anyMethod() {}
+    
+    /*@Pointcut("execution(* com.yao.app.nebula.web.vo.Student.getName(..))")
+    private void test() {}
+    
+    @Around(value = "test()")
+    public Object testAround(ProceedingJoinPoint jp) throws Throwable {
+    	Object[] args = jp.getArgs();
+    	
+    	System.out.println("before");
+    	
+    	Object object = null;
+        try {
+            object = jp.proceed(args);
+        } finally {
+        }
+        
+        System.out.println("after");
+        
+        return object;
+    }*/
 
     /**
      * http://www.blogjava.net/supercrsky/articles/174368.html

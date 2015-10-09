@@ -82,8 +82,22 @@
         <property name="basePackage" value="com.yao.app.nebula.persistence" />
     </bean>
     
-    <bean class="com.yao.app.nebula.util.TraceAdvice" /> 
-    <aop:aspectj-autoproxy />
+    <bean class="com.yao.app.nebula.util.ApplicationContextUtil" />
+    
+    <!-- <bean class="com.yao.app.nebula.web.vo.Student" scope="prototype" /> -->
+    
+    <bean class="com.yao.app.nebula.util.TraceAdvice" />
+    <aop:aspectj-autoproxy>
+    	<aop:include name="com.yao.app.nebula.util.TraceAdvice"/>
+    	<!-- <aop:include name="com.yao.app.nebula.util.ProfilingAspect"/> -->
+    </aop:aspectj-autoproxy>
+    
+    <!-- Aspectj LTW -->
+    <bean class="com.yao.app.nebula.util.ProfilingAspect" factory-method="aspectOf" lazy-init="false"/>
+    <!-- for register AnnotationBeanConfigurerAspect -->
+    <!-- <context:spring-configured/> -->
+    
+    <context:load-time-weaver/>
     
     <beans profile="dev">
 		<context:property-placeholder location="classpath:jdbc-dev.properties" ignore-resource-not-found="false" />
