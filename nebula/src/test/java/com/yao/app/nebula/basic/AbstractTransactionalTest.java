@@ -15,6 +15,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:spring/applicationContext.xml")
 @ActiveProfiles("dev")
-public class AbstractTransactionalTest extends AbstractTransactionalJUnit4SpringContextTests {
+public abstract class AbstractTransactionalTest extends AbstractTransactionalJUnit4SpringContextTests {
 
 }

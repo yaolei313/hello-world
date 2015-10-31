@@ -15,5 +15,8 @@ public class App
         System.out.println(1.0-0.42);
         System.out.println(4.015*100);
         System.out.println(123.3/100);
+        
+        Float t = 0.62342323f;
+        System.out.println(t);
     }
 }

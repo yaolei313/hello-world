@@ -20,7 +20,7 @@ public class UserServiceImpl implements UserService {
     @TraceAvailable
     public UserBean queryUserByUsername(String username) {
     	System.out.println("hello a");
-    	// 不会被aop懒觉，代理对象决定的，因为this就是target，而不是delegateObject
+    	// 不会被aop拦截，代理对象决定的，因为this就是target，而不是delegateObject
     	this.test();
         return userMapper.findUser(username);
     }

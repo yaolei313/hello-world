@@ -87,17 +87,19 @@
     <!-- <bean class="com.yao.app.nebula.web.vo.Student" scope="prototype" /> -->
     
     <bean class="com.yao.app.nebula.util.TraceAdvice" />
-    <aop:aspectj-autoproxy>
-    	<aop:include name="com.yao.app.nebula.util.TraceAdvice"/>
-    	<!-- <aop:include name="com.yao.app.nebula.util.ProfilingAspect"/> -->
-    </aop:aspectj-autoproxy>
-    
     <!-- Aspectj LTW -->
-    <bean class="com.yao.app.nebula.util.ProfilingAspect" factory-method="aspectOf" lazy-init="false"/>
+    <!-- <bean class="com.yao.app.nebula.util.ProfilingAspect" factory-method="aspectOf" lazy-init="false"/> -->
     <!-- for register AnnotationBeanConfigurerAspect -->
     <!-- <context:spring-configured/> -->
     
-    <context:load-time-weaver/>
+    <aop:aspectj-autoproxy>
+    	<!-- Set a list of regex patterns, matching eligible @AspectJ bean names.Default is to consider all @AspectJ beans as eligible. -->
+    	<!-- Example: com.yao.app.nebula.util.TraceAdvice#0 此次必须为正则表达式-->
+    	<aop:include name="(\w+\.)*TraceAdvice(#\d)?"/>
+    	<!-- <aop:include name="com.yao.app.nebula.util.ProfilingAspect"/> -->
+    </aop:aspectj-autoproxy>
+    
+    <!-- <context:load-time-weaver/> -->
     
     <beans profile="dev">
 		<context:property-placeholder location="classpath:jdbc-dev.properties" ignore-resource-not-found="false" />

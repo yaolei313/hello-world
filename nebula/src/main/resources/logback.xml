@@ -26,6 +26,14 @@ debug:当此属性设置为true时，将打印出logback内部日志信息，实
 			<pattern>%date{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
 		</encoder>
 	</appender>
+	
+	<appender name="aspectjLog" class="ch.qos.logback.core.FileAppender">
+		<file>${LOG_BASE_PATH}/aspectj.log</file>
+		<append>false</append>
+		<encoder>
+			<pattern>%date{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+		</encoder>
+	</appender>
 
     <!-- service层之后的日志，包含dao和remote interface -->
 	<appender name="serviceLog"
@@ -72,13 +80,17 @@ debug:当此属性设置为true时，将打印出logback内部日志信息，实
 	<logger name="jdbc.audit" level="OFF"></logger>
 	<logger name="jdbc.resultset" level="OFF"></logger>
 	
+	<logger name="AspectJ Weaver" level="DEBUG" additivity="false">
+		<appender-ref ref="aspectjLog" />
+	</logger>
+	
 	<logger name="org.jasig.cas.client" level="DEBUG" />
     <!-- 
     logger用来设置某个包或某个具体类(name)的日志打印级别(level),以及指定多个appender-ref元素。
     root节点为根logger
      -->
 
-	<root level="INFO">
+	<root level="debug">
 		<appender-ref ref="stdout"></appender-ref>
 		<appender-ref ref="serviceLog"></appender-ref>
 	</root>
