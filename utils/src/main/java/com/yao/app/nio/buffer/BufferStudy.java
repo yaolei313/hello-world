@@ -11,32 +11,47 @@ import java.nio.ByteBuffer;
 public class BufferStudy {
 
 	public static void main(String[] args) {
-		ByteBuffer bb = ByteBuffer.allocate(128);
+		ByteBuffer bb = ByteBuffer.allocate(32);
 		
-		bb.put("hello-world".getBytes());
+		System.out.println("hello".length());
+		
+		bb.put("hello".getBytes());
 		outputStatus(bb);
 		
 		bb.limit(bb.position()).flip();
 		outputStatus(bb);
 		
-		//output(bb);
 		System.out.println((char)bb.get());
 		System.out.println((char)bb.get());
-		
-		bb.compact();
 		outputStatus(bb);
+		
+		// 压缩
+		bb.compact();
+		System.out.println("压缩后状态:");
+		outputStatus(bb);
+		
+		System.out.println((char)bb.get());
+		outputStatus(bb);
+		
+		// 缓冲区比较
+		ByteBuffer b2 = ByteBuffer.allocate(28);
+		b2.put("o".getBytes());
+		
+		if(bb.compareTo(b2)==0){
+			System.out.println("bb equals b2");
+		}
 	}
 	
 	private static void outputStatus(ByteBuffer bb){
-		System.out.println(bb.toString());
-	}
-	
-	private static void output(ByteBuffer bb){
-		int count = bb.remaining();
-		for(int i= 0;i< count;i++){
-			System.out.println((char)bb.get());
-			System.out.println(bb.toString());
+		System.out.print(bb.toString());
+		System.out.print("\t[");
+		for(int i=0;i<bb.limit();i++){
+			if(i!=0 && i!= bb.capacity()-1){
+				System.out.print(",");
+			}
+			System.out.print((char)bb.get(i));
 		}
+		System.out.print("]");
 		System.out.println();
 	}
 

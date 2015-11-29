@@ -9,7 +9,7 @@ public class ForkJoinTaskStudy {
 
     public static void main(String[] args) {
         ForkJoinPool pool = new ForkJoinPool();
-        
+
         Fibonacci task = new Fibonacci(10);
         ForkJoinTask<Integer> r = pool.submit(task);
         try {
@@ -22,7 +22,7 @@ public class ForkJoinTaskStudy {
     public static class Fibonacci extends RecursiveTask<Integer> {
 
         private static final long serialVersionUID = 1L;
-        
+
         final int n;
 
         public Fibonacci(int n) {
