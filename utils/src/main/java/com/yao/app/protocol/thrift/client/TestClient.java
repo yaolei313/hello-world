@@ -19,6 +19,8 @@ import org.apache.thrift.transport.TTransportException;
 
 import com.yao.app.protocol.thrift.service.HelloWorldService;
 import com.yao.app.protocol.thrift.service.HelloWorldService.AsyncClient.sayHello_call;
+import com.yao.app.protocol.thrift.service.UserService;
+import com.yao.app.protocol.thrift.service.YUser;
 
 public class TestClient {
     public static final String SERVER_HOST = "127.0.0.1";
@@ -28,8 +30,9 @@ public class TestClient {
     public static final int TIMEOUT = 30000;
 
     public static void main(String[] args) {
-        testService2();
+        //testService2();
         testService3();
+        //testService4();
     }
     
     public static void testService(){
@@ -147,4 +150,32 @@ public class TestClient {
         }
     }
 
+    public static void testService4(){
+        System.out.println("TFramedTransport TCompactProtocol客户端");
+        TTransport transport = null;
+        try {
+            // transport = new TSocket(SERVER_HOST, SERVER_PORT, TIMEOUT);
+            // transport = new TSocket(SERVER_HOST, SERVER_PORT);
+            transport = new TFramedTransport(new TSocket(SERVER_HOST, SERVER_PORT));
+            
+            TCompactProtocol tprotocol = new TCompactProtocol(transport);
+            TMultiplexedProtocol protocol = new TMultiplexedProtocol(tprotocol, "USER_SERVICE");
+            
+            UserService.Client client = new UserService.Client(protocol);
+            
+            transport.open();
+            
+            YUser result = client.queryUserInfo("y00196907");
+            System.out.println(result.toString());
+            
+        } catch (TTransportException e) {
+            e.printStackTrace();
+        } catch (TException e) {
+            e.printStackTrace();
+        } finally {
+            if(transport != null){
+                transport.close();
+            }
+        }
+    }
 }

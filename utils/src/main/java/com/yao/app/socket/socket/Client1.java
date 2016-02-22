@@ -1,4 +1,4 @@
-package com.yao.app.http.socket;
+package com.yao.app.socket.socket;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

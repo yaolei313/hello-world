@@ -20,7 +20,7 @@ public class HelloServerDemo {
     public static final int SERVER_PORT = 8090;
 
     public static void main(String[] args) {
-        startService3();
+        startService1();
     }
     
     public static void startService1(){

@@ -66,7 +66,7 @@
     <aop:config proxy-target-class="false">
         <aop:pointcut id="serviceOperation"
             expression="execution(* com.yao.app..service.impl.*.*(..))" />
-        <aop:advisor advice-ref="txAdvice" pointcut-ref="serviceOperation" order="2"/>
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="serviceOperation" order="65535"/>
     </aop:config>
 
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">

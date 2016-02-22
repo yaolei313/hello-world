@@ -21,13 +21,14 @@ public class UserServiceImpl implements Iface {
     public YUser queryUserInfo(String userId) throws TException {
 //        UserBean user = userService.queryUserById(userId);
 //        return (YUser) registry.getRegisterConverter(UserBean.class).convert(user);
+        System.out.println("enter call...");
         YUser user = new YUser();
         user.id="y00196907";
         user.name="姚磊";
         user.email="yaolei313@gmail.com";
-        user.gravatarMail="yaolei313@gmail.com";
+        //user.gravatarMail="yaolei313@gmail.com";
         user.registerTime = (YTimestamp)new TimestampTypeConverter().convert(new Timestamp(System.currentTimeMillis()));
-        return new YUser();
+        return user;
     }
 
 }
