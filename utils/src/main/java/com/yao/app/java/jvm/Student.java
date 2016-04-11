@@ -1,4 +1,4 @@
-package com.yao.app.common;
+package com.yao.app.java.jvm;
 
 import java.io.Serializable;
 
@@ -9,8 +9,6 @@ public class Student implements Serializable {
     private long id;
 
     private String code;
-
-    private String name;
 
     public long getId() {
         return id;
@@ -26,14 +24,6 @@ public class Student implements Serializable {
 
     public void setCode(String code) {
         this.code = code;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
 }

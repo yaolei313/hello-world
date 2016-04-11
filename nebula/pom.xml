@@ -372,6 +372,11 @@
 			<artifactId>apache-jstl</artifactId>
 			<version>${jetty.version}</version>
 		</dependency>
+		<dependency>
+		    <groupId>org.eclipse.jetty</groupId>
+		    <artifactId>jetty-jmx</artifactId>
+		    <version>${jetty.version}</version>
+		</dependency>
 		
 		<!-- Hystrix is a latency and fault tolerance library designed 
 		to isolate points of access to remote systems, services and 3rd party libraries, 

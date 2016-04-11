@@ -16,8 +16,7 @@
 
 		<mariadb.version>1.2.3</mariadb.version>
 		<tomcat-jdbc.version>8.0.27</tomcat-jdbc.version>
-		<!-- <commons-dbcp.version>1.4</commons-dbcp.version>
-		<commons-pool.version>1.5.4</commons-pool.version> -->
+		<!-- <commons-dbcp.version>1.4</commons-dbcp.version> <commons-pool.version>1.5.4</commons-pool.version> -->
 
 		<spring.version>4.2.1.RELEASE</spring.version>
 		<aspectj.version>1.8.7</aspectj.version>
@@ -36,15 +35,15 @@
 		<guava.version>18.0</guava.version>
 		<joda-time.version>2.3</joda-time.version>
 		<joda-time-jsptags.version>1.1.1</joda-time-jsptags.version>
-        <metrics.version>3.1.0</metrics.version>
+		<metrics.version>3.1.0</metrics.version>
 
 		<jackson.version>2.4.1</jackson.version>
 		<gson.version>2.2.4</gson.version>
 		<fastjson.version>1.1.41</fastjson.version>
-    
-        <dozer.version>5.5.1</dozer.version>
-        <jedis.version>2.7.2</jedis.version>
-        <rabbitmq.version>3.5.3</rabbitmq.version>
+
+		<dozer.version>5.5.1</dozer.version>
+		<jedis.version>2.7.2</jedis.version>
+		<rabbitmq.version>3.5.3</rabbitmq.version>
 	</properties>
 
 	<dependencies>
@@ -57,26 +56,26 @@
 
 		<!-- db and datasource -->
 		<dependency>
-		    <groupId>org.mariadb.jdbc</groupId>
-		    <artifactId>mariadb-java-client</artifactId>
-		    <version>${mariadb.version}</version>
-		    <scope>runtime</scope>
-            <exclusions>
-              <exclusion>
-                <groupId>commons-dbcp</groupId>
-                <artifactId>commons-dbcp</artifactId>
-              </exclusion>
-            </exclusions>
+			<groupId>org.mariadb.jdbc</groupId>
+			<artifactId>mariadb-java-client</artifactId>
+			<version>${mariadb.version}</version>
+			<scope>runtime</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>commons-dbcp</groupId>
+					<artifactId>commons-dbcp</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
-		    <groupId>org.apache.tomcat</groupId>
-		    <artifactId>tomcat-jdbc</artifactId>
-		    <version>${tomcat-jdbc.version}</version>
+			<groupId>org.apache.tomcat</groupId>
+			<artifactId>tomcat-jdbc</artifactId>
+			<version>${tomcat-jdbc.version}</version>
 		</dependency>
 		<dependency>
-		    <groupId>org.apache.tomcat</groupId>
-		    <artifactId>tomcat-juli</artifactId>
-		    <version>${tomcat-jdbc.version}</version>
+			<groupId>org.apache.tomcat</groupId>
+			<artifactId>tomcat-juli</artifactId>
+			<version>${tomcat-jdbc.version}</version>
 		</dependency>
 
 		<!-- spring -->
@@ -100,6 +99,18 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-core</artifactId>
+			<version>${spring.version}</version>
+			<exclusions>
+				<!-- Exclude Commons Logging in favor of SLF4j -->
+				<exclusion>
+					<groupId>commons-logging</groupId>
+					<artifactId>commons-logging</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
 			<version>${spring.version}</version>
 			<exclusions>
 				<!-- Exclude Commons Logging in favor of SLF4j -->
@@ -336,40 +347,40 @@
 			<artifactId>fastjson</artifactId>
 			<version>${fastjson.version}</version>
 		</dependency>
-    
-        <dependency>
-            <groupId>net.sf.dozer</groupId>
-            <artifactId>dozer</artifactId>
-            <version>${dozer.version}</version>
-        </dependency>
-        
-        <dependency>
-            <groupId>org.jsoup</groupId>
-            <artifactId>jsoup</artifactId>
-            <version>1.8.1</version>
-        </dependency>
-        
-        <dependency>
-            <groupId>redis.clients</groupId>
-            <artifactId>jedis</artifactId>
-            <version>${jedis.version}</version>
-        </dependency>
-        
-        <dependency>
-            <groupId>io.dropwizard.metrics</groupId>
-            <artifactId>metrics-core</artifactId>
-            <version>${metrics.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.dropwizard.metrics</groupId>
-            <artifactId>metrics-healthchecks</artifactId>
-            <version>${metrics.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.rabbitmq</groupId>
-            <artifactId>amqp-client</artifactId>
-            <version>${rabbitmq.version}</version>
-        </dependency>
+
+		<dependency>
+			<groupId>net.sf.dozer</groupId>
+			<artifactId>dozer</artifactId>
+			<version>${dozer.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.jsoup</groupId>
+			<artifactId>jsoup</artifactId>
+			<version>1.8.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>redis.clients</groupId>
+			<artifactId>jedis</artifactId>
+			<version>${jedis.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>io.dropwizard.metrics</groupId>
+			<artifactId>metrics-core</artifactId>
+			<version>${metrics.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>io.dropwizard.metrics</groupId>
+			<artifactId>metrics-healthchecks</artifactId>
+			<version>${metrics.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.rabbitmq</groupId>
+			<artifactId>amqp-client</artifactId>
+			<version>${rabbitmq.version}</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -383,6 +394,17 @@
 					<source>1.8</source>
 					<target>1.8</target>
 					<encoding>UTF-8</encoding>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<archive>
+						<manifestEntries>
+							<Premain-Class>com.yao.app.java.jvm.InstrumentationSavingAgent</Premain-Class>
+						</manifestEntries>
+					</archive>
 				</configuration>
 			</plugin>
 		</plugins>

@@ -1,4 +1,4 @@
-package com.yao.app.common;
+package com.yao.app.java.jvm;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -25,7 +25,7 @@ public class SizeCalculator {
         
         ObjectOutputStream os = null;
         try {
-            DumbOutputStream buf = new DumbOutputStream(new FileOutputStream("D:/temp.txt"));
+            DumbOutputStream buf = new DumbOutputStream(new FileOutputStream("./temp.txt"));
             os = new ObjectOutputStream(buf);
             os.writeObject(o);
             ret = buf.count;
@@ -42,11 +42,13 @@ public class SizeCalculator {
         return ret;
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception{
         Student st = new Student();
         st.setId(1);
-        st.setCode("20051301198");
-        st.setName("姚磊");
-        System.err.println(calcSize(st));
+        st.setCode("111");
+        //System.out.println(calcSize(st));
+        System.out.println(SizeOfObject.fullSizeOf(st)); // 96byte
+        System.out.println(SizeOfObject.sizeOf(st));  //32byte
+        System.out.println(SizeOfObject.sizeOf(new Object()));
     }
 }

@@ -19,10 +19,10 @@ import org.apache.thrift.transport.TTransportException;
 
 import com.yao.app.protocol.thrift.service.HelloWorldService;
 import com.yao.app.protocol.thrift.service.HelloWorldService.AsyncClient.sayHello_call;
-import com.yao.app.protocol.thrift.service.UserService;
-import com.yao.app.protocol.thrift.service.YUser;
+import com.yao.app.protocol.thrift.service.TUserService;
+import com.yao.app.protocol.thrift.service.TUser;
 
-public class TestClient {
+public class MyThriftClient {
     public static final String SERVER_HOST = "127.0.0.1";
 
     public static final int SERVER_PORT = 8091;
@@ -31,8 +31,8 @@ public class TestClient {
 
     public static void main(String[] args) {
         //testService2();
-        testService3();
-        //testService4();
+        //testService3();
+        testService4();
     }
     
     public static void testService(){
@@ -161,11 +161,11 @@ public class TestClient {
             TCompactProtocol tprotocol = new TCompactProtocol(transport);
             TMultiplexedProtocol protocol = new TMultiplexedProtocol(tprotocol, "USER_SERVICE");
             
-            UserService.Client client = new UserService.Client(protocol);
+            TUserService.Client client = new TUserService.Client(protocol);
             
             transport.open();
             
-            YUser result = client.queryUserInfo("y00196907");
+            TUser result = client.queryUserById("y00196907");
             System.out.println(result.toString());
             
         } catch (TTransportException e) {

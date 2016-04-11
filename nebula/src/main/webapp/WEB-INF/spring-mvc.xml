@@ -131,6 +131,7 @@
         </mvc:interceptor>
     </mvc:interceptors>
     
+	<!-- HandlerExceptionResolver可以存在多个，调用resolveException直到此方法返回值不为null  -->    
     <!-- 将Controller抛出的异常转到特定View, 保持SiteMesh的装饰效果 -->   
     <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
         <!-- 定义默认的异常处理页面，当该异常类型的注册时使用 -->

@@ -15,7 +15,7 @@ import org.apache.thrift.transport.TTransportException;
 import org.apache.thrift.transport.TTransportFactory;
 
 import com.yao.app.protocol.thrift.service.HelloWorldService;
-import com.yao.app.protocol.thrift.service.UserService;
+import com.yao.app.protocol.thrift.service.TUserService;
 import com.yao.app.protocol.thrift.service.impl.HelloWorldImpl;
 import com.yao.app.protocol.thrift.service.impl.UserServiceImpl;
 
@@ -34,7 +34,7 @@ public class MyThriftServer {
         processor.registerProcessor("HELLO_SERVICE", new HelloWorldService.Processor<HelloWorldService.Iface>(
                 new HelloWorldImpl()));
         processor
-                .registerProcessor("USER_SERVICE", new UserService.Processor<UserService.Iface>(new UserServiceImpl()));
+                .registerProcessor("USER_SERVICE", new TUserService.Processor<TUserService.Iface>(new UserServiceImpl()));
 
         TProtocolFactory protocolFactory = new TCompactProtocol.Factory();
 
@@ -59,7 +59,7 @@ public class MyThriftServer {
         processor.registerProcessor("HELLO_SERVICE", new HelloWorldService.Processor<HelloWorldService.Iface>(
                 new HelloWorldImpl()));
         processor
-                .registerProcessor("USER_SERVICE", new UserService.Processor<UserService.Iface>(new UserServiceImpl()));
+                .registerProcessor("USER_SERVICE", new TUserService.Processor<TUserService.Iface>(new UserServiceImpl()));
 
         TTransportFactory transportFactory = new TFramedTransport.Factory();
         TProtocolFactory protocolFactory = new TCompactProtocol.Factory();

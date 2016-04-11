@@ -1,11 +1,14 @@
 package com.yao.app.embededjetty;
 
+import java.lang.management.ManagementFactory;
 import java.util.Map;
 import java.util.Properties;
 
+import org.eclipse.jetty.jmx.MBeanContainer;
 import org.eclipse.jetty.server.Connector;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.ServerConnector;
+import org.eclipse.jetty.util.log.Log;
 import org.eclipse.jetty.webapp.Configuration;
 import org.eclipse.jetty.webapp.WebAppContext;
 
@@ -58,6 +61,14 @@ public class Launcher {
 				".*/[^/]*servlet-api-[^/]*\\.jar$|.*/javax.servlet.jsp.jstl-.*\\.jar$|.*/[^/]*taglibs.*\\.jar$");
 
 		server.setHandler(webapp);
+		
+		// Setup JMX
+		MBeanContainer mbContainer=new MBeanContainer(ManagementFactory.getPlatformMBeanServer());
+		server.addEventListener(mbContainer);
+		server.addBean(mbContainer);
+		 
+		// Add loggers MBean to server (will be picked up by MBeanContainer above)
+		server.addBean(Log.getLog());
 
 		server.start();
 		server.join();
