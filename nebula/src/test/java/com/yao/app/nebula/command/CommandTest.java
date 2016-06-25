@@ -34,6 +34,8 @@ public class CommandTest {
     
     @Test
     public void testObservable(){
+        new CommandHelloWorld1("World").observe();
         
+        new CommandHelloWorld1("World").toObservable();
     }
 }
