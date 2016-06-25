@@ -49,7 +49,7 @@
     </bean>
 
     <!-- 注解驱动事务 -->
-    <!-- <tx:annotation-driven order="1"/> -->
+    <tx:annotation-driven order="1" transaction-manager="transactionManager"/>
 
     <!-- the transactional advice (what 'happens'; see the <aop:advisor/> bean 
         below) -->

@@ -3,9 +3,7 @@ package com.yao.app.nebula.web.actions;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -92,61 +90,14 @@ public class GreetingController {
         return "user";
     }
     
-    @RequestMapping(value = "/api/users/{userId}", method = RequestMethod.GET)
-    @ResponseBody
-    public UserBean findUserForAjax(@PathVariable String userId) {
-        LOG.info("userId:" + userId);
-        UserBean user = service.queryUserByUsername(userId);
-        LOG.info(user.getUsername());
-
-        return user;
-    }
-
-    @RequestMapping(value = "/users/{userId}", method = RequestMethod.PUT, produces = "application/json")
-    @ResponseBody
-    public Map<String, String> updateUser(@PathVariable String userId, @RequestParam String newEmail, Model model) {
-        LOG.info("userId:" + userId);
-        LOG.info("newEmail:" + newEmail);
-
-        Map<String, String> map = new HashMap<String, String>();
-        map.put("userId", userId);
-        map.put("newEmail", newEmail);
-
-        return map;
-    }
+    
 
     @RequestMapping("/spring-web/{symbolicName:[a-z-]+}-{version:\\d\\.\\d\\.\\d}{extension:\\.[a-z]+}")
     public void handle(@PathVariable String symbolicName, @PathVariable String version, @PathVariable String extension) {
         LOG.info("test");
     }
 
-    @RequestMapping("/api/test")
-    @ResponseBody
-    public List<String> getUserList() {
-        List<String> result = new ArrayList<String>();
-        result.add("电视");
-        result.add("洗衣机");
-        result.add("冰箱");
-
-        return result;
-    }
-
-    /**
-     * 内容协商，不涉及viewresolver
-     * 
-     * @return
-     */
-    @RequestMapping("/ajaxObject")
-    @ResponseBody
-    public UserBean getUser() {
-        UserBean user = new UserBean();
-        user.setUsername("y00196907");
-        user.setNickname("李白路过");
-        user.setRegisterTime(new Date());
-        user.setEmail("yaolei313@gmail.com");
-
-        return user;
-    }
+    
 
     @RequestMapping("/testexp")
     public void testException() throws IllegalArgumentException {

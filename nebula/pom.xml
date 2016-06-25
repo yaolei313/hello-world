@@ -66,6 +66,12 @@
 		  	<version>3.2.0</version>
 		  	<scope>test</scope>
 		</dependency>
+		
+		<dependency>
+		    <groupId>com.netflix.hystrix</groupId>
+		    <artifactId>hystrix-core</artifactId>
+		    <version>1.5.3</version>
+		</dependency>
 
 		<!-- db and datasource -->
 		<dependency>
@@ -386,6 +392,18 @@
 		    <groupId>com.netflix.hystrix</groupId>
 		    <artifactId>hystrix-core</artifactId>
 		    <version>${hystrix.version}</version>
+		</dependency>
+		
+		<!-- bean validator 1.1 -->
+		<dependency>
+			<groupId>javax.validation</groupId>
+			<artifactId>validation-api</artifactId>
+			<version>1.1.0.Final</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>5.2.4.Final</version>
 		</dependency>
     
 	</dependencies>
