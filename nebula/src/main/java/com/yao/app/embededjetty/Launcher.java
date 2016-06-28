@@ -33,7 +33,7 @@ public class Launcher {
 		server.setStopAtShutdown(true);
 
 		// 这是http的连接器
-		ServerConnector connector = new ServerConnector(server);
+		ServerConnector connector = new ServerConnector(server,1,1);
 		connector.setPort(PORT);
 		connector.setReuseAddress(false);
 		server.setConnectors(new Connector[] { connector });

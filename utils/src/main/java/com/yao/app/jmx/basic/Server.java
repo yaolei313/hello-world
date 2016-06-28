@@ -11,6 +11,7 @@ import javax.management.MBeanNotificationInfo;
 import javax.management.MBeanOperationInfo;
 import javax.management.MBeanServer;
 import javax.management.MBeanServerFactory;
+import javax.management.ObjectInstance;
 import javax.management.ObjectName;
 import javax.management.remote.JMXConnectorServer;
 import javax.management.remote.JMXConnectorServerFactory;
@@ -106,7 +107,12 @@ public class Server {
         echo("\tObjectName = " + mbeanObjectNameStr);
         try {
             ObjectName mbeanObjectName = ObjectName.getInstance(mbeanObjectNameStr);
-            mbs.createMBean(mbeanClassName, mbeanObjectName);
+            ObjectInstance oi = mbs.createMBean(mbeanClassName, mbeanObjectName);
+            
+            System.out.println(oi.getClassName());
+            System.out.println(oi.getClass());
+            System.out.println(oi.getObjectName().getCanonicalName());
+            
             return mbeanObjectName;
         } catch (Exception e) {
             echo("\t!!! Could not create the " + mbeanClassName + " MBean !!!");
