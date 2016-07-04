@@ -3,7 +3,7 @@ package com.yao.app.reactivex;
 import rx.Observable;
 import rx.Subscriber;
 
-public class RxJava {
+public class Create {
 
     public static void main(String[] args) {
         // 创建观察者,检查isUnsubscribed状态
