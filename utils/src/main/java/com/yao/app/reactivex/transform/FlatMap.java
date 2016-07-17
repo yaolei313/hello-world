@@ -1,75 +1,23 @@
-package com.yao.app.reactivex;
+package com.yao.app.reactivex.transform;
 
-import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
 import rx.Observable;
 import rx.Subscriber;
+import rx.functions.Action0;
 import rx.functions.Action1;
 import rx.functions.Func0;
 import rx.functions.Func1;
 
-public class TransformingObservables {
+public class FlatMap {
 
     public static void main(String[] args) {
-        // buffer();
-        // bufferSkip();
-        // bufferByTime();
         // flatMap();
         flatMap2();
     }
 
-    public static void buffer() {
-        Observable<Integer> observable = Observable.range(1, 50);
-
-        Observable<List<Integer>> observable2 = observable.buffer(10);
-
-        observable2.subscribe(new Action1<List<Integer>>() {
-
-            @Override
-            public void call(List<Integer> t) {
-                System.out.println(t);
-            }
-        });
-    }
-
-    public static void bufferSkip() {
-        Observable<Integer> observable = Observable.range(1, 50);
-
-        // creates a new buffer starting with the first emitted item from the
-        // source Observable, and every skip items thereafter;
-        // fills each buffer with count items
-        Observable<List<Integer>> observable2 = observable.buffer(10, 5);
-
-        observable2.subscribe(new Action1<List<Integer>>() {
-
-            @Override
-            public void call(List<Integer> t) {
-                System.out.println(t);
-            }
-        });
-    }
-
-    public static void bufferByTime() {
-        Observable<Long> observable = Observable.interval(3, TimeUnit.MILLISECONDS).take(100);
-
-        // creates a new buffer starting with the first emitted item from the
-        // source Observable, and every skip items thereafter;
-        // fills each buffer with count items
-        Observable<List<Long>> observable2 = observable.buffer(5, TimeUnit.MILLISECONDS);
-
-        observable2.subscribe(new Action1<List<Long>>() {
-
-            @Override
-            public void call(List<Long> t) {
-                System.out.println(t);
-            }
-        });
-
-        Scanner input = new Scanner(System.in);
-        input.next();
-    }
+    
 
     public static void flatMap() {
         Observable<Long> observable = Observable.interval(3, TimeUnit.MILLISECONDS).take(100);
@@ -103,6 +51,9 @@ public class TransformingObservables {
                 try {
                     if (!observer.isUnsubscribed()) {
                         for (int i = 0; i < 100; i++) {
+                            if (i == 77) {
+                                throw new RuntimeException("is 77");
+                            }
                             observer.onNext(i);
                         }
                         observer.onCompleted();
@@ -142,6 +93,21 @@ public class TransformingObservables {
             public void call(Integer t) {
                 System.out.println(t);
             }
+        }, new Action1<Throwable>() {
+
+            @Override
+            public void call(Throwable t) {
+                System.out.println("出错了" + t.getMessage());
+            }
+
+        }, new Action0() {
+            @Override
+            public void call() {
+                System.out.println("执行结束");
+
+            }
+
         });
     }
+
 }
