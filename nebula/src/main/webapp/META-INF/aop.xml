@@ -1,0 +1,17 @@
+<!DOCTYPE aspectj PUBLIC "-//AspectJ//DTD//EN" "http://www.eclipse.org/aspectj/dtd/aspectj.dtd">
+<aspectj>
+    <aspects>
+        <!-- weave in just this aspect -->
+        <aspect name="com.yao.app.nebula.util.ProfilingAspect"/>
+    </aspects>
+    
+    <weaver options="-verbose -showWeaveInfo
+              -XmessageHandlerClass:org.springframework.aop.aspectj.AspectJWeaverMessageHandler">
+        <!-- only weave classes in our application-specific packages -->
+        <include within="com.yao.app.nebula.service..*"/>
+        <include within="com.yao.app.nebula.util.ProfilingAspect"/>
+        
+        <dump within="com.yao.app.nebula.service..*"/>
+        <dump within="com.yao.app.nebula.util.ProfilingAspect"/>
+    </weaver>
+</aspectj>

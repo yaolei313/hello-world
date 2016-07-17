@@ -5,9 +5,10 @@
     <configuration>
         <date-format>yyyy-MM-dd hh:mm:ss</date-format>
         <wildcard>true</wildcard>
+        <!-- <relationship-type></relationship-type> -->
     </configuration>
     
-    <mapping>
+    <mapping map-null="false">
         <class-a>com.yao.app.map.Student</class-a>
         <class-b>com.yao.app.map.StudentDTO</class-b>
         <field>
@@ -15,4 +16,10 @@
             <b>stuName</b>
         </field>
     </mapping>
+    
+    <mapping map-null="false">
+        <class-a>com.yao.app.map.Student</class-a>
+        <class-b>com.yao.app.map.PersonDTO</class-b>
+    </mapping>
+    
 </mappings>

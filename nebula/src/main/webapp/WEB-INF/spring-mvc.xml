@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+
+    <!-- 自动扫描且只扫描@Controller -->
+    <context:component-scan base-package="com.yao.app" use-default-filters="false">
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+        <context:include-filter type="annotation" expression="org.springframework.web.bind.annotation.ControllerAdvice"/>
+    </context:component-scan>
+    
+    <!-- 默认的注解映射的支持AnnotationDrivenBeanDefinitionParser -->
+    <!-- <mvc:annotation-driven /> 会自动注册RequestMappingHandlerMapping, RequestMappingHandlerAdapter, ExceptionHandlerExceptionResolver等bean, 
+        是spring MVC为@Controllers分发请求所必须的。 -->
+    <mvc:annotation-driven content-negotiation-manager="contentNegotiationManager" validator="validator">
+        <mvc:message-converters register-defaults="true">
+            <!-- register-defaults为true会导致converterlist中包含2个StringHttpMessageConverters和MappingJackson2HttpMessageConverter，不过这里的出现在前边，所以这样配置也可以 -->
+            <!-- register-defaults为false的话，这里需要手动配置全部HttpMessageConverter，并且会失去spring的自动检测机制，但不会如上重复配置 -->            
+
+            <!-- 将StringHttpMessageConverter的默认编码设为UTF-8 -->
+            <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+                <constructor-arg value="UTF-8" />
+            </bean>
+            <!-- 将Jackson2HttpMessageConverter的默认格式化输出设为true -->
+            <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+                <property name="prettyPrint" value="true"/>
+                <property name="objectMapper">
+                	<bean class="com.fasterxml.jackson.databind.ObjectMapper">
+                		<property name="dateFormat">
+                			<bean class="java.text.SimpleDateFormat">
+		                		<constructor-arg type="java.lang.String" value="yyyy-MM-dd HH:mm:ss"></constructor-arg>
+		                	</bean>
+                		</property>
+                	</bean>
+                </property>
+            </bean>
+            <!-- 不需要修改配置的HttpMessgeConverter，register-defaults为false时才需要 -->
+            <!-- 
+            <bean class="org.springframework.http.converter.ByteArrayHttpMessageConverter"/>
+			<bean class="org.springframework.http.converter.ResourceHttpMessageConverter"/>
+			<bean class="org.springframework.http.converter.SourceHttpMessageConverter"/>
+			<bean class="org.springframework.http.converter.support.AllEncompassingFormHttpMessageConverter"/>
+			<bean class="org.springframework.http.converter.xml.Jaxb2RootElementHttpMessageConverter"/>
+			<bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"/>
+			-->
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+
+	<bean id="contentNegotiationManager"
+		class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
+		<property name="favorPathExtension" value="true" />
+		<property name="favorParameter" value="false" />
+		<property name="ignoreAcceptHeader" value="true"></property>
+		<property name="defaultContentType" value="application/json"></property>
+		<property name="mediaTypes">
+			<value>
+				json=application/json
+				xml=application/xml
+			</value>
+		</property>
+	</bean>
+  
+    <!-- 本地化解析器(cookie)  -->
+    <bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
+        <property name="cookieName" value="locale"/>
+        <property name="cookieMaxAge" value="-1"/>
+        <property name="defaultLocale" value="zh_CN"/>
+    </bean>
+	
+	<!-- 方法加上@ResponseBody时会跳过视图处理部分，直接调用合适的HttpMessageConverter，将返回值写入输出流，
+		不加上@ResponseBody的话就得使用ViewResolver来完成内容协商了 -->
+	<!-- 
+	<bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+		<property name="contentNegotiationManager" ref="contentNegotiationManager"/>
+		<property name="defaultViews">
+			<list>
+				<ref bean="mappingJacksonJsonView" />
+				<ref bean="marshallingView" />
+			</list>
+		</property>
+		<property name="order" value="0"></property>
+	</bean>
+	-->
+	<!-- 
+	<bean id="mappingJacksonJsonView" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView"></bean>
+	<bean id="marshallingView" class="org.springframework.web.servlet.view.xml.MarshallingView">
+		<property name="marshaller">
+			<bean class="org.springframework.oxm.xstream.XStreamMarshaller">
+				<property name="aliases">
+					<map>
+						<entry key="user" value="com.yao.app.nebula.domain.UserBean"></entry>
+					</map>
+				</property>
+			</bean>
+		</property>
+	</bean>
+    -->
+    
+    <!-- 视图解释类，定义跳转的文件的前后缀 -->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/views/"/>
+        <property name="suffix" value=".jsp"/>
+        <property name="order" value="1" />
+        <property name="redirectContextRelative" value="false" />
+    </bean>
+    
+    <!-- 静态资源使用httpd或nginx处理最好-->
+    <!-- 对静态资源文件的访问 方案一 （二选一） -->
+    <!-- 容器默认的DefaultServletHandler处理 所有静态内容与无RequestMapping处理的URL-->   
+    <mvc:default-servlet-handler />
+
+    <!-- 对静态资源文件的访问 方案二 （二选一） -->
+    <!-- <mvc:resources mapping="/images/**" location="/images/" cache-period="31556926" 
+        /> <mvc:resources mapping="/js/**" location="/js/" cache-period="31556926" 
+        /> <mvc:resources mapping="/css/**" location="/css/" cache-period="31556926" 
+        /> -->
+    
+    <mvc:interceptors>
+        <!-- 本地化解析器(url param)  -->
+        <bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+            <property name="paramName" value="language" />
+        </bean>
+        <bean class="com.yao.app.nebula.web.interceptors.TimeBasedAccessInterceptor"></bean>
+        <mvc:interceptor>
+            <mvc:mapping path="/users/*"/>
+            <bean class="com.yao.app.nebula.web.interceptors.MyMappedInterceptor"></bean>
+        </mvc:interceptor>
+    </mvc:interceptors>
+    
+	<!-- HandlerExceptionResolver可以存在多个，调用resolveException直到此方法返回值不为null  -->    
+    <!-- 将Controller抛出的异常转到特定View, 保持SiteMesh的装饰效果 -->   
+    <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+        <!-- 定义默认的异常处理页面，当该异常类型的注册时使用 -->
+        <property name="defaultErrorView" value="error"></property>
+        <!-- 定义异常处理页面用来获取异常信息的变量名，默认名为exception -->
+        <!-- <property name="exceptionAttribute" value="ex"></property> -->
+        <!-- 定义需要特殊处理的异常，用类名或完全路径名作为key，异常也页名作为值 -->
+        <!-- <property name="exceptionMappings">
+            <props>
+                <prop key="IOException">error/ioexp</prop>
+                <prop key="java.sql.SQLException">error/sqlexp</prop>
+            </props>
+        </property> -->
+        <property name="warnLogCategory" value="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver"></property>
+    </bean>
+    
+    <!-- 异常处理最好使用和非异常状态下相同的contentNegotiationManager和httpMessageResolver，这样行为一致，此处HttpMessageResolver偷懒下 -->
+    <bean class="com.yao.app.nebula.util.CustomHandlerExceptionResolver">
+    	<property name="contentNegotiationManager" ref="contentNegotiationManager"></property>
+    	<property name="order" value="10"></property>
+    </bean>
+    
+    <!-- 指定自己定义的validator -->
+
+	<!-- 以下 validator ConversionService 在使用 mvc:annotation-driven 会 自动注册 -->
+	<bean id="validator"
+		class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+		<property name="providerClass" value="org.hibernate.validator.HibernateValidator" />
+		<!-- 如果不加默认到 使用classpath下的 ValidationMessages.properties -->
+		<property name="validationMessageSource" ref="messageSource" />
+	</bean>
+
+	<!-- 国际化的消息资源文件（本系统中主要用于显示/错误消息定制） -->
+	<bean id="messageSource"
+		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="basenames">
+			<list>
+				<!-- 在web环境中一定要定位到classpath 否则默认到当前web应用下找 -->
+				<value>classpath:messages</value>
+				<value>classpath:org/hibernate/validator/ValidationMessages</value>
+			</list>
+		</property>
+		<property name="useCodeAsDefaultMessage" value="false" />
+		<property name="defaultEncoding" value="UTF-8" />
+		<property name="cacheSeconds" value="60" />
+	</bean>  
+</beans>

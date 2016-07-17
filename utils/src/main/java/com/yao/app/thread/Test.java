@@ -34,12 +34,9 @@ public class Test {
 
         @Override
         public void run() {
-            System.out.println("name:" + name + "\t"
-                    + Thread.currentThread().getId() + "/"
-                    + Thread.currentThread().getName());
+            System.out.println(
+                    "name:" + name + "\t" + Thread.currentThread().getId() + "/" + Thread.currentThread().getName());
 
         }
-
     }
-
 }

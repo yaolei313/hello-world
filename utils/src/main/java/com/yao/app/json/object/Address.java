@@ -1,13 +1,8 @@
 package com.yao.app.json.object;
 
-import java.beans.Transient;
 import java.io.Serializable;
 
-import com.alibaba.fastjson.annotation.JSONField;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.yao.app.common.SizeAware;
-
-public class Address implements Serializable{//,SizeAware {
+public class Address implements Serializable{
     /**
      * 
      */

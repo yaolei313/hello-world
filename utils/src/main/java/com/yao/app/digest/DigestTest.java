@@ -2,8 +2,9 @@ package com.yao.app.digest;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Base64;
+import java.util.Base64.Encoder;
 
-import com.sun.org.apache.xml.internal.security.utils.Base64;
 
 public class DigestTest {
 
@@ -55,7 +56,9 @@ public class DigestTest {
     }
     
     public static void output(byte[] s){
-        System.out.println(Base64.encode(s));
+        Encoder encoder = Base64.getEncoder();
+        System.out.println(encoder.encodeToString(s));
+        
     }
 
 }

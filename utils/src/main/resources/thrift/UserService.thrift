@@ -1,23 +1,14 @@
 namespace java com.yao.app.protocol.thrift.service
 
-struct YTimestamp{
-	1:i16 year,
-	2:byte month,
-	3:byte day,
-	4:byte hour,
-	5:byte minute,
-	6:byte second,
-	7:i16 millisecond
+struct TUser{
+	1:optional string id,
+	2:required string name,
+	3:optional string gravatarMail,
+	4:optional string email
 }
 
-struct YUser{
-	1:string id,
-	2:string name,
-	3:string gravatarMail,
-	4:YTimestamp registerTime,
-	5:string email
-}
-
-service UserService{
-	YUser queryUserInfo(1:string userId)
+service TUserService{
+	TUser queryUserById(1:required string id),
+	
+	string addUser(1:required TUser user)
 }

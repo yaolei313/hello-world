@@ -1,13 +1,9 @@
 package com.yao.app.protocol.thrift.service.impl;
 
-import java.sql.Timestamp;
-
 import org.apache.thrift.TException;
 
-import com.yao.app.protocol.thrift.convertor.TimestampTypeConverter;
-import com.yao.app.protocol.thrift.service.UserService.Iface;
-import com.yao.app.protocol.thrift.service.YTimestamp;
-import com.yao.app.protocol.thrift.service.YUser;
+import com.yao.app.protocol.thrift.service.TUser;
+import com.yao.app.protocol.thrift.service.TUserService.Iface;
 
 public class UserServiceImpl implements Iface {
 
@@ -18,16 +14,22 @@ public class UserServiceImpl implements Iface {
     //TypeConverterRegistry registry;
     
     @Override
-    public YUser queryUserInfo(String userId) throws TException {
+    public TUser queryUserById(String id) throws TException {
 //        UserBean user = userService.queryUserById(userId);
 //        return (YUser) registry.getRegisterConverter(UserBean.class).convert(user);
-        YUser user = new YUser();
+        System.out.println("enter call...");
+        TUser user = new TUser();
         user.id="y00196907";
         user.name="姚磊";
         user.email="yaolei313@gmail.com";
-        user.gravatarMail="yaolei313@gmail.com";
-        user.registerTime = (YTimestamp)new TimestampTypeConverter().convert(new Timestamp(System.currentTimeMillis()));
-        return new YUser();
+        //user.gravatarMail="yaolei313@gmail.com";
+        return user;
+    }
+
+    @Override
+    public String addUser(TUser user) throws TException {
+        // TODO Auto-generated method stub
+        return null;
     }
 
 }

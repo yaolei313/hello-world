@@ -9,6 +9,7 @@ import org.apache.thrift.transport.TSocket;
 import org.apache.thrift.transport.TTransport;
 import org.apache.thrift.transport.TTransportException;
 
+import com.yao.app.protocol.thrift.service.BusinessBasicException;
 import com.yao.app.protocol.thrift.service.HelloWorldService;
 
 public class HelloClientDemo {
@@ -32,12 +33,14 @@ public class HelloClientDemo {
             HelloWorldService.Client client = new HelloWorldService.Client(
                     protocol);
             transport.open();
-            String result = client.sayHello("yaolei");
+            String result = client.sayHelloWithException("libai");
             System.out.println("Thrify client result =: " + result);
-        } catch (TTransportException e) {
-            e.printStackTrace();
-        } catch (TException e) {
-            e.printStackTrace();
+        } catch (BusinessBasicException e1){
+            e1.printStackTrace();
+        } catch (TTransportException e2) {
+            e2.printStackTrace();
+        } catch (TException e3) {
+            e3.printStackTrace();
         } finally {
             if (null != transport) {
                 transport.close();
