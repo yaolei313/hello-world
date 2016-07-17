@@ -1,6 +1,8 @@
-package com.yao.app.cglib;
+package com.yao.app.proxy.cglib;
 
-public class HelloImpl {
+import com.yao.app.proxy.jdk.INamed;
+
+public class HelloImpl implements INamed {
 	public void sayHello() {
 		System.out.println("lei: hello world");
 		sayHelloByBoss();
@@ -13,4 +15,10 @@ public class HelloImpl {
 	public void sayHelloByLeader() {
 		System.out.println("leader : hello guy");
 	}
+
+    @Override
+    public String getName() {
+        System.out.println("cglib li bai");
+        return "cglib li bai";
+    }
 }
