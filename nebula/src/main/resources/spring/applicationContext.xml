@@ -48,11 +48,15 @@
         <property name="dataSource" ref="dataSource" />
     </bean>
 
-    <!-- 注解驱动事务 -->
+    <!-- 注解驱动事务 
+    	spring解析xml时会向spring注册InfrastructureAdvisorAutoProxyCreator
+    -->
     <tx:annotation-driven order="1" transaction-manager="transactionManager"/>
 
     <!-- the transactional advice (what 'happens'; see the <aop:advisor/> bean 
-        below) -->
+        below) 
+    	spring解析xml时会转换为AnnotationTransactionAttributeSource对象    
+    -->
     <tx:advice id="txAdvice" transaction-manager="transactionManager">
         <tx:attributes>
             <!-- 默认rollback-for RuntimeException，仅免检异常回滚 -->
@@ -63,7 +67,9 @@
         </tx:attributes>
     </tx:advice>
 
-    <!-- proxy-target-class默认为false，即使用java的动态代理 -->
+    <!-- proxy-target-class默认为false，即使用java的动态代理 
+    spring解析xml配置时会向spring注册AspectJAwareAdvisorAutoProxyCreator
+    -->
     <aop:config proxy-target-class="false">
         <aop:pointcut id="serviceOperation"
             expression="execution(* com.yao.app..service.impl.*.*(..))" />
