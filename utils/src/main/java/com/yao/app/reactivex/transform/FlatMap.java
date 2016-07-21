@@ -1,7 +1,9 @@
 package com.yao.app.reactivex.transform;
 
-import java.util.Scanner;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+import com.yao.app.reactivex.DefaultSubscriber;
 
 import rx.Observable;
 import rx.Subscriber;
@@ -9,61 +11,62 @@ import rx.functions.Action0;
 import rx.functions.Action1;
 import rx.functions.Func0;
 import rx.functions.Func1;
+import rx.schedulers.Schedulers;
 
 public class FlatMap {
 
     public static void main(String[] args) {
         // flatMap();
-        flatMap2();
+        // flatMap2();
+        concatMap();
     }
 
-    
-
     public static void flatMap() {
-        Observable<Long> observable = Observable.interval(3, TimeUnit.MILLISECONDS).take(100);
+        Observable<Integer> observable = getDefaultIntegerObservable2();
 
-        Observable<Long> observable2 = observable.flatMap(new Func1<Long, Observable<Long>>() {
+        ExecutorService executor = Executors.newFixedThreadPool(3);
+        // 顺序可能发生变化，若对顺序有严格要求，则使用concatMap
+        Observable<Integer> observable2 = observable.flatMap(new Func1<Integer, Observable<Integer>>() {
 
             @Override
-            public Observable<Long> call(Long t) {
-                return Observable.just(t * 2);
+            public Observable<Integer> call(Integer t) {
+                if (t == 19) {
+                    throw new RuntimeException("is 19");
+                }
+                return Observable.just(t * 2).subscribeOn(Schedulers.from(executor));
             }
 
         });
 
-        observable2.subscribe(new Action1<Long>() {
+
+        observable2.subscribe(new Action1<Integer>() {
 
             @Override
-            public void call(Long t) {
+            public void call(Integer t) {
                 System.out.println(t);
             }
+        }, new Action1<Throwable>() {
+
+            @Override
+            public void call(Throwable t) {
+                System.out.println("出错了" + t.getMessage());
+            }
+
+        }, new Action0() {
+            @Override
+            public void call() {
+                System.out.println("执行结束");
+
+            }
+
         });
 
-        Scanner input = new Scanner(System.in);
-        input.next();
     }
 
     public static void flatMap2() {
-        Observable<Integer> observable = Observable.create(new Observable.OnSubscribe<Integer>() {
+        Observable<Integer> observable = getDefaultIntegerObservable();
 
-            @Override
-            public void call(Subscriber<? super Integer> observer) {
-                try {
-                    if (!observer.isUnsubscribed()) {
-                        for (int i = 0; i < 100; i++) {
-                            if (i == 77) {
-                                throw new RuntimeException("is 77");
-                            }
-                            observer.onNext(i);
-                        }
-                        observer.onCompleted();
-                    }
-                } catch (Exception e) {
-                    observer.onError(e);
-                }
-            }
-        });
-
+        // 顺序可能发生变化，若对顺序有严格要求，则使用concatMap
         Observable<Integer> observable2 = observable.flatMap(new Func1<Integer, Observable<Integer>>() {
 
             @Override
@@ -87,24 +90,56 @@ public class FlatMap {
 
         });
 
-        observable2.subscribe(new Action1<Integer>() {
+        observable2.subscribe(new DefaultSubscriber<Integer>());
+    }
+
+    public static void concatMap() {
+        Observable<Integer> observable = getDefaultIntegerObservable();
+
+        Observable<String> observable2 = observable.concatMap(new Func1<Integer, Observable<String>>() {
 
             @Override
-            public void call(Integer t) {
-                System.out.println(t);
+            public Observable<String> call(Integer t) {
+                if (t == null) {
+                    return Observable.just("empty");
+                } else if (t % 2 == 0) {
+                    return Observable.just("oushu");
+                } else {
+                    return Observable.just("jishu");
+                }
             }
-        }, new Action1<Throwable>() {
+
+        });
+
+        observable2.subscribe(new DefaultSubscriber<String>());
+
+    }
+
+    //
+    private static Observable<Integer> getDefaultIntegerObservable() {
+        Observable<Integer> observable = Observable.range(1, 20);
+
+        return observable;
+    }
+
+    private static Observable<Integer> getDefaultIntegerObservable2() {
+        return Observable.create(new Observable.OnSubscribe<Integer>() {
 
             @Override
-            public void call(Throwable t) {
-                System.out.println("出错了" + t.getMessage());
-            }
-
-        }, new Action0() {
-            @Override
-            public void call() {
-                System.out.println("执行结束");
-
+            public void call(Subscriber<? super Integer> observer) {
+                try {
+                    if (!observer.isUnsubscribed()) {
+                        for (int i = 0; i < 100; i++) {
+                            if (i == 77) {
+                                throw new RuntimeException("is 77");
+                            }
+                            observer.onNext(i);
+                        }
+                        observer.onCompleted();
+                    }
+                } catch (Exception e) {
+                    observer.onError(e);
+                }
             }
 
         });

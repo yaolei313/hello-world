@@ -1,6 +1,5 @@
 package com.yao.app.reactivex.create;
 
-import java.util.Scanner;
 import java.util.concurrent.Callable;
 
 import rx.Observable;
