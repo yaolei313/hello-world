@@ -98,7 +98,7 @@
     <!-- <bean class="com.yao.app.nebula.util.ProfilingAspect" factory-method="aspectOf" lazy-init="false"/> -->
     <!-- for register AnnotationBeanConfigurerAspect -->
     <!-- <context:spring-configured/> -->
-    
+    <!-- spring解析xml配置时会向spring注册AnnotationAwareAspectJAutoProxyCreator.class -->
     <aop:aspectj-autoproxy>
     	<!-- Set a list of regex patterns, matching eligible @AspectJ bean names.Default is to consider all @AspectJ beans as eligible. -->
     	<!-- Example: com.yao.app.nebula.util.TraceAdvice#0 此次必须为正则表达式-->
