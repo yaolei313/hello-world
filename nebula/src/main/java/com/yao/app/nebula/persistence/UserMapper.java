@@ -6,6 +6,8 @@ import com.yao.app.nebula.domain.UserBean;
 
 public interface UserMapper {
     UserBean findUser(String id);
-    
+
     List<UserBean> queryUsers();
+
+    int insertUser(UserBean user);
 }

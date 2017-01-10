@@ -10,4 +10,9 @@
     <select id="queryUsers" resultType="UserBean">
         select id,username,email,nickname,sex,gravatar_mail as gravatarMail,register_time as registerTime from users
     </select>
+    
+    <insert id="insertUser" parameterType="UserBean" keyProperty="id" useGeneratedKeys="true">
+    	INSERT INTO `users` (``username`, `email`, `nickname`, `sex`, `gravatar_mail`)
+		VALUES (#{username}, #{email}, #{nickname}, #{sex}, #{gravatarMail})
+    </insert>
 </mapper>

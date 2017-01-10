@@ -10,4 +10,6 @@ public interface UserService {
     UserBean queryUserByUsername(@Param("test") String username);
     
     List<UserBean> queryUsers();
+    
+    int addUser(UserBean user);
 }

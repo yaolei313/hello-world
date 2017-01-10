@@ -1,5 +1,7 @@
 package com.yao.app.algorithm;
 
+import java.util.Scanner;
+
 public class Solution {
 
     /**
@@ -39,14 +41,18 @@ public class Solution {
 
         }
 
-        return global[s.length()-1];
+        return global[s.length() - 1];
     }
 
     public static void main(String[] args) {
-        //Solution s = new Solution();
-        //System.out.println(s.lengthOfLongestSubstring("dvdf"));
-        
-        System.out.println(7/2.0);
+        // Solution s = new Solution();
+        // System.out.println(s.lengthOfLongestSubstring("dvdf"));
+
+        System.out.println(7 / 2.0);
+        System.out.println("enter any char to stop");
+        try (Scanner in = new Scanner(System.in)) {
+            in.next();
+        }
 
     }
 }

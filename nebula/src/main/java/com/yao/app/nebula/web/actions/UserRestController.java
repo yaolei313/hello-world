@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,16 +23,16 @@ import com.yao.app.nebula.service.UserService;
 
 @RestController
 public class UserRestController {
-    
+
     private static final Logger LOG = LoggerFactory.getLogger(UserRestController.class);
 
     @Resource(name = "db.user.service")
-    private UserService service;
-    
+    private UserService userService;
+
     @RequestMapping(value = "/api/users/{userId}", method = RequestMethod.GET)
     public UserBean findUserForAjax(@PathVariable String userId) {
         LOG.info("userId:" + userId);
-        UserBean user = service.queryUserByUsername(userId);
+        UserBean user = userService.queryUserByUsername(userId);
         LOG.info(user.getUsername());
 
         return user;
@@ -49,6 +50,20 @@ public class UserRestController {
         return map;
     }
     
+    @RequestMapping(value = "/api/users", method = RequestMethod.POST, produces = "application/json")
+    public Long addUser(Model model) {
+        UserBean user = new UserBean();
+        user.setUsername("l00196908");
+        user.setEmail("123@123.com");
+        user.setNickname("李白路过");
+        user.setSex("M");
+        user.setGravatarMail("");
+        
+        userService.addUser(user);
+
+        return user.getId();
+    }
+
     @RequestMapping("/api/test")
     public List<String> getUserList() {
         List<String> result = new ArrayList<String>();
@@ -58,7 +73,7 @@ public class UserRestController {
 
         return result;
     }
-    
+
     /**
      * 内容协商，不涉及viewresolver
      * 
@@ -73,5 +88,17 @@ public class UserRestController {
         user.setEmail("yaolei313@gmail.com");
 
         return user;
+    }
+
+    @RequestMapping(value = "/api/test1", method = RequestMethod.POST, produces = "application/json")
+    public String test1(@RequestBody UserBean user) {
+        System.out.println(user.toString());
+        return "SUCCESS";
+    }
+
+    @RequestMapping(value = "/api/test2", method = RequestMethod.POST, produces = "application/json")
+    public String test2(UserBean user) {
+        System.out.println(user.toString());
+        return "SUCCESS";
     }
 }

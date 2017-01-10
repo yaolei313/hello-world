@@ -62,8 +62,10 @@ public class Test {
 
 		p("---------Interval Period Duration------------");
 
+		// holds a start and end date-time
 		Interval inv = new Interval(dt, dt.plusDays(10).plusHours(2));
 
+		// holds a period such as 6 months, 3 days and 7 hours
 		Duration d = inv.toDuration();
 		p(d.getStandardDays());
 		p(d.getStandardHours());

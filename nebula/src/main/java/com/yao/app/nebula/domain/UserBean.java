@@ -19,101 +19,107 @@ import com.yao.app.nebula.util.CustomDateAdapter;
 @XmlAccessorType(value = XmlAccessType.FIELD)
 public class UserBean implements Serializable {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1L;
 
-	private Long id;
+    private Long id;
 
-	/**
-	 * 注册用户名
-	 */
-	private String username;
+    /**
+     * 注册用户名
+     */
+    private String username;
 
-	/**
-	 * 注册邮箱
-	 */
-	private String email;
+    /**
+     * 注册邮箱
+     */
+    private String email;
 
-	/**
-	 * 昵称
-	 */
-	private String nickname;
+    /**
+     * 昵称
+     */
+    private String nickname;
 
-	/**
-	 * 性别
-	 */
-	private String sex;
+    /**
+     * 性别
+     */
+    private String sex;
 
-	/**
-	 * gravatar邮件地址
-	 */
+    /**
+     * gravatar邮件地址
+     */
 
-	// 需要占位时加上
-	// @XmlElement(nillable=true)
-	private String gravatarMail;
+    // 需要占位时加上
+    // @XmlElement(nillable=true)
+    private String gravatarMail;
 
-	/**
-	 * 注册时间
-	 */
-	@XmlJavaTypeAdapter(CustomDateAdapter.class)
-	private Date registerTime;
+    /**
+     * 注册时间
+     */
+    @XmlJavaTypeAdapter(CustomDateAdapter.class)
+    private Date registerTime;
 
-	public Long getId() {
-		return id;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public String getUsername() {
-		return username;
-	}
+    public String getUsername() {
+        return username;
+    }
 
-	public void setUsername(String username) {
-		this.username = username;
-	}
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public String getEmail() {
+        return email;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-	public String getNickname() {
-		return nickname;
-	}
+    public String getNickname() {
+        return nickname;
+    }
 
-	public void setNickname(String nickname) {
-		this.nickname = nickname;
-	}
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
 
-	public String getSex() {
-		return sex;
-	}
+    public String getSex() {
+        return sex;
+    }
 
-	public void setSex(String sex) {
-		this.sex = sex;
-	}
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
 
-	public String getGravatarMail() {
-		return gravatarMail;
-	}
+    public String getGravatarMail() {
+        return gravatarMail;
+    }
 
-	public void setGravatarMail(String gravatarMail) {
-		this.gravatarMail = gravatarMail;
-	}
+    public void setGravatarMail(String gravatarMail) {
+        this.gravatarMail = gravatarMail;
+    }
 
-	public Date getRegisterTime() {
-		return registerTime;
-	}
+    public Date getRegisterTime() {
+        return registerTime;
+    }
 
-	public void setRegisterTime(Date registerTime) {
-		this.registerTime = registerTime;
-	}
+    public void setRegisterTime(Date registerTime) {
+        this.registerTime = registerTime;
+    }
+
+    @Override
+    public String toString() {
+        return "UserBean [id=" + id + ", username=" + username + ", email=" + email + ", nickname=" + nickname
+                + ", sex=" + sex + ", gravatarMail=" + gravatarMail + ", registerTime=" + registerTime + "]";
+    }
 
 }

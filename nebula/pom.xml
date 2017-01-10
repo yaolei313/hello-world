@@ -5,7 +5,7 @@
 	<artifactId>nebula</artifactId>
 	<packaging>war</packaging>
 	<version>1.0-SNAPSHOT</version>
-	<name>Yao Maven Webapp</name>
+	<name>nebula</name>
 	<url>http://maven.apache.org</url>
 
 	<properties>
@@ -14,8 +14,8 @@
 		<mariadb.version>1.2.3</mariadb.version>
 		<tomcat-jdbc.version>8.0.27</tomcat-jdbc.version>
 		
-		<slf4j.version>1.7.12</slf4j.version>
-		<logback.version>1.1.3</logback.version>
+		<slf4j.version>1.7.22</slf4j.version>
+		<logback.version>1.1.8</logback.version>
 		<log4jdbc.version>1.2</log4jdbc.version>
 		
 		<spring.version>4.2.1.RELEASE</spring.version>
@@ -24,7 +24,7 @@
 		<mybatis-spring.version>1.2.1</mybatis-spring.version>
 
 		<validation.version>1.1.0.Final</validation.version>
-		<hibernate-validation.version>5.2.2.Final</hibernate-validation.version>
+		<hibernate-validation.version>5.2.4.Final</hibernate-validation.version>
 		<jackson.version>2.3.2</jackson.version>
 		<!-- <cas.version>3.2.1</cas.version> -->
 		<xstream.version>1.4.7</xstream.version>
@@ -33,7 +33,7 @@
         <stormpath.version>1.0.RC4.5</stormpath.version>
         <jetty.version>9.3.6.v20151106</jetty.version>
         <sitemesh.version>2.4.2</sitemesh.version>
-        <hystrix.version>1.4.21</hystrix.version>
+        <hystrix.version>1.5.8</hystrix.version>
 	</properties>
 	
 	<!-- 等同于dependencies中得spring配置，但此次会引入所有spring的包 -->
@@ -65,24 +65,6 @@
 		  	<!-- use 3.1.0 for Java 8 projects -->
 		  	<version>3.2.0</version>
 		  	<scope>test</scope>
-		</dependency>
-		
-		<dependency>
-		    <groupId>io.reactivex</groupId>
-		    <artifactId>rxjava</artifactId>
-		    <version>1.1.6</version>
-		</dependency>
-		
-		<dependency>
-		    <groupId>com.netflix.hystrix</groupId>
-		    <artifactId>hystrix-core</artifactId>
-		    <version>1.5.3</version>
-		    <exclusions>
-		    	<exclusion>
-		    		<groupId>io.reactivex</groupId>
-		    		<artifactId>rxjava</artifactId>
-		    	</exclusion>
-		    </exclusions>
 		</dependency>
 
 		<!-- db and datasource -->
@@ -210,8 +192,22 @@
 			<version>${slf4j.version}</version>
 		</dependency>
 		<dependency>
+		    <groupId>org.slf4j</groupId>
+		    <artifactId>slf4j-ext</artifactId>
+		    <version>${slf4j.version}</version>
+		</dependency>
+		<!-- At present time, logback is divided into three modules, logback-core, logback-classic and logback-access.
+		logback-access非必须，The logback-access module integrates with Servlet containers, such as Tomcat and Jetty, 
+		to provide HTTP-access log functionality. -->
+		<dependency>
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-classic</artifactId>
+			<version>${logback.version}</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-core</artifactId>
 			<version>${logback.version}</version>
 			<scope>runtime</scope>
 		</dependency>
@@ -405,37 +401,20 @@
 		    <artifactId>hystrix-core</artifactId>
 		    <version>${hystrix.version}</version>
 		</dependency>
-		
-		<!-- bean validator 1.1 -->
-		<dependency>
-			<groupId>javax.validation</groupId>
-			<artifactId>validation-api</artifactId>
-			<version>1.1.0.Final</version>
-		</dependency>
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-validator</artifactId>
-			<version>5.2.4.Final</version>
-		</dependency>
     
 	</dependencies>
 	<build>
 		<finalName>nebula</finalName>
 		<plugins>
 			<plugin>
-				<groupId>org.mortbay.jetty</groupId>
-				<artifactId>maven-jetty-plugin</artifactId>
-				<version>9.3.3.v20150827</version>
+				<groupId>org.eclipse.jetty</groupId>
+				<artifactId>jetty-maven-plugin</artifactId>
+				<version>9.4.0.v20161208</version>
 				<configuration>
-					<contextPath>/</contextPath>
-					<connectors>
-						<connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
-							<port>8080</port>
-						</connector>
-					</connectors>
-					<stopKey>exit</stopKey>
-					<stopPort>8081</stopPort>
-					<scanIntervalSeconds>2</scanIntervalSeconds>
+					<scanIntervalSeconds>10</scanIntervalSeconds>
+					<webApp>
+						<contextPath>/nebula</contextPath>
+					</webApp>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -445,6 +424,7 @@
 				<configuration>
 					<source>1.8</source>
 					<target>1.8</target>
+					<!-- 此处没指定utf-8的话可能导致代码中的汉字乱码，即打印汉字时，非代码中写死的汉字不会乱码，写死的会乱码 -->
 					<encoding>UTF-8</encoding>
 				</configuration>
 			</plugin>
