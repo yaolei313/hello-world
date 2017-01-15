@@ -1,5 +1,7 @@
 package com.yao.app.netty;
 
-public class DiscardServerHandler {
+import io.netty.channel.ChannelInboundHandlerAdapter;
+
+public class DiscardServerHandler extends ChannelInboundHandlerAdapter {
 
 }
