@@ -12,7 +12,7 @@
     </select>
     
     <insert id="insertUser" parameterType="UserBean" keyProperty="id" useGeneratedKeys="true">
-    	INSERT INTO `users` (``username`, `email`, `nickname`, `sex`, `gravatar_mail`)
+    	INSERT INTO `users` (`username`, `email`, `nickname`, `sex`, `gravatar_mail`)
 		VALUES (#{username}, #{email}, #{nickname}, #{sex}, #{gravatarMail})
     </insert>
 </mapper>

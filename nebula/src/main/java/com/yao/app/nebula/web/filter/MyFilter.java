@@ -1,5 +1,7 @@
 package com.yao.app.nebula.web.filter;
 
+import org.apache.commons.lang.StringUtils;
+
 import java.io.IOException;
 
 import javax.servlet.Filter;
@@ -33,7 +35,7 @@ public class MyFilter implements Filter {
 
         byte[] b = null;
 
-        if (callback != null && !callback.equals("")) {
+        if (StringUtils.isNotBlank(callback)) {
             StringBuffer sb = new StringBuffer();
             sb.append(callback).append("(").append(new String(jsonsprw.getResponseData())).append(")");
             b = sb.toString().getBytes();
