@@ -219,7 +219,7 @@
 			<groupId>org.slf4j</groupId>
 			<artifactId>jcl-over-slf4j</artifactId>
 			<version>${slf4j.version}</version>
-			<scope>runtime</scope>
+			<!--<scope>runtime</scope>-->
 		</dependency>
 		<!-- Bridging Java Util Logging API -->
 		<dependency>
@@ -397,6 +397,16 @@
 		    <groupId>com.netflix.hystrix</groupId>
 		    <artifactId>hystrix-core</artifactId>
 		    <version>${hystrix.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>commons-logging</groupId>
+					<artifactId>commons-logging</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-api</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
     
 	</dependencies>
@@ -456,6 +466,18 @@
                     </dependency>
                 </dependencies>
             </plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>jspc-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>jspc</id>
+						<goals>
+							<goal>compile</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 			<!-- <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-jar-plugin</artifactId> 
 				<version>2.4</version> <configuration> <includes> <include>com/yao/app/nebula/thrift/service/*.tld</include> 
 				</includes> </configuration> </plugin> -->
