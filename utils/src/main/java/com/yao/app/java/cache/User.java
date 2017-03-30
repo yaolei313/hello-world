@@ -1,4 +1,4 @@
-package com.yao.app.cache;
+package com.yao.app.java.cache;
 
 public class User {
 	private String id;
