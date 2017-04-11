@@ -54,6 +54,7 @@ public class MybatisTest {
 
         config.getTypeAliasRegistry().registerAlias("UserBean", UserBean.class);
 
+        // 若不注册别名UserBean，parse就会报错
         if (!config.isResourceLoaded(UserMapper.class.toString())) {
             Resource mapperLocation = new ClassPathResource("database/jdbc/UserMapper.xml");
             try {
