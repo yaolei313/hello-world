@@ -462,13 +462,14 @@
                     <dependency>
                         <groupId>org.codehaus.mojo</groupId>
                         <artifactId>extra-enforcer-rules</artifactId>
-                        <version>1.0-beta-4</version>
+                        <version>1.0-beta-6</version>
                     </dependency>
                 </dependencies>
             </plugin>
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>jspc-maven-plugin</artifactId>
+				<version>1.4.6</version>
 				<executions>
 					<execution>
 						<id>jspc</id>
