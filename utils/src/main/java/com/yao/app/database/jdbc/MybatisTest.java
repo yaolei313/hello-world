@@ -66,6 +66,7 @@ public class MybatisTest {
                 System.out.println("Failed to parse mapping resource: '" + mapperLocation + "'");
             }
         }
+
         config.addMapper(PostMapper.class);
 
         SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(config);
@@ -87,7 +88,10 @@ public class MybatisTest {
         try {
             UserMapper userMapper = sqlSession2.getMapper(UserMapper.class);
             UserBean user = userMapper.findUser("y00196907");
-            System.out.print(user);
+            System.out.println(user);
+            // 验证一级缓存
+            user = userMapper.findUser("y00196907");
+            System.out.println(user);
         } finally {
             sqlSession2.close();
         }

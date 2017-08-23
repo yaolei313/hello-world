@@ -29,10 +29,10 @@ public class UserRestController {
     @Resource(name = "db.user.service")
     private UserService userService;
 
-    @RequestMapping(value = "/api/users/{userId}", method = RequestMethod.GET)
-    public UserBean findUserForAjax(@PathVariable String userId) {
-        LOG.info("userId:" + userId);
-        UserBean user = userService.queryUserByUsername(userId);
+    @RequestMapping(value = "/api/users/{userName}", method = RequestMethod.GET)
+    public UserBean findUserForAjax(@PathVariable String userName) {
+        LOG.info("userName:" + userName);
+        UserBean user = userService.queryUserByUsername(userName);
         LOG.info(user.getUsername());
 
         return user;

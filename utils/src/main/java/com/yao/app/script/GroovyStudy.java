@@ -2,6 +2,9 @@ package com.yao.app.script;
 
 import groovy.util.Eval;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * 如何集成groovy脚本
  * http://www.groovy-lang.org/integrating.html
@@ -10,6 +13,8 @@ import groovy.util.Eval;
  */
 public class GroovyStudy {
     public static void main(String[] args) {
+
+        Map<String,String> test = new HashMap<String,String>(9);
         // 1.执行Groovy脚本最简单的方式
         println(Eval.me("33*3"));
         println(Eval.x(10, "x*2"));

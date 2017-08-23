@@ -4,7 +4,9 @@ import com.netflix.hystrix.HystrixCommandGroupKey;
 import com.netflix.hystrix.HystrixObservableCommand;
 
 import rx.Observable;
+import rx.Scheduler;
 import rx.Subscriber;
+import rx.schedulers.Schedulers;
 
 public class CommandHelloWorld1 extends HystrixObservableCommand<String> {
 
@@ -31,7 +33,7 @@ public class CommandHelloWorld1 extends HystrixObservableCommand<String> {
                     observer.onError(e);
                 }
             }
-         } );
+         }).subscribeOn(Schedulers.io());
     }
 
 }

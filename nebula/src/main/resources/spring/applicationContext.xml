@@ -107,7 +107,12 @@
     </aop:aspectj-autoproxy>
     
     <!-- <context:load-time-weaver/> -->
-    
+
+    <!--test-->
+    <bean id="testA" class="com.yao.app.nebula.service.test.TestA" />
+
+    <bean id="testB" class="com.yao.app.nebula.service.test.TestB" />
+
     <beans profile="dev">
 		<context:property-placeholder location="classpath:jdbc-dev.properties" ignore-resource-not-found="false" />
    	</beans>
@@ -115,4 +120,7 @@
    	<beans profile="prod">
 		<context:property-placeholder location="classpath:jdbc-prod.properties" ignore-resource-not-found="false" />
    	</beans>
+
+    <!-- 验证close顺序 -->
+
 </beans>

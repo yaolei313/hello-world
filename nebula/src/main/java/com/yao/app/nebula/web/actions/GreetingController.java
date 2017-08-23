@@ -1,7 +1,6 @@
 package com.yao.app.nebula.web.actions;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -78,12 +77,12 @@ public class GreetingController {
         return "user/list";
     }
 
-    @RequestMapping(value = "/users/{userId}", method = RequestMethod.GET)
-    public String findUser(@PathVariable String userId, Model model) {
-        LOG.info("userId:" + userId);
-        model.addAttribute("userId", userId);
+    @RequestMapping(value = "/users/{userName}", method = RequestMethod.GET)
+    public String findUser(@PathVariable String userName, Model model) {
+        LOG.info("userId:" + userName);
+        model.addAttribute("userId", userName);
 
-        UserBean user = service.queryUserByUsername(userId);
+        UserBean user = service.queryUserByUsername(userName);
         model.addAttribute("user",user);
 
         LOG.info(user.getUsername());
