@@ -1,5 +1,7 @@
 package com.yao.app;
 
+import com.google.common.collect.Lists;
+
 /**
  * Hello world!
  *
@@ -18,5 +20,6 @@ public class App
         
         Float t = 0.62342323f;
         System.out.println(t);
+
     }
 }
