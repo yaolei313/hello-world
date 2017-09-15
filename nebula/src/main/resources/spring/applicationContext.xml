@@ -48,8 +48,13 @@
         <property name="dataSource" ref="dataSource" />
     </bean>
 
-    <!-- 注解驱动事务 
+    <!-- 注解驱动事务
     	spring解析xml时会向spring注册InfrastructureAdvisorAutoProxyCreator
+    	一共三种ProxyCreator，实际spring会保留优先级最高的ProxyCreator，从低到高为
+    	InfrastructureAdvisorAutoProxyCreator
+    	AspectJAwareAdvisorAutoProxyCreator
+    	AnnotationAwareAspectJAutoProxyCreator
+    	三种具体区别 TODO
     -->
     <tx:annotation-driven order="1" transaction-manager="transactionManager"/>
 
@@ -102,7 +107,7 @@
     <aop:aspectj-autoproxy>
     	<!-- Set a list of regex patterns, matching eligible @AspectJ bean names.Default is to consider all @AspectJ beans as eligible. -->
     	<!-- Example: com.yao.app.nebula.util.TraceAdvice#0 此次必须为正则表达式-->
-    	<aop:include name="(\w+\.)*TraceAdvice(#\d)?"/>
+    	<aop:include name="(\w+\.)*TraceAdvice(#\d+)?"/>
     	<!-- <aop:include name="com.yao.app.nebula.util.ProfilingAspect"/> -->
     </aop:aspectj-autoproxy>
     
