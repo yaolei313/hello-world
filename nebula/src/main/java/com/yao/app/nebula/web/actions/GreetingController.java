@@ -73,7 +73,6 @@ public class GreetingController {
         List<UserBean> users = service.queryUsers();
         model.addAttribute("users", users);
         
-        
         return "user/list";
     }
 

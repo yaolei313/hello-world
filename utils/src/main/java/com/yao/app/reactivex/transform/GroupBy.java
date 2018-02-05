@@ -8,8 +8,8 @@ import rx.observables.GroupedObservable;
 public class GroupBy {
 
     public static void main(String[] args) {
-        Observable<Integer> ovservable = Observable.range(1, 20);
-        Observable<GroupedObservable<String, Integer>> grouped = ovservable.groupBy(new Func1<Integer, String>() {
+        Observable<Integer> observable = Observable.range(1, 20);
+        Observable<GroupedObservable<String, Integer>> grouped = observable.groupBy(new Func1<Integer, String>() {
 
             @Override
             public String call(Integer t) {

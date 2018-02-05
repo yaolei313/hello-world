@@ -60,7 +60,7 @@
 
     <!-- the transactional advice (what 'happens'; see the <aop:advisor/> bean 
         below) 
-    	spring解析xml时会转换为AnnotationTransactionAttributeSource对象    
+    	spring解析xml时会转换为NameMatchTransactionAttributeSource对象
     -->
     <tx:advice id="txAdvice" transaction-manager="transactionManager">
         <tx:attributes>
