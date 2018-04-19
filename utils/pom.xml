@@ -37,15 +37,17 @@
 		<joda-time-jsptags.version>1.1.1</joda-time-jsptags.version>
 		<metrics.version>3.1.0</metrics.version>
 
-		<jackson.version>2.4.1</jackson.version>
+		<jackson.version>2.9.4</jackson.version>
 		<gson.version>2.2.4</gson.version>
 		<fastjson.version>1.1.41</fastjson.version>
 		<netty.version>4.1.7.Final</netty.version>
 		<groovy.version>2.4.10</groovy.version>
 
-		<dozer.version>5.5.1</dozer.version>
+		<dozer.version>6.1.0</dozer.version>
+		<org.mapstruct.version>1.2.0.Final</org.mapstruct.version>
 		<jedis.version>2.7.2</jedis.version>
 		<rabbitmq.version>3.5.3</rabbitmq.version>
+		<guice.version>4.2.0</guice.version>
 	</properties>
 
 	<dependencies>
@@ -96,7 +98,7 @@
 		<dependency>
 			<groupId>org.mybatis</groupId>
 			<artifactId>mybatis</artifactId>
-			<version>3.4.2</version>
+			<version>3.4.5</version>
 		</dependency>
 
 		<!-- spring -->
@@ -399,9 +401,21 @@
 		</dependency>
 
 		<dependency>
-			<groupId>net.sf.dozer</groupId>
-			<artifactId>dozer</artifactId>
+			<groupId>com.github.dozermapper</groupId>
+			<artifactId>dozer-core</artifactId>
 			<version>${dozer.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>fr.xebia.extras</groupId>
+			<artifactId>selma</artifactId>
+			<version>1.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.mapstruct</groupId>
+			<artifactId>mapstruct-jdk8</artifactId> <!-- use mapstruct-jdk8 for Java 8 or higher -->
+			<version>${org.mapstruct.version}</version>
 		</dependency>
 
 		<dependency>
@@ -449,6 +463,19 @@
 			<groupId>com.google.zxing</groupId>
 			<artifactId>core</artifactId>
 			<version>3.3.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.openjdk.jol</groupId>
+			<artifactId>jol-core</artifactId>
+			<version>0.9</version>
+		</dependency>
+
+		<!-- -->
+		<dependency>
+			<groupId>com.google.inject</groupId>
+			<artifactId>guice</artifactId>
+			<version>${guice.version}</version>
 		</dependency>
 	</dependencies>
 

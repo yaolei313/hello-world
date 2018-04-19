@@ -4,8 +4,11 @@ import java.util.List;
 
 public class TypeTest {
 
+    private volatile int i = 0;
+
     public static void main(String[] args) {
-        // TODO Auto-generated method stub
+        TypeTest test = new TypeTest();
+        test.i++;
 
         Integer t1 = new Integer(199800);
         Integer t2 = new Integer(199800);
@@ -19,6 +22,9 @@ public class TypeTest {
         System.out.println(t3 == t4);
         System.out.println(127 == t4);
         System.out.println(t3 == 127);
+        // 编译后
+        // System.out.println(127 == t4.intValue());
+        // System.out.println(t3.intValue() == 127);
 
         Integer t5 = new Integer(128);
         Integer t6 = new Integer(128);
