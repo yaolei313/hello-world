@@ -14,6 +14,9 @@ public class Buffer {
         // bufferSkip();
         // bufferByTime();
 
+        Scanner input = new Scanner(System.in);
+        input.next();
+        input.close();
     }
 
     public static void buffer() {
@@ -63,8 +66,6 @@ public class Buffer {
             }
         });
 
-        Scanner input = new Scanner(System.in);
-        input.next();
     }
 
 }

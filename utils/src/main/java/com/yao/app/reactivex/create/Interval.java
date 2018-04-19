@@ -18,7 +18,7 @@ public class Interval {
         
         Scanner input = new Scanner(System.in);
         input.next();
-
+        input.close();
     }
 
 }

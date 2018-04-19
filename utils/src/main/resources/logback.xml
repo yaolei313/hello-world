@@ -84,6 +84,8 @@
 	<logger name="jdbc.resultset" level="OFF"></logger>
 	<logger name="log4jdbc.debug" level="OFF"></logger>
 
+	<logger name="com.yao.app.database.jdbc.UserMapper" level="DEBUG" />
+
 	<root level="DEBUG">
 		<appender-ref ref="stdout"></appender-ref>
 		<appender-ref ref="serviceDebugLog"></appender-ref>

@@ -1,7 +1,6 @@
 package com.yao.app.nebula.web.actions;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -16,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -73,16 +73,15 @@ public class GreetingController {
         List<UserBean> users = service.queryUsers();
         model.addAttribute("users", users);
         
-        
         return "user/list";
     }
 
-    @RequestMapping(value = "/users/{userId}", method = RequestMethod.GET)
-    public String findUser(@PathVariable String userId, Model model) {
-        LOG.info("userId:" + userId);
-        model.addAttribute("userId", userId);
+    @RequestMapping(value = "/users/{userName}", method = RequestMethod.GET)
+    public String findUser(@PathVariable String userName, Model model) {
+        LOG.info("userId:" + userName);
+        model.addAttribute("userId", userName);
 
-        UserBean user = service.queryUserByUsername(userId);
+        UserBean user = service.queryUserByUsername(userName);
         model.addAttribute("user",user);
 
         LOG.info(user.getUsername());
@@ -123,7 +122,7 @@ public class GreetingController {
      * @param ex
      * @return
      */
-    // @ExceptionHandler(Exception.class)
+    @ExceptionHandler(Exception.class)
     public ResponseEntity<String> handleIOException(Exception ex) {
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.set("MyResponseHeader", "MyValue");

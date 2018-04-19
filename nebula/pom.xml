@@ -5,35 +5,35 @@
 	<artifactId>nebula</artifactId>
 	<packaging>war</packaging>
 	<version>1.0-SNAPSHOT</version>
-	<name>Yao Maven Webapp</name>
+	<name>nebula</name>
 	<url>http://maven.apache.org</url>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		
 		<mariadb.version>1.2.3</mariadb.version>
-		<tomcat-jdbc.version>8.0.27</tomcat-jdbc.version>
+		<tomcat-jdbc.version>9.0.4</tomcat-jdbc.version>
 		
-		<slf4j.version>1.7.12</slf4j.version>
-		<logback.version>1.1.3</logback.version>
+		<slf4j.version>1.7.22</slf4j.version>
+		<logback.version>1.1.8</logback.version>
 		<log4jdbc.version>1.2</log4jdbc.version>
 		
-		<spring.version>4.2.1.RELEASE</spring.version>
+		<spring.version>5.0.3.RELEASE</spring.version>
 		<aspectj.version>1.8.7</aspectj.version>
-		<mybatis.version>3.2.3</mybatis.version>
-		<mybatis-spring.version>1.2.1</mybatis-spring.version>
+		<mybatis.version>3.4.5</mybatis.version>
+		<mybatis-spring.version>1.3.1</mybatis-spring.version>
 
-		<validation.version>1.1.0.Final</validation.version>
-		<hibernate-validation.version>5.2.2.Final</hibernate-validation.version>
-		<jackson.version>2.3.2</jackson.version>
+		<validation.version>2.0.1.Final</validation.version>
+		<hibernate-validation.version>6.0.7.Final</hibernate-validation.version>
+		<jackson.version>2.9.4</jackson.version>
 		<!-- <cas.version>3.2.1</cas.version> -->
 		<xstream.version>1.4.7</xstream.version>
         <metrics.version>3.1.0</metrics.version>
         <shiro.version>1.2.3</shiro.version>
         <stormpath.version>1.0.RC4.5</stormpath.version>
-        <jetty.version>9.3.6.v20151106</jetty.version>
+        <jetty.version>9.4.8.v20171121</jetty.version>
         <sitemesh.version>2.4.2</sitemesh.version>
-        <hystrix.version>1.4.21</hystrix.version>
+        <hystrix.version>1.5.8</hystrix.version>
 	</properties>
 	
 	<!-- 等同于dependencies中得spring配置，但此次会引入所有spring的包 -->
@@ -66,24 +66,6 @@
 		  	<version>3.2.0</version>
 		  	<scope>test</scope>
 		</dependency>
-		
-		<dependency>
-		    <groupId>io.reactivex</groupId>
-		    <artifactId>rxjava</artifactId>
-		    <version>1.1.6</version>
-		</dependency>
-		
-		<dependency>
-		    <groupId>com.netflix.hystrix</groupId>
-		    <artifactId>hystrix-core</artifactId>
-		    <version>1.5.3</version>
-		    <exclusions>
-		    	<exclusion>
-		    		<groupId>io.reactivex</groupId>
-		    		<artifactId>rxjava</artifactId>
-		    	</exclusion>
-		    </exclusions>
-		</dependency>
 
 		<!-- db and datasource -->
 		<dependency>
@@ -103,10 +85,18 @@
 		    <artifactId>tomcat-jdbc</artifactId>
 		    <version>${tomcat-jdbc.version}</version>
 		</dependency>
+		<!--  http://stackoverflow.com/questions/32643530/classpath-issue-between-jetty-maven-plugin-and-tomcat-jdbc-8-0-9-leading-to-ser -->
+		<!-- 相当坑爹，用什么juli -->
 		<dependency>
 		    <groupId>org.apache.tomcat</groupId>
 		    <artifactId>tomcat-juli</artifactId>
 		    <version>${tomcat-jdbc.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>de.mklinger.tomcat</groupId>
+			<artifactId>tomcat-juli-slf4j</artifactId>
+			<version>8.5.11</version>
 		</dependency>
 
 		<!-- spring -->
@@ -209,9 +199,18 @@
 			<artifactId>slf4j-api</artifactId>
 			<version>${slf4j.version}</version>
 		</dependency>
+		<!-- At present time, logback is divided into three modules, logback-core, logback-classic and logback-access.
+		logback-access非必须，The logback-access module integrates with Servlet containers, such as Tomcat and Jetty, 
+		to provide HTTP-access log functionality. -->
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-classic</artifactId>
+			<version>${logback.version}</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-core</artifactId>
 			<version>${logback.version}</version>
 			<scope>runtime</scope>
 		</dependency>
@@ -220,7 +219,7 @@
 			<groupId>org.slf4j</groupId>
 			<artifactId>jcl-over-slf4j</artifactId>
 			<version>${slf4j.version}</version>
-			<scope>runtime</scope>
+			<!--<scope>runtime</scope>-->
 		</dependency>
 		<!-- Bridging Java Util Logging API -->
 		<dependency>
@@ -368,26 +367,26 @@
 			<version>1.2</version>
 		</dependency>
 
+		<!--
+		7.x = Servlet 2.5
+ 		8.x = Servlet 3.0
+ 		9.x = Servlet 3.1
+		10.x = Servlet 4.0
+		-->
 		<!-- embedded jetty -->
 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
 			<artifactId>jetty-webapp</artifactId>
 			<version>${jetty.version}</version>
-			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-client</artifactId>
+			<version>${jetty.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
 			<artifactId>jetty-annotations</artifactId>
-			<version>${jetty.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.eclipse.jetty</groupId>
-			<artifactId>apache-jsp</artifactId>
-			<version>${jetty.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.eclipse.jetty</groupId>
-			<artifactId>apache-jstl</artifactId>
 			<version>${jetty.version}</version>
 		</dependency>
 		<dependency>
@@ -404,18 +403,16 @@
 		    <groupId>com.netflix.hystrix</groupId>
 		    <artifactId>hystrix-core</artifactId>
 		    <version>${hystrix.version}</version>
-		</dependency>
-		
-		<!-- bean validator 1.1 -->
-		<dependency>
-			<groupId>javax.validation</groupId>
-			<artifactId>validation-api</artifactId>
-			<version>1.1.0.Final</version>
-		</dependency>
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-validator</artifactId>
-			<version>5.2.4.Final</version>
+			<exclusions>
+				<exclusion>
+					<groupId>commons-logging</groupId>
+					<artifactId>commons-logging</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-api</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
     
 	</dependencies>
@@ -423,19 +420,14 @@
 		<finalName>nebula</finalName>
 		<plugins>
 			<plugin>
-				<groupId>org.mortbay.jetty</groupId>
-				<artifactId>maven-jetty-plugin</artifactId>
-				<version>9.3.3.v20150827</version>
+				<groupId>org.eclipse.jetty</groupId>
+				<artifactId>jetty-maven-plugin</artifactId>
+				<version>9.4.8.v20171121</version>
 				<configuration>
-					<contextPath>/</contextPath>
-					<connectors>
-						<connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
-							<port>8080</port>
-						</connector>
-					</connectors>
-					<stopKey>exit</stopKey>
-					<stopPort>8081</stopPort>
-					<scanIntervalSeconds>2</scanIntervalSeconds>
+					<scanIntervalSeconds>10</scanIntervalSeconds>
+					<webApp>
+						<contextPath>/nebula</contextPath>
+					</webApp>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -445,6 +437,7 @@
 				<configuration>
 					<source>1.8</source>
 					<target>1.8</target>
+					<!-- 此处没指定utf-8的话可能导致代码中的汉字乱码，即打印汉字时，非代码中写死的汉字不会乱码，写死的会乱码 -->
 					<encoding>UTF-8</encoding>
 				</configuration>
 			</plugin>
@@ -475,13 +468,23 @@
                     <dependency>
                         <groupId>org.codehaus.mojo</groupId>
                         <artifactId>extra-enforcer-rules</artifactId>
-                        <version>1.0-beta-4</version>
+                        <version>1.0-beta-7</version>
                     </dependency>
                 </dependencies>
             </plugin>
-			<!-- <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-jar-plugin</artifactId> 
-				<version>2.4</version> <configuration> <includes> <include>com/yao/app/nebula/thrift/service/*.tld</include> 
-				</includes> </configuration> </plugin> -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>jspc-maven-plugin</artifactId>
+				<version>1.4.6</version>
+				<executions>
+					<execution>
+						<id>jspc</id>
+						<goals>
+							<goal>compile</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 </project>

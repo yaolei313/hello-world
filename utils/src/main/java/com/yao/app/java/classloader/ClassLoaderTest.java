@@ -1,5 +1,7 @@
 package com.yao.app.java.classloader;
 
+import com.yao.app.map.Student;
+
 public class ClassLoaderTest {
 
 	public static void main(String[] args) throws Exception {

@@ -48,11 +48,20 @@
         <property name="dataSource" ref="dataSource" />
     </bean>
 
-    <!-- 注解驱动事务 -->
+    <!-- 注解驱动事务
+    	spring解析xml时会向spring注册InfrastructureAdvisorAutoProxyCreator
+    	一共三种ProxyCreator，实际spring会保留优先级最高的ProxyCreator，从低到高为
+    	InfrastructureAdvisorAutoProxyCreator
+    	AspectJAwareAdvisorAutoProxyCreator
+    	AnnotationAwareAspectJAutoProxyCreator
+    	三种具体区别 TODO
+    -->
     <tx:annotation-driven order="1" transaction-manager="transactionManager"/>
 
     <!-- the transactional advice (what 'happens'; see the <aop:advisor/> bean 
-        below) -->
+        below) 
+    	spring解析xml时会转换为NameMatchTransactionAttributeSource对象
+    -->
     <tx:advice id="txAdvice" transaction-manager="transactionManager">
         <tx:attributes>
             <!-- 默认rollback-for RuntimeException，仅免检异常回滚 -->
@@ -63,7 +72,9 @@
         </tx:attributes>
     </tx:advice>
 
-    <!-- proxy-target-class默认为false，即使用java的动态代理 -->
+    <!-- proxy-target-class默认为false，即使用java的动态代理 
+    spring解析xml配置时会向spring注册AspectJAwareAdvisorAutoProxyCreator
+    -->
     <aop:config proxy-target-class="false">
         <aop:pointcut id="serviceOperation"
             expression="execution(* com.yao.app..service.impl.*.*(..))" />
@@ -92,16 +103,21 @@
     <!-- <bean class="com.yao.app.nebula.util.ProfilingAspect" factory-method="aspectOf" lazy-init="false"/> -->
     <!-- for register AnnotationBeanConfigurerAspect -->
     <!-- <context:spring-configured/> -->
-    
+    <!-- spring解析xml配置时会向spring注册AnnotationAwareAspectJAutoProxyCreator.class -->
     <aop:aspectj-autoproxy>
     	<!-- Set a list of regex patterns, matching eligible @AspectJ bean names.Default is to consider all @AspectJ beans as eligible. -->
     	<!-- Example: com.yao.app.nebula.util.TraceAdvice#0 此次必须为正则表达式-->
-    	<aop:include name="(\w+\.)*TraceAdvice(#\d)?"/>
+    	<aop:include name="(\w+\.)*TraceAdvice(#\d+)?"/>
     	<!-- <aop:include name="com.yao.app.nebula.util.ProfilingAspect"/> -->
     </aop:aspectj-autoproxy>
     
     <!-- <context:load-time-weaver/> -->
-    
+
+    <!--test-->
+    <bean id="testA" class="com.yao.app.nebula.service.test.TestA" />
+
+    <bean id="testB" class="com.yao.app.nebula.service.test.TestB" />
+
     <beans profile="dev">
 		<context:property-placeholder location="classpath:jdbc-dev.properties" ignore-resource-not-found="false" />
    	</beans>
@@ -109,4 +125,7 @@
    	<beans profile="prod">
 		<context:property-placeholder location="classpath:jdbc-prod.properties" ignore-resource-not-found="false" />
    	</beans>
+
+    <!-- 验证close顺序 -->
+
 </beans>

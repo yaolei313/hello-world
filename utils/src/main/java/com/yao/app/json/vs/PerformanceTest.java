@@ -1,5 +1,7 @@
 package com.yao.app.json.vs;
 
+import java.util.TimeZone;
+
 import com.alibaba.fastjson.JSON;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
@@ -45,6 +47,9 @@ public class PerformanceTest {
             ObjectMapper mapper = new ObjectMapper();
             mapper.findAndRegisterModules();
             //mapper.registerModule(new JSR310Module());
+            
+            // bug:http://stackoverflow.com/questions/20222376/default-timezone-for-datetime-deserialization-with-jackson-joda-time-module
+            mapper.setTimeZone(TimeZone.getDefault());
 
             t1 = System.currentTimeMillis();
             json = mapper.writeValueAsString(group);

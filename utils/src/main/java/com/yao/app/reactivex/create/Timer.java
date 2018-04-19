@@ -18,16 +18,17 @@ public class Timer {
         });
         
         // deprecated so use interval
-        Observable<Long> observable2 = Observable.timer(2, 1, TimeUnit.SECONDS);
+        /*Observable<Long> observable2 = Observable.timer(2, 1, TimeUnit.SECONDS);
         observable2.subscribe(new Action1<Long>() {
             @Override
             public void call(Long t) {
                 System.out.println(t);
             }
-        });
+        });*/
         
         Scanner input = new Scanner(System.in);
         input.next();
+        input.close();
     }
 
 }

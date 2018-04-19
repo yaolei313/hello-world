@@ -1,0 +1,9 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yao.app.database.jdbc.PostMapper">
+    <select id="findPostTitle" parameterType="long" resultType="string">
+        select title from posts where id =#{value}
+    </select>
+</mapper>

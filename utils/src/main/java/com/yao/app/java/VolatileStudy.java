@@ -1,45 +1,47 @@
 package com.yao.app.java;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 /**
- * volatile是复制一个副本到的自己的线程内存中，修改完成，写回公共内存区。因此不是原子的
- * 
  * @author yaolei
- *
  */
 public class VolatileStudy {
 
-    public volatile int count = 0;
-    
-    public void test(){
-        for(int i=0;i<1000;i++){
-            new Thread(new Runnable(){
-
-                @Override
-                public void run() {
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    count++;
-                }
-                
-            }).start();
-        }
-    }
-    
     public static void main(String[] args) {
-        VolatileStudy test = new VolatileStudy();
-        test.test();
-        
+        ExecutorService executorService =  Executors.newFixedThreadPool(20);
+        StatusHolder statusHolder = new StatusHolder();
+        for (int i = 0; i < 1000; i++) {
+            executorService.submit(() -> statusHolder.modifyStatus());
+        }
+
         try {
             Thread.sleep(5000);
         } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        System.out.println(test.count);
+        System.out.println(statusHolder);
 
+    }
+
+    private static class StatusHolder {
+        public volatile int count = 0;
+
+        public int a = 0;
+
+        public void modifyStatus(){
+            count = count + 10;
+            a = a + 1;
+        }
+
+        @Override
+        public String toString() {
+            final StringBuilder sb = new StringBuilder("StatusHolder{");
+            sb.append("count=").append(count);
+            sb.append(", a=").append(a);
+            sb.append('}');
+            return sb.toString();
+        }
     }
 
 }
