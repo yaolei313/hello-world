@@ -10,5 +10,8 @@ public class NoClassDefFoundErrorTest {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
+
+        String a = "中国";
+        System.out.println(a.substring(0,1));
     }
 }
