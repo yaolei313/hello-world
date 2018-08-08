@@ -12,7 +12,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<junit.version>4.11</junit.version>
+		<junit.version>4.12</junit.version>
 
 		<mariadb.version>1.2.3</mariadb.version>
 		<tomcat-jdbc.version>8.0.27</tomcat-jdbc.version>
@@ -218,11 +218,23 @@
 			<scope>runtime</scope>
 		</dependency>
 
-		<!-- thrift -->
+		<!-- transport protocol -->
 		<dependency>
 			<groupId>org.apache.thrift</groupId>
 			<artifactId>libthrift</artifactId>
 			<version>${thrift.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>io.protostuff</groupId>
+			<artifactId>protostuff-core</artifactId>
+			<version>1.5.9</version>
+		</dependency>
+
+		<dependency>
+			<groupId>io.protostuff</groupId>
+			<artifactId>protostuff-runtime</artifactId>
+			<version>1.5.9</version>
 		</dependency>
 
 		<!-- http utils -->
@@ -505,6 +517,24 @@
 					</archive>
 				</configuration>
 			</plugin>
+      <!--<plugin>
+        <groupId>com.facebook.mojo</groupId>
+        <artifactId>swift-maven-plugin</artifactId>
+        <version>0.23.1</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>generate</goal>
+            </goals>
+          </execution>
+        </executions>
+				<configuration>
+					<idlFiles>
+						<directory>${basedir}/src/main/resources/thrift</directory>
+					</idlFiles>
+					<outputFolder>${basedir}/src/main/java</outputFolder>
+				</configuration>
+      </plugin>-->
 		</plugins>
 	</build>
 </project>

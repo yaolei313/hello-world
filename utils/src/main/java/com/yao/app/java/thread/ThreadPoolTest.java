@@ -1,8 +1,11 @@
-package com.yao.app.thread;
+package com.yao.app.java.thread;
 
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.SynchronousQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 import org.springframework.scheduling.concurrent.CustomizableThreadFactory;
-
-import java.util.concurrent.*;
 
 /**
  * Created by yaolei02 on 2017/6/15.
