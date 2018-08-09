@@ -65,21 +65,6 @@ debug:当此属性设置为true时，将打印出logback内部日志信息，实
         </triggeringPolicy>  -->
 	</appender>
 
-	<!-- log4jdbc -->
-	<!-- additivity日志是否上级传递，默认true -->
-	<logger name="jdbc.connection" level="DEBUG" additivity="false">
-		<appender-ref ref="sqlLog" />
-	</logger>
-	<logger name="jdbc.sqlonly" level="DEBUG" additivity="false">
-		<appender-ref ref="sqlLog" />
-	</logger>
-	<logger name="jdbc.sqltiming" level="DEBUG" additivity="false">
-        <appender-ref ref="sqlLog" />
-    </logger>
-    
-	<logger name="jdbc.audit" level="OFF"></logger>
-	<logger name="jdbc.resultset" level="OFF"></logger>
-	
 	<logger name="AspectJ Weaver" level="DEBUG" additivity="false">
 		<appender-ref ref="aspectjLog" />
 	</logger>

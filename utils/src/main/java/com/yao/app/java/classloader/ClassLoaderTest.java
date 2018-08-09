@@ -16,7 +16,7 @@ public class ClassLoaderTest {
 		System.out.println(newClassLoader);
 		
 		Class<?> class1 = Class.forName("org.mariadb.jdbc.Driver",false,sysClassLoader);
-		Class<?> class2 = Class.forName("net.sf.log4jdbc.DriverSpy",false,newClassLoader);
+		Class<?> class2 = Class.forName("com.mysql.jdbc.Driver",false,newClassLoader);
 		
 		Student s = new Student();
 

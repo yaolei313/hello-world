@@ -102,8 +102,8 @@ public class JDBCTest {
     }
 
     public static Connection getDefaultConnection() throws ClassNotFoundException, SQLException {
-        Class.forName("net.sf.log4jdbc.DriverSpy");
-        Connection conn = DriverManager.getConnection("jdbc:log4jdbc:mysql://192.168.189.28:3306/study", "study",
+        Class.forName("com.mysql.jdbc.Driver");
+        Connection conn = DriverManager.getConnection("jdbc:mysql://192.168.189.28:3306/study", "study",
                 "study");
 
         conn.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
