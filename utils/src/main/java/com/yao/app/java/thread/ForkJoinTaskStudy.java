@@ -1,4 +1,4 @@
-package com.yao.app.thread;
+package com.yao.app.java.thread;
 
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ForkJoinPool;
