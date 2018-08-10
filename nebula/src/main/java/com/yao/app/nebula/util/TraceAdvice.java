@@ -110,7 +110,8 @@ public class TraceAdvice implements Ordered {
 
         Object object = null;
         try {
-            object = jp.proceed(args);
+            // object = jp.proceed(args);
+            object = jp.proceed();
         } finally {
         }
 

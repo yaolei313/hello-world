@@ -1,25 +1,6 @@
 package com.yao.app.utils.http;
 
-import java.io.IOException;
-import java.net.URL;
-import java.security.KeyManagementException;
-import java.security.KeyStore;
-import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
-import java.security.cert.CertificateException;
-import java.security.cert.X509Certificate;
-import java.util.List;
-
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLException;
-import javax.net.ssl.SSLSession;
-import javax.net.ssl.SSLSocket;
-
-import org.apache.http.Consts;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpHost;
-import org.apache.http.NameValuePair;
-import org.apache.http.ParseException;
+import org.apache.http.*;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.AuthCache;
@@ -37,22 +18,28 @@ import org.apache.http.config.Registry;
 import org.apache.http.config.RegistryBuilder;
 import org.apache.http.conn.socket.ConnectionSocketFactory;
 import org.apache.http.conn.socket.PlainConnectionSocketFactory;
+import org.apache.http.conn.ssl.NoopHostnameVerifier;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
-import org.apache.http.conn.ssl.SSLContextBuilder;
-import org.apache.http.conn.ssl.SSLContexts;
-import org.apache.http.conn.ssl.TrustStrategy;
-import org.apache.http.conn.ssl.X509HostnameVerifier;
 import org.apache.http.cookie.Cookie;
 import org.apache.http.impl.auth.BasicScheme;
-import org.apache.http.impl.client.BasicAuthCache;
-import org.apache.http.impl.client.BasicCookieStore;
-import org.apache.http.impl.client.BasicCredentialsProvider;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
+import org.apache.http.impl.client.*;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
+import org.apache.http.ssl.SSLContexts;
+import org.apache.http.ssl.TrustStrategy;
 import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.net.ssl.SSLContext;
+import java.io.IOException;
+import java.net.URL;
+import java.security.KeyManagementException;
+import java.security.KeyStore;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
+import java.util.List;
 
 public class HttpUtils {
 
@@ -60,7 +47,7 @@ public class HttpUtils {
 
     /**
      * 支持http，https(所有证书均有效),返回的client需复用
-     * 
+     *
      * @return
      * @throws KeyStoreException
      * @throws NoSuchAlgorithmException
@@ -68,42 +55,28 @@ public class HttpUtils {
      */
     public static CloseableHttpClient getHttpClient(KeyStore keyStore, List<Cookie> globalCookies)
             throws NoSuchAlgorithmException, KeyStoreException, KeyManagementException {
-        SSLContextBuilder builder = SSLContexts.custom();
-        builder.loadTrustMaterial(keyStore, new TrustStrategy() {
-
+        SSLContext sslContext = SSLContexts.custom().loadTrustMaterial(keyStore, new TrustStrategy() {
             @Override
             public boolean isTrusted(X509Certificate[] chain, String authType) throws CertificateException {
                 return true;
             }
+        }).build();
+        sslContext.getClientSessionContext().setSessionTimeout(60);
 
-        });
-        SSLContext sslContext = builder.build();
-        SSLConnectionSocketFactory sslsf = new SSLConnectionSocketFactory(sslContext, new X509HostnameVerifier() {
-
-            @Override
-            public boolean verify(String arg0, SSLSession arg1) {
-                return true;
-            }
-
-            @Override
-            public void verify(String host, SSLSocket ssl) throws IOException {}
-
-            @Override
-            public void verify(String host, X509Certificate cert) throws SSLException {}
-
-            @Override
-            public void verify(String host, String[] cns, String[] subjectAlts) throws SSLException {}
-
-        });
+        SSLConnectionSocketFactory sslsf = new SSLConnectionSocketFactory(sslContext, new NoopHostnameVerifier());
 
         Registry<ConnectionSocketFactory> socketFactoryRegistry =
-                RegistryBuilder.<ConnectionSocketFactory>create().register("https", sslsf)
-                        .register("http", PlainConnectionSocketFactory.getSocketFactory()).build();
+                RegistryBuilder.<ConnectionSocketFactory>create().register("https", sslsf).register("http", PlainConnectionSocketFactory.getSocketFactory())
+                        .build();
+
+
         PoolingHttpClientConnectionManager cm = new PoolingHttpClientConnectionManager(socketFactoryRegistry);
         cm.setMaxTotal(100);
-        // end
+        cm.setDefaultMaxPerRoute(500);
 
-        RequestConfig globalConfig = RequestConfig.custom().setCookieSpec(CookieSpecs.BEST_MATCH).build();
+        RequestConfig globalConfig =
+                RequestConfig.custom().setConnectionRequestTimeout(500).setConnectTimeout(500).setSocketTimeout(1000).setRedirectsEnabled(false)
+                        .setCookieSpec(CookieSpecs.DEFAULT).build();
 
         CookieStore globalCookieStore = new BasicCookieStore();
         if (globalCookies != null) {
@@ -112,15 +85,13 @@ public class HttpUtils {
         }
 
         CloseableHttpClient httpclient =
-                HttpClients.custom().setConnectionManager(cm).setDefaultRequestConfig(globalConfig)
-                        .setDefaultCookieStore(globalCookieStore).build();
+                HttpClients.custom().setConnectionManager(cm).setDefaultRequestConfig(globalConfig).setDefaultCookieStore(globalCookieStore).build();
 
         return httpclient;
     }
 
-    public static String getContentByPreemptiveAuthentication(CloseableHttpClient httpClient, String url,
-            String username, String password, List<NameValuePair> nvpList, List<Cookie> cookies, boolean isPost)
-            throws ParseException, IOException {
+    public static String getContentByPreemptiveAuthentication(CloseableHttpClient httpClient, String url, String username, String password,
+            List<NameValuePair> nvpList, List<Cookie> cookies, boolean isPost) throws ParseException, IOException {
         HttpClientContext localContext = HttpClientContext.create();
 
         // 添加cookies
@@ -137,8 +108,7 @@ public class HttpUtils {
         URL turl = new URL(url);
         HttpHost target = new HttpHost(turl.getHost(), turl.getPort(), turl.getProtocol());
 
-        credentialsProvider.setCredentials(new AuthScope(target.getHostName(), target.getPort()),
-                new UsernamePasswordCredentials(username, password));
+        credentialsProvider.setCredentials(new AuthScope(target.getHostName(), target.getPort()), new UsernamePasswordCredentials(username, password));
         localContext.setCredentialsProvider(credentialsProvider);
         // Create AuthCache instance
         AuthCache authCache = new BasicAuthCache();
@@ -151,8 +121,8 @@ public class HttpUtils {
         return getHttpResonse(httpClient, url, nvpList, isPost, localContext);
     }
 
-    public static String getContent(CloseableHttpClient httpClient, String url, List<NameValuePair> nvpList,
-            List<Cookie> cookies, boolean isPost) throws ClientProtocolException, IOException {
+    public static String getContent(CloseableHttpClient httpClient, String url, List<NameValuePair> nvpList, List<Cookie> cookies, boolean isPost)
+            throws ClientProtocolException, IOException {
         HttpClientContext localContext = HttpClientContext.create();
 
         // 添加cookies
@@ -166,8 +136,8 @@ public class HttpUtils {
         return getHttpResonse(httpClient, url, nvpList, isPost, localContext);
     }
 
-    private static String getHttpResonse(CloseableHttpClient httpClient, String url, List<NameValuePair> nvpList,
-            boolean isPost, HttpClientContext localContext) throws ClientProtocolException, IOException {
+    private static String getHttpResonse(CloseableHttpClient httpClient, String url, List<NameValuePair> nvpList, boolean isPost,
+            HttpClientContext localContext) throws ClientProtocolException, IOException {
         CloseableHttpResponse response = null;
         if (isPost) {
             log.debug("post url is {}", url);

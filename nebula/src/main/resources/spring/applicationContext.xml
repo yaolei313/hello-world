@@ -110,7 +110,8 @@
     	<aop:include name="(\w+\.)*TraceAdvice(#\d+)?"/>
     	<!-- <aop:include name="com.yao.app.nebula.util.ProfilingAspect"/> -->
     </aop:aspectj-autoproxy>
-    
+
+    <!-- 可以使切面应用于new方式创建的对象，而不是spring创建的对象-->
     <!-- <context:load-time-weaver/> -->
 
     <!--test-->
