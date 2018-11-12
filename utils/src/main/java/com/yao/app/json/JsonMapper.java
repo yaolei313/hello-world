@@ -2,7 +2,6 @@ package com.yao.app.json;
 
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JavaType;
@@ -24,52 +23,48 @@ import java.util.TimeZone;
 public class JsonMapper {
 
     // 若使用这个，就不要通过getMapper来修改内部ObjectMapper
-    public static final JsonMapper NON_NULL_MAPPER = JsonMapper.nonNullMapper().enableJavaTimeModule();
+    public static final JsonMapper NON_NULL_MAPPER = JsonMapper.nonNullMapper();
 
-    public static final JsonMapper NON_EMPTY_MAPPER = JsonMapper.nonEmptyMapper().enableJavaTimeModule();
+    public static final JsonMapper NON_EMPTY_MAPPER = JsonMapper.nonEmptyMapper();
 
-    private static Logger logger = LoggerFactory.getLogger(JsonMapper.class);
+    private static final Logger LOG = LoggerFactory.getLogger(JsonMapper.class);
+
+    private static JsonMapper nonNullMapper() {
+        return new JsonMapper(Include.NON_NULL);
+    }
+
+    private static JsonMapper nonEmptyMapper() {
+        return new JsonMapper(Include.NON_EMPTY);
+    }
 
     private ObjectMapper mapper;
 
-    public JsonMapper() {
-        this(null);
-    }
-
-    public JsonMapper(Include include) {
+    private JsonMapper(Include include) {
         mapper = new ObjectMapper();
         // 设置输出时包含属性的风格
         if (include != null) {
             mapper.setSerializationInclusion(include);
         }
+
         // 设置输入时忽略在JSON字符串中存在但Java对象实际没有的属性
         mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
         mapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_CONTROL_CHARS, true);
         // 修复joda serialize deserialize lost timezone bug
         mapper.setTimeZone(TimeZone.getDefault());
+
+        // 以下为扩展模块
+        mapper.registerModule(new JavaTimeModule());
         mapper.registerModule(new GuavaModule());
-    }
 
-    public static JsonMapper nonNullMapper() {
-        return new JsonMapper(Include.NON_NULL);
-    }
-
-    public static JsonMapper nonEmptyMapper() {
-        return new JsonMapper(Include.NON_EMPTY);
-    }
-
-    /**
-     * 创建只输出初始值被改变的属性到Json字符串的Mapper, 最节约的存储方式，建议在内部接口中使用。
-     */
-    public static JsonMapper nonDefaultMapper() {
-        return new JsonMapper(Include.NON_DEFAULT);
+        // 支持使用Jaxb的Annotation，使得POJO上的annotation不用与Jackson耦合。
+        // mapper.registerModule(new JaxbAnnotationModule());
     }
 
     public String toJson(Object object) {
         try {
             return mapper.writeValueAsString(object);
         } catch (IOException e) {
-            logger.warn("write to json string error:" + object, e);
+            LOG.warn("to json error:{}", object, e);
             return null;
         }
     }
@@ -92,7 +87,7 @@ public class JsonMapper {
         try {
             return mapper.readValue(jsonString, clazz);
         } catch (IOException e) {
-            logger.warn("parse json string error:" + jsonString, e);
+            LOG.warn("parse json error:{}", jsonString, e);
             return null;
         }
     }
@@ -105,7 +100,7 @@ public class JsonMapper {
         try {
             return (T) mapper.readValue(jsonString, valueTypeRef);
         } catch (IOException e) {
-            logger.warn("parse json string error:" + jsonString, e);
+            LOG.warn("parse json error:{}", jsonString, e);
             return null;
         }
     }
@@ -118,7 +113,7 @@ public class JsonMapper {
         try {
             return (T) mapper.readValue(jsonString, valueTypeRef);
         } catch (IOException e) {
-            logger.warn("parse json string error:" + jsonString, e);
+            LOG.warn("parse json error:{}", jsonString, e);
             throw Throwables.propagate(e);
         }
     }
@@ -136,7 +131,7 @@ public class JsonMapper {
         try {
             return (T) mapper.readValue(jsonString, javaType);
         } catch (IOException e) {
-            logger.warn("parse json string error:" + jsonString, e);
+            LOG.warn("parse json error:{}", jsonString, e);
             return null;
         }
     }
@@ -161,10 +156,8 @@ public class JsonMapper {
     public void update(String jsonString, Object object) {
         try {
             mapper.readerForUpdating(object).readValue(jsonString);
-        } catch (JsonProcessingException e) {
-            logger.warn("update json string:" + jsonString + " to object:" + object + " error.", e);
         } catch (IOException e) {
-            logger.warn("update json string:" + jsonString + " to object:" + object + " error.", e);
+            LOG.warn("update  object:{} error. json :{}", object, jsonString, e);
         }
     }
 
@@ -180,33 +173,11 @@ public class JsonMapper {
      * 为False时使用Enum的name()函数来读写Enum, 默认为False
      * 注意本函数一定要在Mapper创建后, 所有的读写操作之前调用
      */
-    public JsonMapper enableEnumUseToString() {
+    /*public JsonMapper enableEnumUseToString() {
         mapper.enable(SerializationFeature.WRITE_ENUMS_USING_TO_STRING);
         mapper.enable(DeserializationFeature.READ_ENUMS_USING_TO_STRING);
 
         return this;
-    }
-
-    /**
-     * 支持使用Jaxb的Annotation，使得POJO上的annotation不用与Jackson耦合。
-     * 默认会先查找jaxb的annotation，如果找不到再找jackson的
-     */
-    /*public void enableJaxbAnnotation() {
-        JaxbAnnotationModule module = new JaxbAnnotationModule();
-        mapper.registerModule(module);
     }*/
-    public JsonMapper enableJavaTimeModule() {
-        JavaTimeModule module = new JavaTimeModule();
-        mapper.registerModule(module);
-
-        return this;
-    }
-
-    /**
-     * 取出Mapper做进一步的设置或使用其他序列化API
-     */
-    public ObjectMapper getMapper() {
-        return mapper;
-    }
 
 }

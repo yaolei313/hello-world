@@ -1,7 +1,5 @@
 package com.yao.app.java.nio.memory;
 
-import sun.misc.JavaNioAccess;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -39,11 +37,12 @@ public class MeasureDirectMemory {
 
         System.out.println("now memory:" + Runtime.getRuntime().freeMemory());
 
-        JavaNioAccess.BufferPool pool = sun.misc.SharedSecrets.getJavaNioAccess().getDirectBufferPool();
+        // jdk8 ok
+        /*JavaNioAccess.BufferPool pool = sun.misc.SharedSecrets.getJavaNioAccess().getDirectBufferPool();
         System.out.println("count:" + pool.getCount());
         System.out.println("memory used:" + pool.getMemoryUsed());
         System.out.println("name:" + pool.getName());
-        System.out.println("total capacity:" + pool.getTotalCapacity());
+        System.out.println("total capacity:" + pool.getTotalCapacity());*/
 
         System.out.println("----------------------------------");
 
