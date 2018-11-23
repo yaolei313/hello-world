@@ -33,7 +33,7 @@
 		<commons-io.version>2.4</commons-io.version>
 		<commons-codec.version>1.9</commons-codec.version>
 		<commons-beanutils.version>1.9.1</commons-beanutils.version>
-		<guava.version>18.0</guava.version>
+		<guava.version>23.0</guava.version>
 		<joda-time.version>2.3</joda-time.version>
 		<joda-time-jsptags.version>1.1.1</joda-time-jsptags.version>
 		<metrics.version>3.1.0</metrics.version>
@@ -445,6 +445,19 @@
 			<groupId>org.mapstruct</groupId>
 			<artifactId>mapstruct-processor</artifactId>
 			<version>${org.mapstruct.version}</version>
+		</dependency>
+
+		<!-- annotation process tool-->
+		<dependency>
+			<groupId>com.squareup</groupId>
+			<artifactId>javapoet</artifactId>
+			<version>1.11.1</version>
+		</dependency>
+		<!-- spi tool-->
+		<dependency>
+			<groupId>com.google.auto.service</groupId>
+			<artifactId>auto-service</artifactId>
+			<version>1.0-rc4</version>
 		</dependency>
 
 		<dependency>
