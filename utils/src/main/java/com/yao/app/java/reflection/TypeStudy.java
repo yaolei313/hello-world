@@ -22,7 +22,7 @@ public class TypeStudy {
         System.out.println(clazz.getDeclaredAnnotations());
         System.out.println(clazz.getDeclaringClass());
 
-        System.out.println("-------------");
+        System.out.println("------1-------");
 
         System.out.println(clazz.getEnclosingClass());
         System.out.println(clazz.getEnumConstants());
@@ -30,26 +30,38 @@ public class TypeStudy {
         System.out.println(clazz.getGenericSuperclass());
         System.out.println(clazz.getTypeName());
 
-        System.out.println("-------------");
+        System.out.println("------2-------");
 
         System.out.println(clazz.getName());
         System.out.println(clazz.getSimpleName());
         System.out.println(clazz.getCanonicalName());
 
-        System.out.println("-------------");
+        System.out.println("------3-------");
+
+        TypeRef<ReflectionStudy> typeRef = new TypeRef<ReflectionStudy>() {
+        };
+        System.out.println(typeRef.getType());
+
     }
 
-    private static class TypeRef<T>{
+    private abstract static class TypeRef<T>{
 
         private Type type;
 
         public TypeRef() {
+            // getGenericSuperclass  返回直接继承的父类（包含泛型参数）
+            // getSuperclass   返回直接继承的父类（由于编译擦除，没有显示泛型参数）
+            // 这个地方一般都是通过匿名，所以父类的话就是TypeRef<Xxxx>了
             Type superclass = getClass().getGenericSuperclass();
             if (superclass instanceof Class) {
                 throw new RuntimeException("Missing type parameter.");
             }
             ParameterizedType parameterized = (ParameterizedType) superclass;
             this.type = MoreTypes.canonicalize(parameterized.getActualTypeArguments()[0]);
+        }
+
+        public Type getType() {
+            return type;
         }
     }
 }

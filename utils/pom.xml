@@ -436,6 +436,7 @@
 			<version>1.0</version>
 		</dependency>
 
+		<!-- annotation process tool-->
 		<dependency>
 			<groupId>org.mapstruct</groupId>
 			<artifactId>mapstruct-jdk8</artifactId> <!-- use mapstruct-jdk8 for Java 8 or higher -->
@@ -446,14 +447,11 @@
 			<artifactId>mapstruct-processor</artifactId>
 			<version>${org.mapstruct.version}</version>
 		</dependency>
-
-		<!-- annotation process tool-->
 		<dependency>
 			<groupId>com.squareup</groupId>
 			<artifactId>javapoet</artifactId>
 			<version>1.11.1</version>
 		</dependency>
-		<!-- spi tool-->
 		<dependency>
 			<groupId>com.google.auto.service</groupId>
 			<artifactId>auto-service</artifactId>
@@ -534,14 +532,31 @@
 					<target>1.8</target>
 					<!-- 此处没指定utf-8的话可能导致代码中的汉字乱码，即打印汉字时，非代码中写死的汉字不会乱码，写死的会乱码 -->
 					<encoding>UTF-8</encoding>
-					<annotationProcessorPaths>
+					<compilerArgument>-Xlint:all</compilerArgument>
+					<showWarnings>true</showWarnings>
+					<showDeprecation>true</showDeprecation>
+					<!-- https://maven.apache.org/plugins/maven-compiler-plugin/compile-mojo.html#annotationProcessorPaths -->
+					<!-- 不指定没有任何影响-->
+					<!--<annotationProcessorPaths>
 						<path>
 							<groupId>org.mapstruct</groupId>
 							<artifactId>mapstruct-processor</artifactId>
 							<version>${org.mapstruct.version}</version>
 						</path>
-					</annotationProcessorPaths>
+						<path>
+							<groupId>com.google.auto.service</groupId>
+							<artifactId>auto-service</artifactId>
+							<version>1.0-rc4</version>
+						</path>
+					</annotationProcessorPaths>-->
 				</configuration>
+				<dependencies>
+					<dependency>
+						<groupId>com.google.guava</groupId>
+						<artifactId>guava</artifactId>
+						<version>23.0</version>
+					</dependency>
+				</dependencies>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

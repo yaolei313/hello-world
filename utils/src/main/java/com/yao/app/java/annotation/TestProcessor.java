@@ -7,9 +7,8 @@ import com.squareup.javapoet.TypeSpec;
 
 import javax.annotation.processing.*;
 import javax.lang.model.SourceVersion;
-import javax.lang.model.element.Element;
-import javax.lang.model.element.Modifier;
-import javax.lang.model.element.TypeElement;
+import javax.lang.model.element.*;
+import javax.tools.Diagnostic;
 import java.io.Closeable;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -22,10 +21,10 @@ import java.util.Set;
 @AutoService(Processor.class)
 @SupportedAnnotationTypes("com.yao.app.java.annotation.Custom")
 @SupportedOptions({TestProcessor.SKIP_PRIMITIVE_TYPE_PRESENCE_CHECK})
-@SupportedSourceVersion(SourceVersion.RELEASE_11)
+@SupportedSourceVersion(SourceVersion.RELEASE_8)
 public class TestProcessor extends AbstractProcessor {
 
-    protected static final String SKIP_PRIMITIVE_TYPE_PRESENCE_CHECK = "mapstruct.custom.skipPrimitiveTypePresenceCheck";
+    protected static final String SKIP_PRIMITIVE_TYPE_PRESENCE_CHECK = "skipPrimitiveTypePresenceCheck";
 
     @Override
     public Set<String> getSupportedAnnotationTypes() {
@@ -45,15 +44,70 @@ public class TestProcessor extends AbstractProcessor {
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
         Set<? extends Element> elements = roundEnv.getElementsAnnotatedWith(Custom.class);
         LoggerFileTool tool = new LoggerFileTool(processingEnv);
+        processingEnv.getMessager().printMessage(Diagnostic.Kind.NOTE, "hello world");
         tool.writeLog("start handle");
         tool.writeLog(annotations.toString());
-        for(Element element : elements){
-            if(element instanceof TypeElement){
+        for (Element element : elements) {
+            Custom anno = element.getAnnotation(Custom.class);
+            tool.writeLog("Element:" + element + "," + element.getSimpleName() + ",Custom value:" + anno.value());
+            if (element instanceof PackageElement) {
+                PackageElement packageElement = (PackageElement) element;
+                tool.writeLog("PackageElement:" + packageElement);
+            } else if (element instanceof TypeElement) {
+                TypeElement typeElement = (TypeElement) element;
+                tool.writeLog("TypeElement:" + typeElement.getQualifiedName());
+            } else if (element instanceof ExecutableElement) {
+                ExecutableElement executableElement = (ExecutableElement) element;
+                tool.writeLog("ExecutableElement" + executableElement.getReturnType() + "," + executableElement.getReceiverType());
+            } else if (element instanceof VariableElement) {
+                VariableElement variableElement = (VariableElement) element;
+                tool.writeLog("VariableElement" + variableElement.getConstantValue());
+            } else {
+                tool.writeLog("Other Element" + element);
+            }
 
-            } else if(element instanceof )
+            /*element.accept(new ElementVisitor<Void, Void>() {
+
+                @Override
+                public Void visit(Element e, Void aVoid) {
+                    return null;
+                }
+
+                @Override
+                public Void visitPackage(PackageElement e, Void aVoid) {
+                    return null;
+                }
+
+                @Override
+                public Void visitType(TypeElement e, Void aVoid) {
+                    return null;
+                }
+
+                @Override
+                public Void visitVariable(VariableElement e, Void aVoid) {
+                    return null;
+                }
+
+                @Override
+                public Void visitExecutable(ExecutableElement e, Void aVoid) {
+                    return null;
+                }
+
+                @Override
+                public Void visitTypeParameter(TypeParameterElement e, Void aVoid) {
+                    return null;
+                }
+
+                @Override
+                public Void visitUnknown(Element e, Void aVoid) {
+                    return null;
+                }
+            }, null);*/
         }
 
-        return false;
+        tool.flush();
+
+        return true;
     }
 
     private static class LoggerFileTool implements Closeable {
@@ -84,10 +138,7 @@ public class TestProcessor extends AbstractProcessor {
                 methodBuilder.addStatement("$T.out.println($S)", System.class, message);
             }
 
-            TypeSpec type = TypeSpec.classBuilder("LoggerFile")
-                    .addModifiers(Modifier.PUBLIC)
-                    .addMethod(methodBuilder.build())
-                    .build();
+            TypeSpec type = TypeSpec.classBuilder("LoggerFile").addModifiers(Modifier.PUBLIC).addMethod(methodBuilder.build()).build();
 
             JavaFile javaFile = JavaFile.builder("com.yao.app.java.annotation", type).build();
             try {
