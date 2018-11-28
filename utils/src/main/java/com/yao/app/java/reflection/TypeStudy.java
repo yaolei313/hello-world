@@ -1,5 +1,6 @@
 package com.yao.app.java.reflection;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.inject.internal.MoreTypes;
 
 import java.lang.reflect.ParameterizedType;
@@ -44,7 +45,7 @@ public class TypeStudy {
 
     }
 
-    private abstract static class TypeRef<T>{
+    private abstract static class TypeRef<T> implements Comparable<TypeRef<T>>{
 
         private Type type;
 
@@ -63,5 +64,9 @@ public class TypeStudy {
         public Type getType() {
             return type;
         }
+
+        // 避免编译器提示泛型T never used
+        @Override
+        public int compareTo(TypeRef<T> o) { return 0; }
     }
 }

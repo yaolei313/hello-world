@@ -2,6 +2,13 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
+	<parent>
+		<groupId>com.yao.app</groupId>
+		<artifactId>parent</artifactId>
+		<version>1.0-SNAPSHOT</version>
+		<relativePath>../parent/</relativePath>
+	</parent>
+
 	<groupId>com.yao.app</groupId>
 	<artifactId>utils</artifactId>
 	<version>1.0-SNAPSHOT</version>
@@ -10,223 +17,118 @@
 	<name>utils</name>
 	<url>http://maven.apache.org</url>
 
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<junit.version>4.12</junit.version>
-		<assertj.version>3.11.1</assertj.version>
-
-		<mariadb.version>1.2.3</mariadb.version>
-		<tomcat-jdbc.version>8.0.27</tomcat-jdbc.version>
-		<!-- <commons-dbcp.version>1.4</commons-dbcp.version> <commons-pool.version>1.5.4</commons-pool.version> -->
-
-		<spring.version>5.0.7.RELEASE</spring.version>
-		<aspectj.version>1.8.7</aspectj.version>
-
-		<slf4j.version>1.7.22</slf4j.version>
-		<logback.version>1.1.8</logback.version>
-
-		<poi.version>3.10-FINAL</poi.version>
-		<thrift.version>0.9.3</thrift.version>
-		<httpclient.version>4.5.6</httpclient.version>
-		<httpcore.version>4.4.10</httpcore.version>
-		<commons-lang3.version>3.3.2</commons-lang3.version>
-		<commons-io.version>2.4</commons-io.version>
-		<commons-codec.version>1.9</commons-codec.version>
-		<commons-beanutils.version>1.9.1</commons-beanutils.version>
-		<guava.version>23.0</guava.version>
-		<joda-time.version>2.3</joda-time.version>
-		<joda-time-jsptags.version>1.1.1</joda-time-jsptags.version>
-		<metrics.version>3.1.0</metrics.version>
-
-		<jackson.version>2.9.4</jackson.version>
-		<gson.version>2.2.4</gson.version>
-		<fastjson.version>1.1.41</fastjson.version>
-		<netty.version>4.1.24.Final</netty.version>
-		<groovy.version>2.4.10</groovy.version>
-
-		<dozer.version>6.1.0</dozer.version>
-		<org.mapstruct.version>1.2.0.Final</org.mapstruct.version>
-		<jedis.version>2.7.2</jedis.version>
-		<rabbitmq.version>3.5.3</rabbitmq.version>
-		<guice.version>4.2.0</guice.version>
-	</properties>
-
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>${junit.version}</version>
-			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.assertj</groupId>
 			<artifactId>assertj-core</artifactId>
-			<version>${assertj.version}</version>
-			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-test</artifactId>
-			<version>${spring.version}</version>
-			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-core</artifactId>
-			<version>2.21.0</version>
-			<scope>test</scope>
 		</dependency>
 
 		<!-- rx java -->
 		<dependency>
 			<groupId>io.reactivex</groupId>
 			<artifactId>rxjava</artifactId>
-			<version>1.1.6</version>
 		</dependency>
 
 		<dependency>
 			<groupId>io.reactivex</groupId>
 			<artifactId>rxjava-async-util</artifactId>
-			<version>0.21.0</version>
 		</dependency>
 
 		<!-- db and datasource -->
 		<dependency>
 			<groupId>org.mariadb.jdbc</groupId>
 			<artifactId>mariadb-java-client</artifactId>
-			<version>${mariadb.version}</version>
-			<scope>runtime</scope>
-			<exclusions>
-				<exclusion>
-					<groupId>commons-dbcp</groupId>
-					<artifactId>commons-dbcp</artifactId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.tomcat</groupId>
 			<artifactId>tomcat-jdbc</artifactId>
-			<version>${tomcat-jdbc.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.tomcat</groupId>
 			<artifactId>tomcat-juli</artifactId>
-			<version>${tomcat-jdbc.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.mybatis</groupId>
 			<artifactId>mybatis</artifactId>
-			<version>3.4.5</version>
 		</dependency>
 
 		<!-- spring -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
-			<version>2.0.3.RELEASE</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
-			<version>${spring.version}</version>
-			<exclusions>
-				<!-- Exclude Commons Logging in favor of SLF4j -->
-				<exclusion>
-					<groupId>commons-logging</groupId>
-					<artifactId>commons-logging</artifactId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-beans</artifactId>
-			<version>${spring.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-core</artifactId>
-			<version>${spring.version}</version>
-			<exclusions>
-				<!-- Exclude Commons Logging in favor of SLF4j -->
-				<exclusion>
-					<groupId>commons-logging</groupId>
-					<artifactId>commons-logging</artifactId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context-support</artifactId>
-			<version>${spring.version}</version>
-			<exclusions>
-				<!-- Exclude Commons Logging in favor of SLF4j -->
-				<exclusion>
-					<groupId>commons-logging</groupId>
-					<artifactId>commons-logging</artifactId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-jdbc</artifactId>
-			<version>${spring.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-orm</artifactId>
-			<version>${spring.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-aop</artifactId>
-			<version>${spring.version}</version>
 		</dependency>
 
 		<!-- AspectJ -->
 		<dependency>
 			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjrt</artifactId>
-			<version>${aspectj.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjweaver</artifactId>
-			<version>${aspectj.version}</version>
 		</dependency>
 
-		<!-- Logging Begin -->
+		<!-- Logging -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
-			<version>${slf4j.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-classic</artifactId>
-			<version>${logback.version}</version>
-			<scope>runtime</scope>
 		</dependency>
-		<!-- Bridging Commons Logging API -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>jcl-over-slf4j</artifactId>
-			<version>${slf4j.version}</version>
-			<scope>runtime</scope>
 		</dependency>
-		<!-- Bridging Java Util Logging API -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>jul-to-slf4j</artifactId>
-			<version>${slf4j.version}</version>
-			<scope>runtime</scope>
 		</dependency>
-		<!-- Bridging Log4j API -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>log4j-over-slf4j</artifactId>
-			<version>${slf4j.version}</version>
-			<scope>runtime</scope>
 		</dependency>
 
 
@@ -234,288 +136,194 @@
 		<dependency>
 			<groupId>org.apache.thrift</groupId>
 			<artifactId>libthrift</artifactId>
-			<version>${thrift.version}</version>
 		</dependency>
-
 		<dependency>
 			<groupId>io.protostuff</groupId>
 			<artifactId>protostuff-core</artifactId>
-			<version>1.5.9</version>
 		</dependency>
-
 		<dependency>
 			<groupId>io.protostuff</groupId>
 			<artifactId>protostuff-runtime</artifactId>
-			<version>1.5.9</version>
 		</dependency>
 
 		<!-- http utils -->
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpclient</artifactId>
-			<version>${httpclient.version}</version>
-			<exclusions>
-				<!-- Exclude Commons Logging in favor of SLF4j -->
-				<exclusion>
-					<groupId>commons-logging</groupId>
-					<artifactId>commons-logging</artifactId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpcore</artifactId>
-			<version>${httpcore.version}</version>
 		</dependency>
 
 		<!-- excel -->
 		<dependency>
 			<groupId>org.apache.poi</groupId>
 			<artifactId>poi</artifactId>
-			<version>${poi.version}</version>
 		</dependency>
 
 		<!-- utils -->
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
-			<version>${commons-lang3.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
-			<version>${commons-io.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-codec</groupId>
 			<artifactId>commons-codec</artifactId>
-			<version>${commons-codec.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-beanutils</groupId>
 			<artifactId>commons-beanutils</artifactId>
-			<version>${commons-beanutils.version}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>commons-logging</groupId>
-					<artifactId>commons-logging</artifactId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 
 		<dependency>
 			<groupId>cglib</groupId>
 			<artifactId>cglib</artifactId>
-			<version>3.2.6</version>
 		</dependency>
 
 		<!-- google java library -->
 		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
-			<version>${guava.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.dom4j</groupId>
 			<artifactId>dom4j</artifactId>
-			<version>2.0.0</version>
-		</dependency>
-
-		<!-- joda -->
-		<dependency>
-			<groupId>joda-time</groupId>
-			<artifactId>joda-time</artifactId>
-			<version>${joda-time.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>joda-time</groupId>
-			<artifactId>joda-time-jsptags</artifactId>
-			<version>${joda-time-jsptags.version}</version>
 		</dependency>
 
 		<!-- jackson -->
-		<!-- add-on module for jackson to support joda data types -->
-		<dependency>
-			<groupId>com.fasterxml.jackson.datatype</groupId>
-			<artifactId>jackson-datatype-joda</artifactId>
-			<version>${jackson.version}</version>
-		</dependency>
-
-		<!-- add-on module for jackson to support guava data types -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.datatype</groupId>
 			<artifactId>jackson-datatype-guava</artifactId>
-			<version>${jackson.version}</version>
 		</dependency>
-
-		<!-- add-on module for jackson to support jsr-310(java 8 date & time) data 
-			types -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.datatype</groupId>
 			<artifactId>jackson-datatype-jsr310</artifactId>
-			<version>${jackson.version}</version>
 		</dependency>
-
-		<!-- the core, which includes Streaming API, shared low-level abstractions 
-			(but NOT data-binding) -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-core</artifactId>
-			<version>${jackson.version}</version>
 		</dependency>
-
-		<!-- Just the annotations; use this dependency if you want to attach annotations 
-			to classes without connecting them to the code. -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-annotations</artifactId>
-			<version>${jackson.version}</version>
 		</dependency>
-
-		<!-- databinding; ObjectMapper, JsonNode and related classes are here -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
-			<version>${jackson.version}</version>
 		</dependency>
-
-		<!-- smile (binary JSON). Other artifacts in this group do other formats. -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.dataformat</groupId>
 			<artifactId>jackson-dataformat-smile</artifactId>
-			<version>${jackson.version}</version>
 		</dependency>
-
-		<!-- JAX-RS provider 即Java API for RESTful Web Services -->
-		<!-- <dependency> <groupId>com.fasterxml.jackson.jaxrs</groupId> <artifactId>jackson-jaxrs-json-provider</artifactId> 
-			<version>${jackson.version}</version> </dependency> -->
-
-		<!-- Support for JAX-B annotations as additional configuration -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.module</groupId>
 			<artifactId>jackson-module-jaxb-annotations</artifactId>
-			<version>${jackson.version}</version>
 		</dependency>
 
 		<!-- gson -->
 		<dependency>
 			<groupId>com.google.code.gson</groupId>
 			<artifactId>gson</artifactId>
-			<version>${gson.version}</version>
 		</dependency>
 
 		<!-- fastjson -->
 		<dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>fastjson</artifactId>
-			<version>${fastjson.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>io.netty</groupId>
 			<artifactId>netty-all</artifactId>
-			<version>${netty.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.codehaus.groovy</groupId>
 			<artifactId>groovy-all</artifactId>
-			<version>${groovy.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>com.github.dozermapper</groupId>
 			<artifactId>dozer-core</artifactId>
-			<version>${dozer.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>fr.xebia.extras</groupId>
 			<artifactId>selma</artifactId>
-			<version>1.0</version>
 		</dependency>
 
 		<!-- annotation process tool-->
 		<dependency>
 			<groupId>org.mapstruct</groupId>
 			<artifactId>mapstruct-jdk8</artifactId> <!-- use mapstruct-jdk8 for Java 8 or higher -->
-			<version>${org.mapstruct.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.mapstruct</groupId>
 			<artifactId>mapstruct-processor</artifactId>
-			<version>${org.mapstruct.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.squareup</groupId>
 			<artifactId>javapoet</artifactId>
-			<version>1.11.1</version>
 		</dependency>
 		<dependency>
 			<groupId>com.google.auto.service</groupId>
 			<artifactId>auto-service</artifactId>
-			<version>1.0-rc4</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.jsoup</groupId>
 			<artifactId>jsoup</artifactId>
-			<version>1.8.1</version>
 		</dependency>
 
 		<dependency>
 			<groupId>redis.clients</groupId>
 			<artifactId>jedis</artifactId>
-			<version>${jedis.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>io.dropwizard.metrics</groupId>
 			<artifactId>metrics-core</artifactId>
-			<version>${metrics.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>io.dropwizard.metrics</groupId>
 			<artifactId>metrics-healthchecks</artifactId>
-			<version>${metrics.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.rabbitmq</groupId>
 			<artifactId>amqp-client</artifactId>
-			<version>${rabbitmq.version}</version>
 		</dependency>
 
 		<!-- bean validator 1.1 -->
 		<dependency>
 			<groupId>javax.validation</groupId>
 			<artifactId>validation-api</artifactId>
-			<version>1.1.0.Final</version>
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-validator</artifactId>
-			<version>5.2.4.Final</version>
 		</dependency>
 
 		<!-- qr code -->
 		<dependency>
 			<groupId>com.google.zxing</groupId>
 			<artifactId>core</artifactId>
-			<version>3.3.0</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.openjdk.jol</groupId>
 			<artifactId>jol-core</artifactId>
-			<version>0.9</version>
 		</dependency>
 
 		<!-- -->
 		<dependency>
 			<groupId>com.google.inject</groupId>
 			<artifactId>guice</artifactId>
-			<version>${guice.version}</version>
 		</dependency>
 
 	</dependencies>
@@ -526,42 +334,10 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.8.0</version>
-				<configuration>
-					<source>1.8</source>
-					<target>1.8</target>
-					<!-- 此处没指定utf-8的话可能导致代码中的汉字乱码，即打印汉字时，非代码中写死的汉字不会乱码，写死的会乱码 -->
-					<encoding>UTF-8</encoding>
-					<compilerArgument>-Xlint:all</compilerArgument>
-					<showWarnings>true</showWarnings>
-					<showDeprecation>true</showDeprecation>
-					<!-- https://maven.apache.org/plugins/maven-compiler-plugin/compile-mojo.html#annotationProcessorPaths -->
-					<!-- 不指定没有任何影响-->
-					<!--<annotationProcessorPaths>
-						<path>
-							<groupId>org.mapstruct</groupId>
-							<artifactId>mapstruct-processor</artifactId>
-							<version>${org.mapstruct.version}</version>
-						</path>
-						<path>
-							<groupId>com.google.auto.service</groupId>
-							<artifactId>auto-service</artifactId>
-							<version>1.0-rc4</version>
-						</path>
-					</annotationProcessorPaths>-->
-				</configuration>
-				<dependencies>
-					<dependency>
-						<groupId>com.google.guava</groupId>
-						<artifactId>guava</artifactId>
-						<version>23.0</version>
-					</dependency>
-				</dependencies>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
-				<version>3.0.2</version>
 				<configuration>
 					<archive>
 						<manifestEntries>
@@ -570,24 +346,6 @@
 					</archive>
 				</configuration>
 			</plugin>
-      <!--<plugin>
-        <groupId>com.facebook.mojo</groupId>
-        <artifactId>swift-maven-plugin</artifactId>
-        <version>0.23.1</version>
-        <executions>
-          <execution>
-            <goals>
-              <goal>generate</goal>
-            </goals>
-          </execution>
-        </executions>
-				<configuration>
-					<idlFiles>
-						<directory>${basedir}/src/main/resources/thrift</directory>
-					</idlFiles>
-					<outputFolder>${basedir}/src/main/java</outputFolder>
-				</configuration>
-      </plugin>-->
 		</plugins>
 	</build>
 </project>
