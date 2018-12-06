@@ -38,7 +38,7 @@ public class Launcher {
 		connector.setReuseAddress(false);
 		server.setConnectors(new Connector[] { connector });
 
-		WebAppContext webapp = new WebAppContext(DEFAULT_WEBAPP_PATH, "/");
+		WebAppContext webapp = new WebAppContext(DEFAULT_WEBAPP_PATH, "/nebula");
 		webapp.setDescriptor("src/main/webapp/WEB-INF/web.xml");
 		webapp.setResourceBase(DEFAULT_WEBAPP_PATH);
 		webapp.setParentLoaderPriority(true);

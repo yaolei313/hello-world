@@ -1,16 +1,13 @@
 package com.yao.app.reactivex.transform;
 
-import rx.Observable;
-import rx.functions.Action1;
-import rx.functions.Func2;
 
 public class Scan {
     public static void main(String[] args) {
         //scan();
-        scan2();
+        //scan2();
     }
 
-    public static void scan() {
+    /*public static void scan() {
         Observable<Integer> observable = Observable.range(1, 5);
 
         Observable<Integer> observable2 = observable.scan(new Func2<Integer, Integer, Integer>() {
@@ -52,5 +49,5 @@ public class Scan {
                 System.out.println(t);
             }
         });
-    }
+    }*/
 }

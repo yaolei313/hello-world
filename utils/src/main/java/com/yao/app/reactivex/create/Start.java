@@ -2,14 +2,6 @@ package com.yao.app.reactivex.create;
 
 import java.util.concurrent.Callable;
 
-import rx.Observable;
-import rx.Subscriber;
-import rx.functions.Action0;
-import rx.functions.Action1;
-import rx.functions.ActionN;
-import rx.functions.Func0;
-import rx.functions.FuncN;
-import rx.util.async.Async;
 
 public class Start {
 
@@ -18,13 +10,13 @@ public class Start {
         // toAsync();
         // fromRunnable();
         // fromCallable();
-        fromAction();
+        //fromAction();
         // start();
         // Scanner input = new Scanner(System.in);
         // input.next();
     }
 
-    public static void asyncAction() {
+    /*public static void asyncAction() {
         FuncN<Observable<Void>> fun = Async.asyncAction(new ActionN() {
 
             @Override
@@ -170,6 +162,6 @@ public class Start {
             }
 
         });
-    }
+    }*/
 
 }

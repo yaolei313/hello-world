@@ -1,15 +1,13 @@
 package com.yao.app.reactivex.create;
 
-import rx.Observable;
-import rx.Subscriber;
 
 public class Empty {
 
     public static void main(String[] args) {
-        throwTest();
+        // throwTest();
     }
     
-    public static void emptyTest(){
+    /*public static void emptyTest(){
         // 直接调用观察者的onCompleted
         Observable<String> observable = Observable.empty();
 
@@ -80,6 +78,6 @@ public class Empty {
 
             }
         });
-    }
+    }*/
 
 }

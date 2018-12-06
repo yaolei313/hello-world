@@ -4,13 +4,11 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
-import rx.Observable;
-import rx.functions.Action1;
 
 public class Buffer {
 
     public static void main(String[] args) {
-        buffer();
+        //buffer();
         // bufferSkip();
         // bufferByTime();
 
@@ -19,7 +17,7 @@ public class Buffer {
         input.close();
     }
 
-    public static void buffer() {
+    /*public static void buffer() {
         Observable<Integer> observable = Observable.range(1, 50);
 
         Observable<List<Integer>> observable2 = observable.buffer(10);
@@ -66,6 +64,6 @@ public class Buffer {
             }
         });
 
-    }
+    }*/
 
 }

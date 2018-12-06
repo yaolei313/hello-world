@@ -3,25 +3,18 @@ package com.yao.app.reactivex.transform;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import com.yao.app.reactivex.DefaultSubscriber;
 
-import rx.Observable;
-import rx.Subscriber;
-import rx.functions.Action0;
-import rx.functions.Action1;
-import rx.functions.Func0;
-import rx.functions.Func1;
-import rx.schedulers.Schedulers;
+
 
 public class FlatMap {
 
     public static void main(String[] args) {
         // flatMap();
         // flatMap2();
-        concatMap();
+        // concatMap();
     }
 
-    public static void flatMap() {
+    /*public static void flatMap() {
         Observable<Integer> observable = getDefaultIntegerObservable2();
 
         ExecutorService executor = Executors.newFixedThreadPool(3);
@@ -143,6 +136,6 @@ public class FlatMap {
             }
 
         });
-    }
+    }*/
 
 }

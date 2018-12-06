@@ -1,13 +1,10 @@
 package com.yao.app.reactivex.create;
 
-import rx.Observable;
-import rx.Subscriber;
-import rx.functions.Func0;
 
 public class Defer {
 
     public static void main(String[] args) {
-        Observable<String> observable = Observable.defer(new Func0<Observable<String>>(){
+        /*Observable<String> observable = Observable.defer(new Func0<Observable<String>>(){
 
             @Override
             public Observable<String> call() {
@@ -40,7 +37,7 @@ public class Defer {
                 System.out.println("观察到数据:" + t);
 
             }
-        });
+        });*/
 
     }
 

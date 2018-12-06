@@ -2,15 +2,13 @@ package com.yao.app.reactivex.create;
 
 import java.util.List;
 
-import rx.Observable;
-import rx.functions.Action1;
 
 import com.google.common.collect.Lists;
 
 public class Just {
 
     public static void main(String[] args) {
-        Observable<String> observable = Observable.just("hello","li bai");
+        /*Observable<String> observable = Observable.just("hello","li bai");
         observable.subscribe(new Action1<String>(){
 
             @Override
@@ -29,7 +27,7 @@ public class Just {
             public void call(List<String> t) {
                 System.out.println(t);
             }
-        });
+        });*/
     }
 
 }

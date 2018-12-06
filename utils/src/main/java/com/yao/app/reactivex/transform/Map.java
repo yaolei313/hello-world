@@ -1,18 +1,15 @@
 package com.yao.app.reactivex.transform;
 
-import rx.Observable;
-import rx.functions.Action1;
-import rx.functions.Func1;
 
 public class Map {
 
     public static void main(String[] args) {
         // TODO Auto-generated method stub
         //map();
-        cast();
+        //cast();
     }
 
-    public static void map() {
+    /*public static void map() {
         Observable<Integer> observable = Observable.range(1, 20);
 
         Observable<String> observable2 = observable.map(new Func1<Integer, String>() {
@@ -46,6 +43,6 @@ public class Map {
             }
         });
 
-    }
+    }*/
 
 }

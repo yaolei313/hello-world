@@ -1,14 +1,11 @@
 package com.yao.app.reactivex.transform;
 
-import rx.Observable;
-import rx.functions.Action1;
-import rx.functions.Func1;
-import rx.observables.GroupedObservable;
+
 
 public class GroupBy {
 
     public static void main(String[] args) {
-        Observable<Integer> observable = Observable.range(1, 20);
+        /*Observable<Integer> observable = Observable.range(1, 20);
         Observable<GroupedObservable<String, Integer>> grouped = observable.groupBy(new Func1<Integer, String>() {
 
             @Override
@@ -24,7 +21,7 @@ public class GroupBy {
                 
             }
             
-        });
+        });*/
     }
 
 }

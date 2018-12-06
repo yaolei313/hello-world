@@ -1,4 +1,4 @@
-package com.yao.app.utils.http;
+package com.yao.app.http;
 
 import org.apache.http.*;
 import org.apache.http.auth.AuthScope;
