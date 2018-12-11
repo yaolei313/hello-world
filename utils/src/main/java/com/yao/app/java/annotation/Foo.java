@@ -1,13 +1,14 @@
 package com.yao.app.java.annotation;
 
 import com.yao.app.java.jvm.Employee;
+import com.yao.app.spi.annotation.Custom;
 
 import java.io.Serializable;
 
 /**
  * Created by yaolei02 on 2018/4/19.
  */
-public @Custom("class") class Foo extends @Custom("extend") Employee implements @Custom("interface") Serializable {
+public @Custom("class123") class Foo extends @Custom("extend") Employee implements @Custom("interface") Serializable {
     public @Custom("field") String desc;
 
     public @Custom("construct return") Foo(@Custom("construct param") String desc) throws @Custom("construct exception") Exception {

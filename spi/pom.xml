@@ -11,7 +11,8 @@
     <url>http://maven.apache.org</url>
     
     <modules>
-        <module>apt-spi</module>
+        <module>apt-api</module>
+        <module>apt-processor</module>
         <module>instrumentation-spi</module>
     </modules>
 </project>

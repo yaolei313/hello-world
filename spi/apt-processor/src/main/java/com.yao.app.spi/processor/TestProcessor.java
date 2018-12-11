@@ -1,9 +1,10 @@
-package com.yao.app.java.annotation;
+package com.yao.app.spi.processor;
 
 import com.google.auto.service.AutoService;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeSpec;
+import com.yao.app.spi.annotation.Custom;
 
 import javax.annotation.processing.*;
 import javax.lang.model.SourceVersion;
@@ -19,7 +20,7 @@ import java.util.Set;
  * Created by yaolei02 on 2018/11/19.
  */
 @AutoService(Processor.class)
-@SupportedAnnotationTypes("com.yao.app.java.annotation.Custom")
+@SupportedAnnotationTypes("com.yao.app.spi.annotation.Custom")
 @SupportedOptions({TestProcessor.SKIP_PRIMITIVE_TYPE_PRESENCE_CHECK})
 @SupportedSourceVersion(SourceVersion.RELEASE_8)
 public class TestProcessor extends AbstractProcessor {
@@ -46,9 +47,11 @@ public class TestProcessor extends AbstractProcessor {
         LoggerFileTool tool = new LoggerFileTool(processingEnv);
         processingEnv.getMessager().printMessage(Diagnostic.Kind.NOTE, "hello world");
         tool.writeLog("start handle");
+        // 输出 [com.yao.app.java.annotation.Custom]
         tool.writeLog(annotations.toString());
         for (Element element : elements) {
             Custom anno = element.getAnnotation(Custom.class);
+            // 输出 Element:com.yao.app.java.annotation.Foo,Foo,Custom value:class
             tool.writeLog("Element:" + element + "," + element.getSimpleName() + ",Custom value:" + anno.value());
             if (element instanceof PackageElement) {
                 PackageElement packageElement = (PackageElement) element;

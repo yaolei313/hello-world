@@ -6,7 +6,6 @@
 		<groupId>com.yao.app</groupId>
 		<artifactId>parent</artifactId>
 		<version>1.0-SNAPSHOT</version>
-		<relativePath>../parent/</relativePath>
 	</parent>
 
 	<groupId>com.yao.app</groupId>
@@ -48,6 +47,10 @@
 		<dependency>
 			<groupId>org.mybatis</groupId>
 			<artifactId>mybatis</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.github.pagehelper</groupId>
+			<artifactId>pagehelper</artifactId>
 		</dependency>
 
 		<!-- spring -->
@@ -327,10 +330,13 @@
 			<groupId>com.squareup</groupId>
 			<artifactId>javapoet</artifactId>
 		</dependency>
+
 		<dependency>
-			<groupId>com.google.auto.service</groupId>
-			<artifactId>auto-service</artifactId>
+			<groupId>com.yao.app</groupId>
+			<artifactId>apt-processor</artifactId>
+			<version>1.0-SNAPSHOT</version>
 		</dependency>
+
 
 		<!-- ioc -->
 		<dependency>

@@ -7,6 +7,7 @@ import javax.lang.model.element.Modifier;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Function;
 
 /**
  * 一个生成java文件的工具,注意生成的不是byte code
@@ -45,7 +46,7 @@ public class PoetStudy {
         MethodSpec test2 =
                 MethodSpec.methodBuilder("test").addModifiers(Modifier.PUBLIC).returns(LocalDate.class).addStatement("return new $T", LocalDate.class).build();
 
-        List<MethodSpec> methods = Lists.newArrayList(getOrderId, setOrderId, main, test, test2);
+        List<MethodSpec> methods = Lists.newArrayList(getOrderId, setOrderId, constructor, main, test, test2);
 
 
         TypeSpec orderType = TypeSpec.classBuilder("Order").addModifiers(Modifier.PUBLIC).addFields(fields).addMethods(methods).build();
@@ -76,7 +77,16 @@ public class PoetStudy {
         return setMethod;
     }
 
-    public static MethodSpec genConstructor(FieldSpec... properties){
+    public static MethodSpec genConstructor(FieldSpec... properties) {
+
+        MethodSpec.Builder constructorBuilder = MethodSpec.constructorBuilder().addModifiers(Modifier.PUBLIC);
+        for (FieldSpec fieldSpec : properties) {
+            ParameterSpec parameterSpec = CONVERT.apply(fieldSpec);
+            constructorBuilder.addParameter(parameterSpec).addStatement("this.$N=$N", fieldSpec, parameterSpec);
+        }
+        return constructorBuilder.build();
 
     }
+
+    private static Function<FieldSpec, ParameterSpec> CONVERT = item -> ParameterSpec.builder(item.type, item.name).build();
 }

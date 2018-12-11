@@ -159,6 +159,11 @@
                 <version>${mybatis.version}</version>
             </dependency>
             <dependency>
+                <groupId>com.github.pagehelper</groupId>
+                <artifactId>pagehelper</artifactId>
+                <version>5.1.8</version>
+            </dependency>
+            <dependency>
                 <groupId>org.mybatis</groupId>
                 <artifactId>mybatis-spring</artifactId>
                 <version>${mybatis-spring.version}</version>
@@ -554,8 +559,22 @@
                         <compilerArgument>-Xlint:all</compilerArgument>
                         <showWarnings>true</showWarnings>
                         <showDeprecation>true</showDeprecation>
-                        <!-- https://maven.apache.org/plugins/maven-compiler-plugin/compile-mojo.html#annotationProcessorPaths -->
-                        <!-- 不指定annotationProcessorPaths没有任何影响-->
+                        <!--
+                        问题1:annotationProcessorPaths
+                        https://maven.apache.org/plugins/maven-compiler-plugin/compile-mojo.html#annotationProcessorPaths
+                        不指定annotationProcessorPaths没有任何影响
+                        -->
+
+                        <!--
+                        问题2:javax.annotation.processing.Processor: Provider not found.
+                        https://stackoverflow.com/questions/36248959/bad-service-configuration-file-or-exception-thrown-while-constructing-processor
+
+                        The default maven lifecycle runs javac with javax.annotation.processing.Processor file as a part of classpath.
+                        This cause compiler to expect a compiled instance of annotation processors listed in the files.
+                        But LogMeCustomAnnotationProcessor is not compiled at that moment so compiler raises "Bad service configuration file ..." error.
+                        See bug report. https://issues.apache.org/jira/browse/MCOMPILER-97
+                        -->
+
                     </configuration>
                 </plugin>
                 <plugin>
