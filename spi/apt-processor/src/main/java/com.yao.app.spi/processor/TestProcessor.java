@@ -17,6 +17,8 @@ import java.util.List;
 import java.util.Set;
 
 /**
+ * 此处不是运行时的处理注解的机制(反射)，而是编译时处理注解。
+ * <p>
  * Created by yaolei02 on 2018/11/19.
  */
 @AutoService(Processor.class)
@@ -51,22 +53,21 @@ public class TestProcessor extends AbstractProcessor {
         tool.writeLog(annotations.toString());
         for (Element element : elements) {
             Custom anno = element.getAnnotation(Custom.class);
-            // 输出 Element:com.yao.app.java.annotation.Foo,Foo,Custom value:class
-            tool.writeLog("Element:" + element + "," + element.getSimpleName() + ",Custom value:" + anno.value());
+            String prefix = element.getSimpleName() + "/" + anno.value();
             if (element instanceof PackageElement) {
                 PackageElement packageElement = (PackageElement) element;
-                tool.writeLog("PackageElement:" + packageElement);
+                tool.writeLog("[" + prefix + "]PackageElement:" + packageElement.getQualifiedName());
             } else if (element instanceof TypeElement) {
                 TypeElement typeElement = (TypeElement) element;
-                tool.writeLog("TypeElement:" + typeElement.getQualifiedName());
+                tool.writeLog("[" + prefix + "]TypeElement:" + typeElement.getQualifiedName());
             } else if (element instanceof ExecutableElement) {
                 ExecutableElement executableElement = (ExecutableElement) element;
-                tool.writeLog("ExecutableElement" + executableElement.getReturnType() + "," + executableElement.getReceiverType());
+                tool.writeLog("[" + prefix + "]ExecutableElement:return " + executableElement.getReturnType() + ",receiver " + executableElement.getReceiverType());
             } else if (element instanceof VariableElement) {
                 VariableElement variableElement = (VariableElement) element;
-                tool.writeLog("VariableElement" + variableElement.getConstantValue());
+                tool.writeLog("[" + prefix + "]VariableElement:" + variableElement.getSimpleName());
             } else {
-                tool.writeLog("Other Element" + element);
+                tool.writeLog("[" + prefix +"]Other Element" + element);
             }
 
             /*element.accept(new ElementVisitor<Void, Void>() {
