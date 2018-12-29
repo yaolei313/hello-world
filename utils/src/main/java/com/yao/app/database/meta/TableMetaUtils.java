@@ -13,6 +13,7 @@ import java.sql.Types;
 
 import javax.sql.DataSource;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.jdbc.datasource.DataSourceUtils;
 import org.springframework.transaction.PlatformTransactionManager;
@@ -23,9 +24,14 @@ import org.springframework.transaction.support.DefaultTransactionDefinition;
 public class TableMetaUtils {
     
     public static void main(String[] args) {
-        String tableName = "user_info";
-        String className = "UserInfo";
+        String tableName = "users";
+        String className = "User";
         String fileName = "D:/" + className + ".java";
+
+        String osName = System.getProperty("os.name");
+        if (StringUtils.isNotBlank(osName) && osName.toLowerCase().startsWith("mac")){
+            fileName = "/Users/yaolei/temp/"+ className + ".java";
+        }
         
         try{
             PrintWriter pw =

@@ -19,6 +19,8 @@ import java.util.Set;
 /**
  * 此处不是运行时的处理注解的机制(反射)，而是编译时处理注解。
  * <p>
+ * processingEnv在父类中被传入，其
+ * 提供了一系列工具类，比如Elements,Types,Filer等.
  * Created by yaolei02 on 2018/11/19.
  */
 @AutoService(Processor.class)

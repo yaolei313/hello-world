@@ -15,7 +15,7 @@ public @Custom("class123") class Foo extends @Custom("extend") Employee implemen
         this.desc = desc;
     }
 
-    public @Custom("method return") String getDesc(@Custom("method param this")Foo this, @Custom("method param 2") String desc)
+    public @Custom("method return") String getDesc(@Custom("method param 1")Foo other, @Custom("method param 2") String desc)
         throws @Custom("method exception") Exception {
         return desc;
     }
