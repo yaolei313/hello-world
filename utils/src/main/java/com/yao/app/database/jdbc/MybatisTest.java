@@ -52,7 +52,8 @@ public class MybatisTest {
 
         config.getTypeAliasRegistry().registerAlias("UserBean", UserBean.class);
 
-        // 若不注册别名UserBean，parse就会报错
+        // 注册方式1，若不注册别名UserBean，parse就会报错
+        // resource路径和mapper不一致的情况可以使用此种
         if (!config.isResourceLoaded(UserMapper.class.toString())) {
             Resource mapperLocation = new ClassPathResource("database/jdbc/UserMapper.xml");
             try {
@@ -65,6 +66,7 @@ public class MybatisTest {
             }
         }
 
+        // 注册方式2
         config.addMapper(PostMapper.class);
 
         SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(config);

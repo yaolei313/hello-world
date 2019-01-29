@@ -5,6 +5,6 @@
 <title>hello world</title>  
 </head>  
 <body>  
-    ${user.username}
+    ${user.username} ${user.email}
 </body>  
 </html>

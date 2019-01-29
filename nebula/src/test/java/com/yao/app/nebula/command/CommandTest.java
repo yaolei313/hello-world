@@ -12,14 +12,7 @@ public class CommandTest {
     @Test
     public void testSynchronous() {
         // 同步调用
-        new CommandHelloWorld1("World").observe().subscribe(new Action1<String>() {
-            @Override
-            public void call(String s) {
-                assertEquals("Hello World!", s);
-            }
-        });
-
-        assertEquals("Hello Bob!", new CommandHelloWorld("Bob").execute());
+        assertEquals("Hello World!", new CommandHelloWorld("World").execute());
     }
 
     @Test

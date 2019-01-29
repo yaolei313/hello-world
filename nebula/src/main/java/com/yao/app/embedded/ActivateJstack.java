@@ -1,4 +1,4 @@
-package com.yao.app.embededjetty;
+package com.yao.app.embedded;
 
 import java.lang.management.ManagementFactory;
 import java.util.Scanner;

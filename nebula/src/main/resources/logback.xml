@@ -4,7 +4,7 @@ scanPeriod:设置监测配置文件是否有修改的时间间隔，如果没有
 debug:当此属性设置为true时，将打印出logback内部日志信息，实时查看logback运行状态。默认值为false。
 -->
 <configuration scan="true" scanPeriod="120 seconds" debug="false">
-	<property name="LOG_BASE_PATH" value="/tmp/studylog"></property>
+	<property name="LOG_BASE_PATH" value="/opt/apps/logs"></property>
 
     <!-- 
     appender属性包含name，class
@@ -16,14 +16,6 @@ debug:当此属性设置为true时，将打印出logback内部日志信息，实
 		<encoder>
 			<pattern>%date{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
 			<!-- <pattern>%-4relative [%thread] %-5level %logger{35} - %msg%n</pattern>   --> 
-		</encoder>
-	</appender>
-
-	<appender name="sqlLog" class="ch.qos.logback.core.FileAppender">
-		<file>${LOG_BASE_PATH}/sql.log</file>
-		<append>false</append>
-		<encoder>
-			<pattern>%date{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
 		</encoder>
 	</appender>
 	
