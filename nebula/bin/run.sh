@@ -34,6 +34,7 @@ JVM_DEBUG="-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=8989 -X
 
 function run() {
     START_LOG=${LOG_PATH}"/start.log"
+    PID_FILE=${APP_PATH}"/pid"
 
     echo "${APP_PATH}" > ${START_LOG}
     mkdir -p ${LOG_PATH}
@@ -43,6 +44,8 @@ function run() {
     CMD="exec ${JAVA_CMD} ${JVM_ARGS} ${JVM_DEBUG}"
     echo "${CMD}" >> ${START_LOG}
     ${CMD} -jar nebula.jar >> ${START_LOG} 2>&1 &
+
+    echo $! > ${PID_FILE}
 }
 
 run
