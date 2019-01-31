@@ -7,6 +7,15 @@ public class TypeTest {
     private volatile int i = 0;
 
     public static void main(String[] args) {
+        String a = new String("abc");
+        System.out.println(a);
+
+        String b= "efg";
+        System.out.println(b);
+
+        String c = new String(b);
+        System.out.println(c == b);
+
         TypeTest test = new TypeTest();
         test.i++;
 

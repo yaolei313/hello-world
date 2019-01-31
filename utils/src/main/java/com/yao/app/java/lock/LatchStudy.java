@@ -9,15 +9,29 @@ import java.util.concurrent.CountDownLatch;
  */
 public class LatchStudy {
     public static void main(String[] args) {
-        CountDownLatch latch = new CountDownLatch(5);
 
-        List<Thread> threadList = new ArrayList<>();
-        for(int i = 0;i<5;i++){
-            Thread t = new Thread(()->{
-                latch.countDown();
+        try {
+            CountDownLatch latch = new CountDownLatch(5);
+
+            List<Thread> threads = ThreadUtils.createTask(5, () -> {
+                try {
+                    System.out.println(Thread.currentThread().getName() + " start do job.");
+                    Thread.sleep(1000);
+                    System.out.println(Thread.currentThread().getName() + "'s job finished.");
+                    latch.countDown();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             });
-            threadList.add(t);
-        }
+            System.out.println("the boss distributes jobs");
+            ThreadUtils.startTask(threads);
 
+            System.out.println("the boss is waiting");
+            latch.await();
+            System.out.println("all job finished. the boss go away");
+
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }
