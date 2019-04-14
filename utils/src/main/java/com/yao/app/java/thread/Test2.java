@@ -18,7 +18,9 @@ public class Test2 {
             System.out.println(errorCount.get());
             i++;
             Future<?> future = service.submit(new NormalJob(String.valueOf(i), errorCount));
-            if(future.isDone())
+            if(future.isDone()){
+
+            }
         }
         System.out.println("happen error exit");
 
