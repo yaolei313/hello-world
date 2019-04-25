@@ -1,7 +1,6 @@
 *.class
 *.classpath
 *.project
-*.gitignore
 *.log
 *.iml
 
