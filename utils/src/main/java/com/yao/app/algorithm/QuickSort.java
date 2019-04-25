@@ -5,7 +5,8 @@ public class QuickSort {
     public static void main(String[] args) {
         QuickSort t = new QuickSort();
 
-        int[] a = new int[] {11, 2, 8, 111, 44, 66, 45, 23};
+        //int[] a = new int[] {11, 2, 8, 111, 44, 66, 45, 23};
+        int[] a = new int[]{11, 2, 8, 111, 44, 66, 11, 23};
 
         QuickSort.printArray(a);
         t.quickSort(a, 0, a.length - 1);
@@ -24,15 +25,19 @@ public class QuickSort {
     private int partition(int[] a, int l, int r) {
         int tmp = a[l];
         while (l < r) {
-            while (l < r && a[r] > tmp) {
+            while (l < r && a[r] >= tmp) {
                 r--;
             }
-            a[l] = a[r];
+            if (l < r) {
+                a[l] = a[r];
+            }
 
-            while (l < r && a[l] < tmp) {
+            while (l < r && a[l] <= tmp) {
                 l++;
             }
-            a[r] = a[l];
+            if (l < r) {
+                a[r] = a[l];
+            }
         }
         a[l] = tmp;
 
