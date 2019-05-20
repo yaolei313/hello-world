@@ -19,10 +19,10 @@ public class TUser implements org.apache.thrift.TBase<TUser, TUser._Fields>, jav
   private static final org.apache.thrift.scheme.SchemeFactory STANDARD_SCHEME_FACTORY = new TUserStandardSchemeFactory();
   private static final org.apache.thrift.scheme.SchemeFactory TUPLE_SCHEME_FACTORY = new TUserTupleSchemeFactory();
 
-  public @org.apache.thrift.annotation.Nullable String id; // optional
-  public @org.apache.thrift.annotation.Nullable String name; // required
-  public @org.apache.thrift.annotation.Nullable String gravatarMail; // optional
-  public @org.apache.thrift.annotation.Nullable String email; // optional
+  public @org.apache.thrift.annotation.Nullable java.lang.String id; // optional
+  public @org.apache.thrift.annotation.Nullable java.lang.String name; // required
+  public @org.apache.thrift.annotation.Nullable java.lang.String gravatarMail; // optional
+  public @org.apache.thrift.annotation.Nullable java.lang.String email; // optional
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements org.apache.thrift.TFieldIdEnum {
@@ -31,7 +31,7 @@ public class TUser implements org.apache.thrift.TBase<TUser, TUser._Fields>, jav
     GRAVATAR_MAIL((short)3, "gravatarMail"),
     EMAIL((short)4, "email");
 
-    private static final java.util.Map<String, _Fields> byName = new java.util.HashMap<String, _Fields>();
+    private static final java.util.Map<java.lang.String, _Fields> byName = new java.util.HashMap<java.lang.String, _Fields>();
 
     static {
       for (_Fields field : java.util.EnumSet.allOf(_Fields.class)) {
@@ -64,7 +64,7 @@ public class TUser implements org.apache.thrift.TBase<TUser, TUser._Fields>, jav
      */
     public static _Fields findByThriftIdOrThrow(int fieldId) {
       _Fields fields = findByThriftId(fieldId);
-      if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+      if (fields == null) throw new java.lang.IllegalArgumentException("Field " + fieldId + " doesn't exist!");
       return fields;
     }
 
@@ -72,14 +72,14 @@ public class TUser implements org.apache.thrift.TBase<TUser, TUser._Fields>, jav
      * Find the _Fields constant that matches name, or null if its not found.
      */
     @org.apache.thrift.annotation.Nullable
-    public static _Fields findByName(String name) {
+    public static _Fields findByName(java.lang.String name) {
       return byName.get(name);
     }
 
     private final short _thriftId;
-    private final String _fieldName;
+    private final java.lang.String _fieldName;
 
-    _Fields(short thriftId, String fieldName) {
+    _Fields(short thriftId, java.lang.String fieldName) {
       _thriftId = thriftId;
       _fieldName = fieldName;
     }
@@ -88,7 +88,7 @@ public class TUser implements org.apache.thrift.TBase<TUser, TUser._Fields>, jav
       return _thriftId;
     }
 
-    public String getFieldName() {
+    public java.lang.String getFieldName() {
       return _fieldName;
     }
   }
@@ -114,7 +114,7 @@ public class TUser implements org.apache.thrift.TBase<TUser, TUser._Fields>, jav
   }
 
   public TUser(
-    String name)
+    java.lang.String name)
   {
     this();
     this.name = name;
@@ -151,11 +151,11 @@ public class TUser implements org.apache.thrift.TBase<TUser, TUser._Fields>, jav
   }
 
   @org.apache.thrift.annotation.Nullable
-  public String getId() {
+  public java.lang.String getId() {
     return this.id;
   }
 
-  public TUser setId(@org.apache.thrift.annotation.Nullable String id) {
+  public TUser setId(@org.apache.thrift.annotation.Nullable java.lang.String id) {
     this.id = id;
     return this;
   }
@@ -176,11 +176,11 @@ public class TUser implements org.apache.thrift.TBase<TUser, TUser._Fields>, jav
   }
 
   @org.apache.thrift.annotation.Nullable
-  public String getName() {
+  public java.lang.String getName() {
     return this.name;
   }
 
-  public TUser setName(@org.apache.thrift.annotation.Nullable String name) {
+  public TUser setName(@org.apache.thrift.annotation.Nullable java.lang.String name) {
     this.name = name;
     return this;
   }
@@ -201,11 +201,11 @@ public class TUser implements org.apache.thrift.TBase<TUser, TUser._Fields>, jav
   }
 
   @org.apache.thrift.annotation.Nullable
-  public String getGravatarMail() {
+  public java.lang.String getGravatarMail() {
     return this.gravatarMail;
   }
 
-  public TUser setGravatarMail(@org.apache.thrift.annotation.Nullable String gravatarMail) {
+  public TUser setGravatarMail(@org.apache.thrift.annotation.Nullable java.lang.String gravatarMail) {
     this.gravatarMail = gravatarMail;
     return this;
   }
@@ -226,11 +226,11 @@ public class TUser implements org.apache.thrift.TBase<TUser, TUser._Fields>, jav
   }
 
   @org.apache.thrift.annotation.Nullable
-  public String getEmail() {
+  public java.lang.String getEmail() {
     return this.email;
   }
 
-  public TUser setEmail(@org.apache.thrift.annotation.Nullable String email) {
+  public TUser setEmail(@org.apache.thrift.annotation.Nullable java.lang.String email) {
     this.email = email;
     return this;
   }
@@ -250,13 +250,13 @@ public class TUser implements org.apache.thrift.TBase<TUser, TUser._Fields>, jav
     }
   }
 
-  public void setFieldValue(_Fields field, @org.apache.thrift.annotation.Nullable Object value) {
+  public void setFieldValue(_Fields field, @org.apache.thrift.annotation.Nullable java.lang.Object value) {
     switch (field) {
     case ID:
       if (value == null) {
         unsetId();
       } else {
-        setId((String)value);
+        setId((java.lang.String)value);
       }
       break;
 
@@ -264,7 +264,7 @@ public class TUser implements org.apache.thrift.TBase<TUser, TUser._Fields>, jav
       if (value == null) {
         unsetName();
       } else {
-        setName((String)value);
+        setName((java.lang.String)value);
       }
       break;
 
@@ -272,7 +272,7 @@ public class TUser implements org.apache.thrift.TBase<TUser, TUser._Fields>, jav
       if (value == null) {
         unsetGravatarMail();
       } else {
-        setGravatarMail((String)value);
+        setGravatarMail((java.lang.String)value);
       }
       break;
 
@@ -280,7 +280,7 @@ public class TUser implements org.apache.thrift.TBase<TUser, TUser._Fields>, jav
       if (value == null) {
         unsetEmail();
       } else {
-        setEmail((String)value);
+        setEmail((java.lang.String)value);
       }
       break;
 
@@ -288,7 +288,7 @@ public class TUser implements org.apache.thrift.TBase<TUser, TUser._Fields>, jav
   }
 
   @org.apache.thrift.annotation.Nullable
-  public Object getFieldValue(_Fields field) {
+  public java.lang.Object getFieldValue(_Fields field) {
     switch (field) {
     case ID:
       return getId();
@@ -303,13 +303,13 @@ public class TUser implements org.apache.thrift.TBase<TUser, TUser._Fields>, jav
       return getEmail();
 
     }
-    throw new IllegalStateException();
+    throw new java.lang.IllegalStateException();
   }
 
   /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
   public boolean isSet(_Fields field) {
     if (field == null) {
-      throw new IllegalArgumentException();
+      throw new java.lang.IllegalArgumentException();
     }
 
     switch (field) {
@@ -322,11 +322,11 @@ public class TUser implements org.apache.thrift.TBase<TUser, TUser._Fields>, jav
     case EMAIL:
       return isSetEmail();
     }
-    throw new IllegalStateException();
+    throw new java.lang.IllegalStateException();
   }
 
   @Override
-  public boolean equals(Object that) {
+  public boolean equals(java.lang.Object that) {
     if (that == null)
       return false;
     if (that instanceof TUser)
@@ -410,7 +410,7 @@ public class TUser implements org.apache.thrift.TBase<TUser, TUser._Fields>, jav
 
     int lastComparison = 0;
 
-    lastComparison = Boolean.valueOf(isSetId()).compareTo(other.isSetId());
+    lastComparison = java.lang.Boolean.valueOf(isSetId()).compareTo(other.isSetId());
     if (lastComparison != 0) {
       return lastComparison;
     }
@@ -420,7 +420,7 @@ public class TUser implements org.apache.thrift.TBase<TUser, TUser._Fields>, jav
         return lastComparison;
       }
     }
-    lastComparison = Boolean.valueOf(isSetName()).compareTo(other.isSetName());
+    lastComparison = java.lang.Boolean.valueOf(isSetName()).compareTo(other.isSetName());
     if (lastComparison != 0) {
       return lastComparison;
     }
@@ -430,7 +430,7 @@ public class TUser implements org.apache.thrift.TBase<TUser, TUser._Fields>, jav
         return lastComparison;
       }
     }
-    lastComparison = Boolean.valueOf(isSetGravatarMail()).compareTo(other.isSetGravatarMail());
+    lastComparison = java.lang.Boolean.valueOf(isSetGravatarMail()).compareTo(other.isSetGravatarMail());
     if (lastComparison != 0) {
       return lastComparison;
     }
@@ -440,7 +440,7 @@ public class TUser implements org.apache.thrift.TBase<TUser, TUser._Fields>, jav
         return lastComparison;
       }
     }
-    lastComparison = Boolean.valueOf(isSetEmail()).compareTo(other.isSetEmail());
+    lastComparison = java.lang.Boolean.valueOf(isSetEmail()).compareTo(other.isSetEmail());
     if (lastComparison != 0) {
       return lastComparison;
     }
@@ -467,8 +467,8 @@ public class TUser implements org.apache.thrift.TBase<TUser, TUser._Fields>, jav
   }
 
   @Override
-  public String toString() {
-    StringBuilder sb = new StringBuilder("TUser(");
+  public java.lang.String toString() {
+    java.lang.StringBuilder sb = new java.lang.StringBuilder("TUser(");
     boolean first = true;
 
     if (isSetId()) {
@@ -528,7 +528,7 @@ public class TUser implements org.apache.thrift.TBase<TUser, TUser._Fields>, jav
     }
   }
 
-  private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
+  private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, java.lang.ClassNotFoundException {
     try {
       read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
     } catch (org.apache.thrift.TException te) {

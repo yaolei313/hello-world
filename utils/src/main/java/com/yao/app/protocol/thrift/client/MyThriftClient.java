@@ -150,6 +150,8 @@ public class MyThriftClient {
         }
     }
 
+    // --user service --
+
     public static void testService4(){
         System.out.println("TFramedTransport TCompactProtocol客户端");
         TTransport transport = null;
