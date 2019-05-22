@@ -3,11 +3,7 @@ package com.yao.app.protocol.thrift.server;
 import org.apache.thrift.TProcessor;
 import org.apache.thrift.protocol.TBinaryProtocol;
 import org.apache.thrift.protocol.TCompactProtocol;
-import org.apache.thrift.server.THsHaServer;
-import org.apache.thrift.server.TNonblockingServer;
-import org.apache.thrift.server.TServer;
-import org.apache.thrift.server.TSimpleServer;
-import org.apache.thrift.server.TThreadPoolServer;
+import org.apache.thrift.server.*;
 import org.apache.thrift.transport.TFramedTransport;
 import org.apache.thrift.transport.TNonblockingServerSocket;
 import org.apache.thrift.transport.TServerSocket;
@@ -20,7 +16,7 @@ public class HelloServerDemo {
     public static final int SERVER_PORT = 8090;
 
     public static void main(String[] args) {
-        startService1();
+        startService5();
     }
     
     public static void startService1(){
@@ -122,6 +118,38 @@ public class HelloServerDemo {
 
             //半同步半异步的服务模型
             TServer server = new THsHaServer(thhsArgs);
+            server.serve();
+
+        } catch (Exception e) {
+            System.out.println("Server start error!!!");
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * TThreadedSelectorServer服务模型
+     * 一个AcceptThread用于处理监听socket上的新连接
+     * 线程池selector threads用来处理网络I/O，
+     * 线程池worker threads用来进行请求的处理
+     */
+    public static void startService5(){
+        try {
+            System.out.println("HelloWorld TThreadedSelectorServer start ....");
+
+            TProcessor processor = new HelloWorldService.Processor<HelloWorldService.Iface>(
+                    new HelloWorldImpl());
+
+            TNonblockingServerSocket transport = new TNonblockingServerSocket(
+                    SERVER_PORT);
+
+            TThreadedSelectorServer.Args args = new TThreadedSelectorServer.Args(transport);
+            args.processor(processor);
+            args.selectorThreads(2);
+            args.workerThreads(5);
+            args.transportFactory(new TFramedTransport.Factory());
+            args.protocolFactory(new TBinaryProtocol.Factory());
+
+            TServer server = new TThreadedSelectorServer(args);
             server.serve();
 
         } catch (Exception e) {

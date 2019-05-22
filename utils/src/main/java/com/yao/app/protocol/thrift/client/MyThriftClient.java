@@ -34,96 +34,87 @@ public class MyThriftClient {
         //testService3();
         testService4();
     }
-    
-    public static void testService(){
+
+    public static void testService() {
         System.out.println("TCompactProtocol客户端");
-        
+
         TTransport transport = null;
         try {
             // transport = new TSocket(SERVER_HOST, SERVER_PORT, TIMEOUT);
             transport = new TSocket(SERVER_HOST, SERVER_PORT);
             //transport = new TFramedTransport(new TSocket(SERVER_HOST, SERVER_PORT));
-            
+
             TCompactProtocol tprotocol = new TCompactProtocol(transport);
             TMultiplexedProtocol protocol = new TMultiplexedProtocol(tprotocol, "HELLO_SERVICE");
-            
+
             HelloWorldService.Client client = new HelloWorldService.Client(protocol);
-            
+
             transport.open();
-            
+
             String result = client.sayHello("李白路过");
             System.out.println(result);
-            
+
         } catch (TTransportException e) {
             e.printStackTrace();
         } catch (TException e) {
             e.printStackTrace();
         } finally {
-            if(transport != null){
+            if (transport != null) {
                 transport.close();
             }
         }
     }
-    
-    public static void testService2(){
+
+    public static void testService2() {
         System.out.println("TFramedTransport TCompactProtocol客户端");
         TTransport transport = null;
         try {
             transport = new TFramedTransport(new TSocket(SERVER_HOST, SERVER_PORT));
-            
+
             TCompactProtocol tprotocol = new TCompactProtocol(transport);
             TMultiplexedProtocol protocol = new TMultiplexedProtocol(tprotocol, "HELLO_SERVICE");
-            
+
             HelloWorldService.Client client = new HelloWorldService.Client(protocol);
-            
+
             transport.open();
-            
+
             String result = client.sayHello("李白路过");
             System.out.println(result);
-            
+
         } catch (TTransportException e) {
             e.printStackTrace();
         } catch (TException e) {
             e.printStackTrace();
         } finally {
-            if(transport != null){
+            if (transport != null) {
                 transport.close();
             }
         }
     }
-    
-    public static void testService3(){
+
+    public static void testService3() {
         // 测试异步客户端
         System.out.println("TCompactProtocol异步客户端，不需要指定frametransport");
         try {
             TAsyncClientManager clientManager = new TAsyncClientManager();
-            
+
             TNonblockingTransport transport = new TNonblockingSocket(SERVER_HOST,
                     SERVER_PORT, TIMEOUT);
-            
-            TProtocolFactory protocolFactory = new TMultiplexedProtocolFactory(new TCompactProtocol.Factory(),"HELLO_SERVICE");
-            
+
+            TProtocolFactory protocolFactory = new TMultiplexedProtocolFactory(new TCompactProtocol.Factory(), "HELLO_SERVICE");
+
             HelloWorldService.AsyncClient client = new HelloWorldService.AsyncClient(protocolFactory, clientManager, transport);
-            
+
             System.out.println("Client start ...");
-            
+
             final CountDownLatch latch = new CountDownLatch(1);
-            AsyncMethodCallback<sayHello_call> resultHandler = new AsyncMethodCallback<sayHello_call>(){
+            AsyncMethodCallback<String> resultHandler = new AsyncMethodCallback<String>() {
 
                 @Override
-                public void onComplete(sayHello_call response) {
+                public void onComplete(String response) {
                     System.out.println("onComplete");
-                    try {
-                        System.out.println("AsynCall result =:"
-                                + response.getResult());
-                    } catch (TException e) {
-                        e.printStackTrace();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    } finally {
-                        latch.countDown();
-                    }
-                    
+                    System.out.println("AsynCall result =:" + response);
+                    latch.countDown();
                 }
 
                 @Override
@@ -131,16 +122,14 @@ public class MyThriftClient {
                     System.out.println("onError :" + exception.getMessage());
                     latch.countDown();
                 }
-
-                
             };
-            
+
             System.out.println("call method sayHello start ...");
             client.sayHello("summer", resultHandler);
             System.out.println("call method sayHello end ...");
             boolean wait = latch.await(30, TimeUnit.SECONDS);
             System.out.println("如果计数到达零，则该方法返回 true 值,结果为" + wait);
-            
+
         } catch (IOException e) {
             e.printStackTrace();
         } catch (TException e) {
@@ -152,30 +141,30 @@ public class MyThriftClient {
 
     // --user service --
 
-    public static void testService4(){
+    public static void testService4() {
         System.out.println("TFramedTransport TCompactProtocol客户端");
         TTransport transport = null;
         try {
             // transport = new TSocket(SERVER_HOST, SERVER_PORT, TIMEOUT);
             // transport = new TSocket(SERVER_HOST, SERVER_PORT);
             transport = new TFramedTransport(new TSocket(SERVER_HOST, SERVER_PORT));
-            
+
             TCompactProtocol tprotocol = new TCompactProtocol(transport);
             TMultiplexedProtocol protocol = new TMultiplexedProtocol(tprotocol, "USER_SERVICE");
-            
+
             TUserService.Client client = new TUserService.Client(protocol);
-            
+
             transport.open();
-            
+
             TUser result = client.queryUserById("y00196907");
             System.out.println(result.toString());
-            
+
         } catch (TTransportException e) {
             e.printStackTrace();
         } catch (TException e) {
             e.printStackTrace();
         } finally {
-            if(transport != null){
+            if (transport != null) {
                 transport.close();
             }
         }

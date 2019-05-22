@@ -19,7 +19,7 @@ public class HelloClientDemo {
     public static final int TIMEOUT = 30000;
 
     public static void main(String[] args) {
-        sendServiceReq1();
+        sendServiceReq2();
     }
     
     public static void sendServiceReq1(){
@@ -51,10 +51,12 @@ public class HelloClientDemo {
     public static void sendServiceReq2(){
         TTransport transport = null;
         try {
-            transport = new TFramedTransport(new TSocket(SERVER_IP,
-                    SERVER_PORT, TIMEOUT));
+            // transport不一致会出现connect reset
+            transport = new TFramedTransport(new TSocket(SERVER_IP, SERVER_PORT, TIMEOUT));
+            // transport = new TSocket(SERVER_IP, SERVER_PORT, TIMEOUT);
             // 协议要和服务端一致
-            TProtocol protocol = new TCompactProtocol(transport);
+            // TProtocol protocol = new TCompactProtocol(transport);
+            TProtocol protocol = new TBinaryProtocol(transport);
             HelloWorldService.Client client = new HelloWorldService.Client(
                     protocol);
             transport.open();

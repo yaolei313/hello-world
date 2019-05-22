@@ -6,6 +6,7 @@ import java.util.concurrent.TimeUnit;
 import org.apache.thrift.TException;
 import org.apache.thrift.async.AsyncMethodCallback;
 import org.apache.thrift.async.TAsyncClientManager;
+import org.apache.thrift.protocol.TBinaryProtocol;
 import org.apache.thrift.protocol.TCompactProtocol;
 import org.apache.thrift.protocol.TProtocolFactory;
 import org.apache.thrift.transport.TNonblockingSocket;
@@ -31,13 +32,14 @@ public class HelloAsynClientDemo {
             TNonblockingTransport transport = new TNonblockingSocket(SERVER_IP,
                     SERVER_PORT, TIMEOUT);
 
-            TProtocolFactory tprotocol = new TCompactProtocol.Factory();
+            //TProtocolFactory tprotocol = new TCompactProtocol.Factory();
+            TProtocolFactory tprotocol = new TBinaryProtocol.Factory();
             HelloWorldService.AsyncClient asyncClient = new HelloWorldService.AsyncClient(
                     tprotocol, clientManager, transport);
             System.out.println("Client start .....");
 
             CountDownLatch latch = new CountDownLatch(1);
-            AsynCallback callBack = new AsynCallback(latch);
+            AsyncMethodCallback callBack = new AsynCallback(latch);
             System.out.println("call method sayHello start ...");
             asyncClient.sayHello(userName, callBack);
             System.out.println("call method sayHello .... end");
@@ -49,7 +51,7 @@ public class HelloAsynClientDemo {
         System.out.println("startClient end.");
     }
 
-    public class AsynCallback implements AsyncMethodCallback<sayHello_call> {
+    public class AsynCallback implements AsyncMethodCallback<String> {
         private CountDownLatch latch;
 
         public AsynCallback(CountDownLatch latch) {
@@ -57,19 +59,12 @@ public class HelloAsynClientDemo {
         }
 
         @Override
-        public void onComplete(sayHello_call response) {
+        public void onComplete(String response) {
             System.out.println("onComplete");
-            try {
-                // Thread.sleep(1000L * 1);
-                System.out.println("AsynCall result =:"
-                        + response.getResult().toString());
-            } catch (TException e) {
-                e.printStackTrace();
-            } catch (Exception e) {
-                e.printStackTrace();
-            } finally {
-                latch.countDown();
-            }
+            // Thread.sleep(1000L * 1);
+            System.out.println("AsynCall result =:"
+                    + response);
+            latch.countDown();
         }
 
         @Override
