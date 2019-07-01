@@ -17,9 +17,16 @@
                         password="study">
         </jdbcConnection>
 
+        <!-- 1.3.7版本的generator已经支持jdk8，增加useJSR310Types配置即可
         <javaTypeResolver type="com.yao.app.mybatis.JDK8JavaTypeResolver">
             <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>-->
+
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+            <property name="useJSR310Types" value="true"/>
         </javaTypeResolver>
+
 
         <!-- domain def -->
         <javaModelGenerator targetPackage="com.yao.app.store.model"
