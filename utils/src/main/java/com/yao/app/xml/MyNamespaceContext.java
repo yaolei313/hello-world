@@ -5,11 +5,17 @@ import javax.xml.namespace.NamespaceContext;
 import java.util.Iterator;
 
 /**
+ * 没必要，直接使用{@link org.springframework.util.xml.SimpleNamespaceContext SimpleNamespaceContext}
+ *
  * Created by yaolei02 on 2017/4/11.
  */
 public class MyNamespaceContext implements NamespaceContext {
 
-    private String defaultNamespaceUri = "";
+    private final String defaultNamespaceUri;
+
+    public MyNamespaceContext(String defaultNamespaceUri) {
+        this.defaultNamespaceUri = defaultNamespaceUri;
+    }
 
     @Override
     public String getNamespaceURI(String prefix) {
@@ -19,8 +25,6 @@ public class MyNamespaceContext implements NamespaceContext {
             return XMLConstants.XMLNS_ATTRIBUTE_NS_URI;
         } else if (XMLConstants.DEFAULT_NS_PREFIX.equals(prefix)) {
             return this.defaultNamespaceUri;
-        } else if("mypre".equals(prefix)){
-            return "http://www.example.com/books";
         }
 
         return XMLConstants.NULL_NS_URI;

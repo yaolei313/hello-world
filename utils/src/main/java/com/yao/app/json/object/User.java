@@ -1,6 +1,7 @@
 package com.yao.app.json.object;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 
 public class User implements Serializable {
@@ -14,8 +15,8 @@ public class User implements Serializable {
     private String name;
 
     // fastjson not support jdk 8 
-    // private LocalDate birthDay;
-    private Date birthDay;
+    private LocalDate birthDay;
+    //private Date birthDay;
 
     private Address address;
 
@@ -37,12 +38,13 @@ public class User implements Serializable {
         this.name = name;
     }
 
-    public Date getBirthDay() {
+    public LocalDate getBirthDay() {
         return birthDay;
     }
 
-    public void setBirthDay(Date birthDay) {
+    public User setBirthDay(LocalDate birthDay) {
         this.birthDay = birthDay;
+        return this;
     }
 
     public Address getAddress() {

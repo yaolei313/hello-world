@@ -4,7 +4,7 @@ scanPeriod:设置监测配置文件是否有修改的时间间隔，如果没有
 debug:当此属性设置为true时，将打印出logback内部日志信息，实时查看logback运行状态。默认值为false。
 -->
 <configuration scan="true" scanPeriod="120 seconds" debug="false">
-	<property name="LOG_BASE_PATH" value="/opt/apps/logs"></property>
+	<property name="LOG_BASE_PATH" value="/tmp/logs"></property>
 
     <!-- 
     appender属性包含name，class
@@ -33,16 +33,16 @@ debug:当此属性设置为true时，将打印出logback内部日志信息，实
 		<!-- 当前日志记录到的文件(活动文件)，可有可无，可以通过设置此属性，将活动文件和归档文件分开 -->
 		<file>${LOG_BASE_PATH}/nebula-all.log</file>
 		<append>true</append>
-        <encoder>
-            <pattern>%date{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
-        </encoder>
-        <!-- 
-                发生滚动时，决定RollingFileAppender的行为，涉及文件移动及重命名
-                包含TimeBasedRollingPolicy:
-        FixedWindowRollingPolicy(固定窗口算法):
-        <maxIndex>,<minIndex>,<fileNamePattern>,其中命名必须包含%i) 
-                假设最小值和最大值分别为1和2，命名模式为 mylog%i.log,会产生归档文件mylog1.log和mylog2.log。还可以指定文件压缩选项，例如，mylog%i.log.gz 或者 没有log%i.log.zip
-         -->
+		<encoder>
+			<pattern>%date{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+		</encoder>
+		<!--
+    发生滚动时，决定RollingFileAppender的行为，涉及文件移动及重命名
+    包含TimeBasedRollingPolicy:
+    FixedWindowRollingPolicy(固定窗口算法):
+    <maxIndex>,<minIndex>,<fileNamePattern>,其中命名必须包含%i)
+    假设最小值和最大值分别为1和2，命名模式为 mylog%i.log,会产生归档文件mylog1.log和mylog2.log。还可以指定文件压缩选项，例如，mylog%i.log.gz 或者 没有log%i.log.zip
+    -->
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
 			<!-- 归档文件，必须包含文件名及%d转换符，且%d可以包含一个java.text.SimpleDateFormat指定的时间格式。 -->
 			<fileNamePattern>${LOG_BASE_PATH}/rolling/nebula-all.%d{yyyy-MM-dd}.log.gzip</fileNamePattern>

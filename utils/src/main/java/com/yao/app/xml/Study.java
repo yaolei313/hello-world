@@ -1,20 +1,20 @@
 package com.yao.app.xml;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathExpression;
+import javax.xml.xpath.XPathExpressionException;
+import javax.xml.xpath.XPathFactory;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
+import org.springframework.util.xml.SimpleNamespaceContext;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.xpath.*;
-import java.io.IOException;
 
 /**
- *
  * https://www.ibm.com/developerworks/cn/xml/x-javaxpathapi.html
  *
  * https://www.ibm.com/developerworks/cn/xml/x-jaxp13a.html
@@ -22,15 +22,17 @@ import java.io.IOException;
  * Created by yaolei02 on 2017/4/9.
  */
 public class Study {
-    public static void main(String[] args){
+
+    public static void main(String[] args) {
         System.out.println("==================");
         study1();
         System.out.println("==================");
         study2();
         System.out.println("==================");
+        study3();
     }
 
-    public static void study1(){
+    public static void study1() {
         try {
             DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
             documentBuilderFactory.setNamespaceAware(true);
@@ -43,29 +45,13 @@ public class Study {
             XPath xPath = xPathFactory.newXPath();
 
             XPathExpression expression = xPath.compile("//book/author[@test]/@test");
-            Object result = expression.evaluate(document, XPathConstants.NODESET);
-            NodeList nodes = (NodeList) result;
-            for (int i = 0; i < nodes.getLength(); i++) {
-                Node node = nodes.item(i);
-                System.out.println(node.getNodeValue());
-            }
+            iterateNodeSet(document, expression);
 
             XPathExpression expression2 = xPath.compile("//book[author='Neal Stephenson']/title/text()");
-            Object result2 = expression2.evaluate(document, XPathConstants.NODESET);
-            NodeList nodes2 = (NodeList) result;
-            for (int i = 0; i < nodes2.getLength(); i++) {
-                Node node = nodes.item(i);
-                System.out.println(node.getNodeValue());
-            }
+            iterateNodeSet(document, expression2);
             // nodeset,number,boolean,string
             // org.w3c.dom.NodeList,Double,Boolean,String
-        } catch (ParserConfigurationException e) {
-            e.printStackTrace();
-        } catch (SAXException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (XPathExpressionException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -73,7 +59,7 @@ public class Study {
     /**
      * xml文档包含xmlns时，study1是无法解析的
      */
-    public static void study2(){
+    public static void study2() {
         try {
             DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
             documentBuilderFactory.setNamespaceAware(true);
@@ -84,37 +70,25 @@ public class Study {
 
             XPathFactory xPathFactory = XPathFactory.newInstance();
             XPath xPath = xPathFactory.newXPath();
-            xPath.setNamespaceContext(new MyNamespaceContext());
 
-            XPathExpression expression = xPath.compile("//mypre:book/mypre:author[@test]/@test");
-            Object result = expression.evaluate(document, XPathConstants.NODESET);
-            NodeList nodes = (NodeList) result;
-            for (int i = 0; i < nodes.getLength(); i++) {
-                Node node = nodes.item(i);
-                System.out.println(node.getNodeValue());
-            }
+            SimpleNamespaceContext context = new SimpleNamespaceContext();
+            context.bindDefaultNamespaceUri("http://www.example.com/books");
+            xPath.setNamespaceContext(context);
 
-            XPathExpression expression2 = xPath.compile("//mypre:book[author='Neal Stephenson']/mypre:title/text()");
-            Object result2 = expression2.evaluate(document, XPathConstants.NODESET);
-            NodeList nodes2 = (NodeList) result;
-            for (int i = 0; i < nodes2.getLength(); i++) {
-                Node node = nodes.item(i);
-                System.out.println(node.getNodeValue());
-            }
+            XPathExpression expression = xPath.compile("//book/author[@test]/@test");
+            iterateNodeSet(document, expression);
+
+            XPathExpression expression2 = xPath.compile("//book[author='Neal Stephenson']/title/text()");
+            iterateNodeSet(document, expression2);
+
             // nodeset,number,boolean,string
             // org.w3c.dom.NodeList,Double,Boolean,String
-        } catch (ParserConfigurationException e) {
-            e.printStackTrace();
-        } catch (SAXException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (XPathExpressionException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public static void study3(){
+    public static void study3() {
         try {
             DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
             documentBuilderFactory.setNamespaceAware(true);
@@ -127,24 +101,22 @@ public class Study {
             XPath xPath = xPathFactory.newXPath();
 
             XPathExpression expression = xPath.compile("//context:property-placeholder/@location");
-            Object result = expression.evaluate(document, XPathConstants.NODESET);
-            NodeList nodes = (NodeList) result;
-            for (int i = 0; i < nodes.getLength(); i++) {
-                Node node = nodes.item(i);
-                System.out.println(node.getNodeValue());
-            }
-
+            iterateNodeSet(document, expression);
 
             // nodeset,number,boolean,string
             // org.w3c.dom.NodeList,Double,Boolean,String
-        } catch (ParserConfigurationException e) {
-            e.printStackTrace();
-        } catch (SAXException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (XPathExpressionException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private static void iterateNodeSet(Document document, XPathExpression expression) throws XPathExpressionException {
+        System.out.println("----");
+        NodeList nodeList = (NodeList) expression.evaluate(document, XPathConstants.NODESET);
+        for (int i = 0; i < nodeList.getLength(); i++) {
+            Node node = nodeList.item(i);
+            System.out.println(node.toString() + "\t" + node.getNodeValue());
+        }
+        System.out.println("----");
     }
 }

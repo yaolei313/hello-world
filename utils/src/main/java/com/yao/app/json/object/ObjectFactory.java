@@ -1,11 +1,7 @@
 package com.yao.app.json.object;
 
 
-
-import java.sql.Date;
-import java.time.Instant;
 import java.time.LocalDate;
-import java.time.ZoneId;
 
 public class ObjectFactory {
     public static User getDefaultUser(){
@@ -13,8 +9,11 @@ public class ObjectFactory {
         
         user.setId("y00196907");
         user.setName("yaolei");
-        Instant instant = LocalDate.of(1987,3,13).atStartOfDay(ZoneId.systemDefault()).toInstant();
-        user.setBirthDay(Date.from(instant));
+
+        LocalDate birthDay = LocalDate.of(1987,3,13);
+        //Instant instant = birthDay.atStartOfDay(ZoneId.systemDefault()).toInstant();
+        //user.setBirthDay(Date.from(instant));
+        user.setBirthDay(birthDay);
         
         Address address = new Address();
         address.setCountry("China");

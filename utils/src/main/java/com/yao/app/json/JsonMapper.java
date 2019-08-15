@@ -9,7 +9,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.fasterxml.jackson.datatype.guava.GuavaModule;
+import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
 import com.google.common.base.Throwables;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -53,11 +55,20 @@ public class JsonMapper {
         mapper.setTimeZone(TimeZone.getDefault());
 
         // 以下为扩展模块
-        mapper.registerModule(new JavaTimeModule());
         mapper.registerModule(new GuavaModule());
+        mapper.registerModule(new ParameterNamesModule());
+        mapper.registerModule(new JavaTimeModule());
+        mapper.registerModule(new Jdk8Module());
 
         // 支持使用Jaxb的Annotation，使得POJO上的annotation不用与Jackson耦合。
         // mapper.registerModule(new JaxbAnnotationModule());
+
+        // 设置是否使用Enum的toString函数来读写Enum,
+        // 为False时使用Enum的name()函数来读写Enum, 默认为False
+        // 注意本函数一定要在Mapper创建后, 所有的读写操作之前调用
+        // mapper.enable(SerializationFeature.WRITE_ENUMS_USING_TO_STRING);
+        // mapper.enable(DeserializationFeature.READ_ENUMS_USING_TO_STRING);
+
     }
 
     public String toJson(Object object) {
@@ -167,17 +178,5 @@ public class JsonMapper {
     public String toJsonP(String functionName, Object object) {
         return toJson(new JSONPObject(functionName, object));
     }
-
-    /**
-     * 设置是否使用Enum的toString函数来读写Enum,
-     * 为False时使用Enum的name()函数来读写Enum, 默认为False
-     * 注意本函数一定要在Mapper创建后, 所有的读写操作之前调用
-     */
-    /*public JsonMapper enableEnumUseToString() {
-        mapper.enable(SerializationFeature.WRITE_ENUMS_USING_TO_STRING);
-        mapper.enable(DeserializationFeature.READ_ENUMS_USING_TO_STRING);
-
-        return this;
-    }*/
 
 }
