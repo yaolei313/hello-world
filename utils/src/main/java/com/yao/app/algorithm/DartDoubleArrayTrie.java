@@ -26,7 +26,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DAT {
+/**
+ * https://github.com/komiya-atsushi/darts-java/blob/master/src/main/java/darts/DoubleArrayTrie.java
+ */
+public class DartDoubleArrayTrie {
 	private final static int BUF_SIZE = 16384;
 	private final static int UNIT_SIZE = 8; // size of int + int
 
@@ -197,7 +200,7 @@ public class DAT {
 		return begin;
 	}
 
-	public DAT() {
+	public DartDoubleArrayTrie() {
 		check = null;
 		base = null;
 		used = null;

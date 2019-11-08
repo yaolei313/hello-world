@@ -87,6 +87,10 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-aop</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-instrument</artifactId>
+		</dependency>
 
 		<!-- AspectJ -->
 		<dependency>
@@ -356,7 +360,7 @@
 		<dependency>
 			<groupId>org.ahocorasick</groupId>
 			<artifactId>ahocorasick</artifactId>
-			<version>0.4.0</version>
+			<version>0.4.1</version>
 		</dependency>
 		<dependency>
 			<groupId>com.hankcs</groupId>

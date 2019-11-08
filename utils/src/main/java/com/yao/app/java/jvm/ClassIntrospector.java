@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Map;
-import jdk.internal.misc.Unsafe;
+//import jdk.internal.misc.Unsafe;
 
 /**
  * 描述：来着http://java-performance.info/memory-introspection-using-sun-misc-unsafe-and-reflection/
@@ -19,13 +19,13 @@ import jdk.internal.misc.Unsafe;
  */
 public class ClassIntrospector {
 
-    private static final Unsafe unsafe;
+    //private static final Unsafe unsafe;
     /**
      * Size of any Object reference
      */
-    private static final int objectRefSize;
+    //private static final int objectRefSize;
 
-    static {
+    /*static {
         try {
             Field field = Unsafe.class.getDeclaredField("theUnsafe");
             field.setAccessible(true);
@@ -38,9 +38,9 @@ public class ClassIntrospector {
         }
     }
 
-    /**
+    *//**
      * Sizes of all primitive values
-     */
+     *//*
     private static final Map<Class<?>, Integer> primitiveSizes;
 
     static {
@@ -54,14 +54,14 @@ public class ClassIntrospector {
         primitiveSizes.put(boolean.class, 1);
     }
 
-    /**
+    *//**
      * Get object information for any Java object. Do not pass primitives to
      * this method because they will boxed and the information you will get will
      * be related to a boxed version of your value.
      *
      * @param obj Object to introspect
      * @return Object info
-     */
+     *//*
     public ObjectInfo introspect(final Object obj)
         throws IllegalAccessException {
         try {
@@ -213,5 +213,5 @@ public class ClassIntrospector {
         } else {
             return objectRefSize;
         }
-    }
+    }*/
 }

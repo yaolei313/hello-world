@@ -26,4 +26,6 @@
         <property name="name2" ref="name2" />
     </bean>
 
+    <bean id="test3" class="com.yao.app.spring.TestFactoryBean" />
+
 </beans>
