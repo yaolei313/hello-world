@@ -30,7 +30,7 @@ public class TableMetaUtils {
 
         String osName = System.getProperty("os.name");
         if (StringUtils.isNotBlank(osName) && osName.toLowerCase().startsWith("mac")){
-            fileName = "/Users/yaolei/temp/"+ className + ".java";
+            fileName = "/temp/"+ className + ".java";
         }
         
         try{

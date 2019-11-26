@@ -47,30 +47,36 @@ public class TestProcessor extends AbstractProcessor {
 
     @Override
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
-        Set<? extends Element> elements = roundEnv.getElementsAnnotatedWith(Custom.class);
         LoggerFileTool tool = new LoggerFileTool(processingEnv);
-        processingEnv.getMessager().printMessage(Diagnostic.Kind.NOTE, "hello world");
-        tool.writeLog("start handle");
-        // 输出 [com.yao.app.java.annotation.Custom]
-        tool.writeLog(annotations.toString());
-        for (Element element : elements) {
-            Custom anno = element.getAnnotation(Custom.class);
-            String prefix = element.getSimpleName() + "/" + anno.value();
-            if (element instanceof PackageElement) {
-                PackageElement packageElement = (PackageElement) element;
-                tool.writeLog("[" + prefix + "]PackageElement:" + packageElement.getQualifiedName());
-            } else if (element instanceof TypeElement) {
-                TypeElement typeElement = (TypeElement) element;
-                tool.writeLog("[" + prefix + "]TypeElement:" + typeElement.getQualifiedName());
-            } else if (element instanceof ExecutableElement) {
-                ExecutableElement executableElement = (ExecutableElement) element;
-                tool.writeLog("[" + prefix + "]ExecutableElement:return " + executableElement.getReturnType() + ",receiver " + executableElement.getReceiverType());
-            } else if (element instanceof VariableElement) {
-                VariableElement variableElement = (VariableElement) element;
-                tool.writeLog("[" + prefix + "]VariableElement:" + variableElement.getSimpleName());
-            } else {
-                tool.writeLog("[" + prefix +"]Other Element" + element);
+        try {
+            if (roundEnv.processingOver()) {
+                tool.writeLog("subsequent round");
+                return false;
             }
+            Set<? extends Element> elements = roundEnv.getElementsAnnotatedWith(Custom.class);
+            processingEnv.getMessager().printMessage(Diagnostic.Kind.NOTE, "hello world");
+            tool.writeLog("start handle");
+            // 输出 [com.yao.app.java.annotation.Custom]
+            tool.writeLog(annotations.toString());
+            for (Element element : elements) {
+                Custom anno = element.getAnnotation(Custom.class);
+                String prefix = element.getSimpleName() + "/" + anno.value();
+                if (element instanceof PackageElement) {
+                    PackageElement packageElement = (PackageElement) element;
+                    tool.writeLog("[" + prefix + "]PackageElement:" + packageElement.getQualifiedName());
+                } else if (element instanceof TypeElement) {
+                    TypeElement typeElement = (TypeElement) element;
+                    tool.writeLog("[" + prefix + "]TypeElement:" + typeElement.getQualifiedName());
+                } else if (element instanceof ExecutableElement) {
+                    ExecutableElement executableElement = (ExecutableElement) element;
+                    tool.writeLog(
+                        "[" + prefix + "]ExecutableElement:return " + executableElement.getReturnType() + ",receiver " + executableElement.getReceiverType());
+                } else if (element instanceof VariableElement) {
+                    VariableElement variableElement = (VariableElement) element;
+                    tool.writeLog("[" + prefix + "]VariableElement:" + variableElement.getSimpleName());
+                } else {
+                    tool.writeLog("[" + prefix + "]Other Element" + element);
+                }
 
             /*element.accept(new ElementVisitor<Void, Void>() {
 
@@ -109,14 +115,16 @@ public class TestProcessor extends AbstractProcessor {
                     return null;
                 }
             }, null);*/
+            }
+        }finally {
+            tool.flush();
         }
-
-        tool.flush();
 
         return true;
     }
 
     private static class LoggerFileTool implements Closeable {
+
         private final ProcessingEnvironment processingEnvironment;
 
         private List<String> messages;
@@ -139,7 +147,7 @@ public class TestProcessor extends AbstractProcessor {
             this.frozen = true;
 
             MethodSpec.Builder methodBuilder =
-                    MethodSpec.methodBuilder("allMessages").addModifiers(Modifier.PUBLIC, Modifier.STATIC, Modifier.FINAL).returns(void.class);
+                MethodSpec.methodBuilder("allMessages").addModifiers(Modifier.PUBLIC, Modifier.STATIC, Modifier.FINAL).returns(void.class);
             for (String message : messages) {
                 methodBuilder.addStatement("$T.out.println($S)", System.class, message);
             }

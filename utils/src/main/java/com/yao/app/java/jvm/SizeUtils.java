@@ -7,6 +7,7 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.HashSet;
 import java.util.Set;
+import org.openjdk.jol.info.GraphLayout;
 
 
 public class SizeUtils {
@@ -96,5 +97,8 @@ public class SizeUtils {
         System.out.println(SizeUtils.fullSizeOf(st)); // 96byte
         System.out.println(SizeUtils.sizeOf(st));  //32byte
         System.out.println(SizeUtils.sizeOf(new Object()));
+
+        long size = GraphLayout.parseInstance(st).totalSize();
+        System.out.println(size);
     }
 }

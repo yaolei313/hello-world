@@ -22,6 +22,10 @@ import com.yao.app.protocol.thrift.service.HelloWorldService.AsyncClient.sayHell
 import com.yao.app.protocol.thrift.service.TUserService;
 import com.yao.app.protocol.thrift.service.TUser;
 
+/**
+ * TODO 增加下client pool
+ *
+ */
 public class MyThriftClient {
     public static final String SERVER_HOST = "127.0.0.1";
 

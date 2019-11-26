@@ -1,21 +1,37 @@
 package com.yao.app.algorithm;
 
-import java.io.*;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+
+/**
+ * 描述
+ *
+ * @auther allen@xiaohongshu.com 2019-09-11
+ */
 public class ReducedTrie {
+
     private static int BC_UNIT_SIZE = 8; // INT + INT
     private static int UNIT_SIZE = 4;// INT
     private static int DEFAULT_SIZE = 65536;
-    private static int DEFAULT_TAIL_SIZE = 65536*5;
+    private static int DEFAULT_TAIL_SIZE = 65536 * 5;
     private static int END_FLAG = 1;
-    private static int DEBUG_LOG = 0;
+    private static boolean DEBUG_LOG = false;
 
-    private int [] base;
-    private int [] check;
-    private int [] tail;
+    private int[] base;
+    private int[] check;
+    private int[] tail;
+
     private List<Integer>[] lists;
 
     private int position;
@@ -35,15 +51,13 @@ public class ReducedTrie {
         lists = null;
         position = 1;
 
-        File bcFile = new File(filename+".bc");
+        File bcFile = new File(filename + ".bc");
         int size = (int) bcFile.length() / BC_UNIT_SIZE;
         base = new int[size];
         check = new int[size];
         lists = new List[size];
 
-        DataInputStream bcDataInputStream = new DataInputStream(
-                new BufferedInputStream(
-                        new FileInputStream(bcFile)));
+        DataInputStream bcDataInputStream = new DataInputStream(new BufferedInputStream(new FileInputStream(bcFile)));
         for (int i = 0; i < size; i++) {
             base[i] = bcDataInputStream.readInt();
             check[i] = bcDataInputStream.readInt();
@@ -51,9 +65,8 @@ public class ReducedTrie {
         bcDataInputStream.close();
 
         File tailFile = new File(filename + ".tail");
-        DataInputStream tailDataInputStream = new DataInputStream(
-                new BufferedInputStream(
-                        new FileInputStream(tailFile)));
+        DataInputStream tailDataInputStream = new DataInputStream(new BufferedInputStream(new FileInputStream(tailFile)));
+
         int tailSize = (int) tailFile.length() / UNIT_SIZE;
         tail = new int[tailSize];
         for (int i = 0; i < tailSize; i++) {
@@ -67,13 +80,13 @@ public class ReducedTrie {
 
         File indexFile = new File(filename + ".index");
         DataInputStream indexDataInputStream = new DataInputStream(
-                new BufferedInputStream(
-                        new FileInputStream(indexFile)));
+            new BufferedInputStream(
+                new FileInputStream(indexFile)));
 
         File listFile = new File(filename + ".list");
         DataInputStream listDataInputStream = new DataInputStream(
-                new BufferedInputStream(
-                        new FileInputStream(listFile)));
+            new BufferedInputStream(
+                new FileInputStream(listFile)));
 
         int indexSize = (int) indexFile.length() / BC_UNIT_SIZE;
         for (int i = 0; i < indexSize; i++) {
@@ -91,7 +104,7 @@ public class ReducedTrie {
     @SuppressWarnings("unchecked")
     private void initial(int... size) {
         switch (size.length) {
-            case 0 :
+            case 0:
                 base = new int[DEFAULT_SIZE];
                 check = new int[DEFAULT_SIZE];
                 lists = new List[DEFAULT_SIZE];
@@ -110,7 +123,8 @@ public class ReducedTrie {
                 tail = new int[size[1]];
                 break;
             default:
-                if (DEBUG_LOG == 1) {
+
+                if (DEBUG_LOG) {
                     info("using default size");
                 }
                 base = new int[DEFAULT_SIZE];
@@ -128,8 +142,9 @@ public class ReducedTrie {
     public void save(String filename) throws IOException {
 
         DataOutputStream dataOutputStreamForBC = new DataOutputStream(
-                new BufferedOutputStream(
-                        new FileOutputStream(filename+".bc")));
+
+            new BufferedOutputStream(
+                new FileOutputStream(filename + ".bc")));
         for (int i = 0; i < base.length; i++) {
             dataOutputStreamForBC.writeInt(base[i]);
             dataOutputStreamForBC.writeInt(check[i]);
@@ -137,25 +152,27 @@ public class ReducedTrie {
         dataOutputStreamForBC.close();
 
         DataOutputStream dataOutputStreamForTail = new DataOutputStream(
-                new BufferedOutputStream(
-                        new FileOutputStream(filename + ".tail")));
-        for (int x: tail) {
+
+            new BufferedOutputStream(
+                new FileOutputStream(filename + ".tail")));
+        for (int x : tail) {
             dataOutputStreamForTail.writeInt(x);
         }
         dataOutputStreamForTail.close();
 
         DataOutputStream dataOutputStreamForIndex = new DataOutputStream(
-                new BufferedOutputStream(
-                        new FileOutputStream(filename + ".index")));
-        DataOutputStream dataOutputStreamForList =  new DataOutputStream(
-                new BufferedOutputStream(
-                        new FileOutputStream(filename + ".list")));
+
+            new BufferedOutputStream(
+                new FileOutputStream(filename + ".index")));
+        DataOutputStream dataOutputStreamForList = new DataOutputStream(
+            new BufferedOutputStream(
+                new FileOutputStream(filename + ".list")));
 
         for (int i = 0; i < lists.length; i++) {
             if (lists[i] != null) {
                 dataOutputStreamForIndex.writeInt(i);
                 dataOutputStreamForIndex.writeInt(lists[i].size());
-                for (int x: lists[i]) {
+                for (int x : lists[i]) {
                     dataOutputStreamForList.writeInt(x);
                 }
             }
@@ -173,13 +190,14 @@ public class ReducedTrie {
                     error("accessing the empty node");
                     return;
                 case -2:
-                    if (DEBUG_LOG == 1) {
-                        info(list.get(i) + " #"+ String.valueOf(i) + " has already been in the dictionary");
+
+                    if (DEBUG_LOG) {
+                        info(list.get(i) + " #" + i + " has already been in the dictionary");
                     }
                     break;
                 default:
-                    if (DEBUG_LOG == 1) {
-                        info(list.get(i)+"#"+i);
+                    if (DEBUG_LOG) {
+                        info(list.get(i) + "#" + i);
                     }
                     break;
             }
@@ -190,7 +208,8 @@ public class ReducedTrie {
         int[] keyValue = string2IntArray(key);
         if (!search(keyValue)) {
             int pre = 1;
-            for (int i=0; i<keyValue.length; i++) {
+
+            for (int i = 0; i < keyValue.length; i++) {
                 if (base[pre] < 0) {
                     //if current node is an end-point ,then separate or create a new node
                     int oldBase = base[pre];
@@ -199,22 +218,24 @@ public class ReducedTrie {
                         int q = xCheck(keyValue[i]);
                         base[pre] = q;
                         checkBC(base[pre] + keyValue[i]);
-                        base[ base[pre]+keyValue[i] ] = oldBase;
-                        check[ base[pre]+keyValue[i] ] = pre;
+
+                        base[base[pre] + keyValue[i]] = oldBase;
+                        check[base[pre] + keyValue[i]] = pre;
                         put(pre, keyValue[i]);
                         moveTail(-oldBase);
                         pre = base[pre] + keyValue[i];
                     } else {
                         //separate
                         List<Integer> list = new ArrayList<>();
-                        list.add(tail[-oldBase]); list.add(keyValue[i]);
+                        list.add(tail[-oldBase]);
+                        list.add(keyValue[i]);
                         int q = xCheck(list);
                         base[pre] = q;
-                        checkBC(Math.max(base[pre] + tail[-oldBase],base[pre] + keyValue[i]));
-                        base[ base[pre]+tail[-oldBase] ] = oldBase;
-                        base[ base[pre]+keyValue[i] ] = -position;
-                        check[ base[pre]+tail[-oldBase] ] = check[ base[pre]+keyValue[i] ] = pre;
-                        writeTail(keyValue, i+1);
+                        checkBC(Math.max(base[pre] + tail[-oldBase], base[pre] + keyValue[i]));
+                        base[base[pre] + tail[-oldBase]] = oldBase;
+                        base[base[pre] + keyValue[i]] = -position;
+                        check[base[pre] + tail[-oldBase]] = check[base[pre] + keyValue[i]] = pre;
+                        writeTail(keyValue, i + 1);
                         put(pre, tail[-oldBase]);
                         put(pre, keyValue[i]);
                         moveTail(-oldBase);
@@ -222,21 +243,24 @@ public class ReducedTrie {
                     }
                 } else if (base[pre] > 0) {
                     checkBC(base[pre] + keyValue[i]);
-                    if (check[ base[pre] + keyValue[i] ] == 0) {
-                        check[ base[pre] + keyValue[i] ] = pre;
-                        base[ base[pre] + keyValue[i] ] = -position;
+
+                    if (check[base[pre] + keyValue[i]] == 0) {
+                        check[base[pre] + keyValue[i]] = pre;
+                        base[base[pre] + keyValue[i]] = -position;
                         put(pre, keyValue[i]);
                         writeTail(keyValue, i + 1);
                         break;//a new node
-                    } else if (check[ base[pre] + keyValue[i] ] == pre) {
+                    } else if (check[base[pre] + keyValue[i]] == pre) {
                         //put(pre, keyValue[i]);
                         pre = base[pre] + keyValue[i];
                     } else {
-                        processConflict(pre, check[ base[pre] + keyValue[i] ], keyValue[i]);
+                        processConflict(pre, check[base[pre] + keyValue[i]], keyValue[i]);
                         writeTail(keyValue, i + 1);
                         break;//a new node
                     }
-                } else return -1;
+                } else {
+                    return -1;
+                }
             }
         } else {
             return -2;
@@ -245,7 +269,8 @@ public class ReducedTrie {
     }
 
     private int processConflict(int node1, int node2, int newNodeValue) {
-        int node = (lists[node1].size()+1) < lists[node2].size() ? node1 : node2;
+
+        int node = (lists[node1].size() + 1) < lists[node2].size() ? node1 : node2;
         int oldNodeBase = base[node];
         if (node == node1) {
             base[node] = xCheck(lists[node], newNodeValue);
@@ -255,22 +280,27 @@ public class ReducedTrie {
         for (int i = 0; i < lists[node].size(); i++) {
             int oldNext = oldNodeBase + lists[node].get(i);
             int newNext = base[node] + lists[node].get(i);
-            if (oldNext == node1) node1 = newNext;
+
+            if (oldNext == node1) {
+                node1 = newNext;
+            }
             base[newNext] = base[oldNext];
             check[newNext] = node;
             if (base[oldNext] > 0) {
                 for (int j = 0; j < lists[oldNext].size(); j++) {
-                    int temp = lists[oldNext].get(j); lists[oldNext].set(j, null);
-                    check[ base[oldNext] + temp ] = newNext;
+                    int temp = lists[oldNext].get(j);
+                    lists[oldNext].set(j, null);
+                    check[base[oldNext] + temp] = newNext;
                     put(newNext, temp);
                 }
                 lists[oldNext].clear();
                 lists[oldNext] = null;
             }
-            base[oldNext] = 0; check[oldNext] = 0;
+            base[oldNext] = 0;
+            check[oldNext] = 0;
         }
-        base[ base[node1] + newNodeValue ] = -position;
-        check[ base[node1] + newNodeValue ] = node1;
+        base[base[node1] + newNodeValue] = -position;
+        check[base[node1] + newNodeValue] = node1;
         put(node1, newNodeValue);
         return node;
     }
@@ -290,12 +320,13 @@ public class ReducedTrie {
     @SuppressWarnings("unchecked")
     private void extendBC(int p) {
         info(String.format("extend base and check @%d", p));
-        int newSize = p+DEFAULT_SIZE;
-        int[] base1 =  new int[newSize];
+
+        int newSize = p + DEFAULT_SIZE;
+        int[] base1 = new int[newSize];
         int[] check1 = new int[newSize];
         List<Integer>[] lists1 = new List[newSize];
         int len = base.length;
-        System.arraycopy(base, 0, base1, 0,   len);
+        System.arraycopy(base, 0, base1, 0, len);
         System.arraycopy(check, 0, check1, 0, len);
         System.arraycopy(lists, 0, lists1, 0, len);
         base = base1;
@@ -305,8 +336,9 @@ public class ReducedTrie {
 
     private void extendT(int p) {
         info(String.format("extend tail @%d", p));
-        int[] tail1 = new int[p*13/10];
-        System.arraycopy(tail, 0, tail1, 0 ,tail.length);
+
+        int[] tail1 = new int[p * 13 / 10];
+        System.arraycopy(tail, 0, tail1, 0, tail.length);
         tail = tail1;
     }
 
@@ -315,13 +347,17 @@ public class ReducedTrie {
         for (int i = 0; i < key.length; i++) {
             if (base[pre] < 0) {
                 return compareTail(-base[pre], i, key);
-            } else if (base[pre] > 0 && (base[pre] + key[i] < base.length) ) {
-                if (check[ base[pre] + key[i] ] == pre) {
+
+            } else if (base[pre] > 0 && (base[pre] + key[i] < base.length)) {
+                if (check[base[pre] + key[i]] == pre) {
                     pre = base[pre] + key[i];
                 } else {
                     return false;
                 }
-            } else return false;
+
+            } else {
+                return false;
+            }
         }
         return true;
     }
@@ -331,9 +367,10 @@ public class ReducedTrie {
         return search(keyValue);
     }
 
-    private boolean compareTail(int start,int keyIndex, int[] key) {
-        checkTail(start+key.length-keyIndex+1);
-        for (int i = start, j=keyIndex; j < key.length ; i++,j++) {
+
+    private boolean compareTail(int start, int keyIndex, int[] key) {
+        checkTail(start + key.length - keyIndex + 1);
+        for (int i = start, j = keyIndex; j < key.length; i++, j++) {
             if (key[j] != tail[i]) {
                 return false;
             }
@@ -346,19 +383,23 @@ public class ReducedTrie {
     }
 
     private void moveTail(int start, int steps) {
-        if (steps <= 0 || tail[start] == END_FLAG) return;
-        int i= start + steps;
-        for (;tail[i] != END_FLAG; i++) {
+
+        if (steps <= 0 || tail[start] == END_FLAG) {
+            return;
+        }
+        int i = start + steps;
+        for (; tail[i] != END_FLAG; i++) {
             tail[i - steps] = tail[i];
         }
-        for (int j = 0; j < steps; j++,i--) {
+        for (int j = 0; j < steps; j++, i--) {
             tail[i] = 0;
         }
         tail[i] = END_FLAG;
     }
 
     public boolean delete(String key) {
-        int []keyValue = string2IntArray(key);
+
+        int[] keyValue = string2IntArray(key);
         int pre = 1;
         int index = -1;
         int tempVal;
@@ -367,19 +408,23 @@ public class ReducedTrie {
             index++;
             tempVal = keyValue[index];
             next = base[pre] + tempVal;
-            if (check[next] != pre)  {
+            if (check[next] != pre) {
                 return false;
             }
-            if (base[next] < 0) break;
+            if (base[next] < 0) {
+                break;
+            }
             pre = next;
         } while (true);
-        if (tempVal == END_FLAG || compareTail(-base[next], index+1, keyValue)) {
+        if (tempVal == END_FLAG || compareTail(-base[next], index + 1, keyValue)) {
             for (int i = 0; i < lists[pre].size(); i++) {
                 if (lists[pre].get(i) == tempVal) {
-                    lists[pre].remove(i);break;
+                    lists[pre].remove(i);
+                    break;
                 }
             }
-            base[next] = 0; check[next] = 0;
+            base[next] = 0;
+            check[next] = 0;
             //info(String.format("%s next[%d] turn to 0",key, next));
             return true;
         }
@@ -399,8 +444,13 @@ public class ReducedTrie {
             next = base[pre] + tempVal;
             builder.append(tempVal);
             ++index;
-            if (check[next] != pre) return null;
-            if (base[next] < 0) break;
+
+            if (check[next] != pre) {
+                return null;
+            }
+            if (base[next] < 0) {
+                break;
+            }
             pre = next;
 
         }
@@ -411,14 +461,16 @@ public class ReducedTrie {
             int i = 0;
             while (index < key.length) {
                 if (tail[-base[next] + i] == key[index]) {
-                    builder.append((char) tail[-base[next]+i]);
+
+                    builder.append((char) tail[-base[next] + i]);
                     ++i;
                     ++index;
+                } else {
+                    return null;
                 }
-                else return null;
             }
-            while (tail[-base[next]+i] != END_FLAG) {
-                builder.append((char) tail[-base[next]+i]);
+            while (tail[-base[next] + i] != END_FLAG) {
+                builder.append((char) tail[-base[next] + i]);
                 ++i;
             }
             list.add(builder.toString());
@@ -426,14 +478,15 @@ public class ReducedTrie {
         } else {
             List<String> temp = new LinkedList<>();
             find(pre, new StringBuilder(), temp);
-            for (String x: temp) {
+
+            for (String x : temp) {
                 list.add(builder.toString() + x);
             }
             return list;
         }
     }
 
-    private void find( int pre, StringBuilder builder, List<String> list) {
+    private void find(int pre, StringBuilder builder, List<String> list) {
         int next;
         if (base[pre] < 0) {
             builder.append(readTail(-base[pre]));
@@ -465,8 +518,9 @@ public class ReducedTrie {
     private int xCheck(int x) {
         int q = 1;
         while (true) {
-            checkBC(q+x);
-            if (check[q+x] != 0) {
+
+            checkBC(q + x);
+            if (check[q + x] != 0) {
                 q++;
             } else {
                 break;
@@ -477,10 +531,12 @@ public class ReducedTrie {
 
     private int xCheck(List<Integer> list) {
         int q = 1;
-        findQ:while (true) {
+
+        findQ:
+        while (true) {
             for (int i = 0; i < list.size(); i++) {
-                checkBC(q+list.get(i));
-                if (check[q+list.get(i)] != 0) {
+                checkBC(q + list.get(i));
+                if (check[q + list.get(i)] != 0) {
                     q++;
                     continue findQ;
                 }
@@ -492,10 +548,12 @@ public class ReducedTrie {
 
     private int xCheck(List<Integer> list, int x) {
         int q = 1;
-        findQ:while (true) {
+
+        findQ:
+        while (true) {
             for (int i = 0; i < list.size(); i++) {
-                checkBC(Math.max(q+list.get(i), q+x));
-                if (check[q+list.get(i)] != 0 || check[q+x] != 0) {
+                checkBC(Math.max(q + list.get(i), q + x));
+                if (check[q + list.get(i)] != 0 || check[q + x] != 0) {
                     q++;
                     continue findQ;
                 }
@@ -506,9 +564,11 @@ public class ReducedTrie {
     }
 
     private void writeTail(int[] key, int start) {
-        if (start >= key.length) return;
-        checkTail(position+key.length-start+1);
-        for (int i=position, j=start; j<key.length; position++,i++,j++) {
+        if (start >= key.length) {
+            return;
+        }
+        checkTail(position + key.length - start + 1);
+        for (int i = position, j = start; j < key.length; position++, i++, j++) {
             tail[i] = key[j];
         }
     }
@@ -524,17 +584,15 @@ public class ReducedTrie {
     }
 
     private int[] string2IntArray(String key) {
-        if (key == null || key.length() == 0) return null;
-        int[] result = new int[key.length()+1];
-        for (int i=0; i<key.length(); i++) {
+        if (key == null || key.length() == 0) {
+            return null;
+        }
+        int[] result = new int[key.length() + 1];
+        for (int i = 0; i < key.length(); i++) {
             result[i] = key.charAt(i);
         }
         result[key.length()] = END_FLAG;
         return result;
-    }
-
-    private void log(String key, Object value) {
-        System.out.println(String.format("%s : %s",key, String.valueOf(value)));
     }
 
     private void error(String value) {
