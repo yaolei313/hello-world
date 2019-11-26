@@ -6,7 +6,7 @@
 		<groupId>com.yao.app</groupId>
 		<artifactId>parent</artifactId>
 		<version>1.0.1-SNAPSHOT</version>
-		<relativePath>../parent/</relativePath>
+    <relativePath/>
 	</parent>
 
 	<groupId>com.yao.app</groupId>
@@ -317,7 +317,7 @@
 		<!-- annotation process tool-->
 		<dependency>
 			<groupId>org.mapstruct</groupId>
-			<artifactId>mapstruct-jdk8</artifactId> <!-- use mapstruct-jdk8 for Java 8 or higher -->
+			<artifactId>mapstruct</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.mapstruct</groupId>
@@ -366,6 +366,12 @@
 			<groupId>com.hankcs</groupId>
 			<artifactId>aho-corasick-double-array-trie</artifactId>
 			<version>1.2.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.mongodb</groupId>
+			<artifactId>mongodb-driver-sync</artifactId>
+			<version>3.11.2</version>
 		</dependency>
 
 	</dependencies>

@@ -61,7 +61,7 @@
         <groovy.version>2.4.10</groovy.version>
         
         <dozer.version>6.1.0</dozer.version>
-        <org.mapstruct.version>1.3.0.Final</org.mapstruct.version>
+        <org.mapstruct.version>1.3.1.Final</org.mapstruct.version>
         <jedis.version>2.9.0</jedis.version>
         <rabbitmq.version>5.5.0</rabbitmq.version>
         
@@ -433,7 +433,7 @@
             <!-- annotation process tool-->
             <dependency>
                 <groupId>org.mapstruct</groupId>
-                <artifactId>mapstruct-jdk8</artifactId> <!-- use mapstruct-jdk8 for Java 8 or higher -->
+                <artifactId>mapstruct</artifactId> <!-- Java 8 Baseline -->
                 <version>${org.mapstruct.version}</version>
             </dependency>
             <dependency>
