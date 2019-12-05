@@ -1,4 +1,4 @@
-package com.yao.app.java;
+package com.yao.app.java.types;
 
 import java.util.List;
 

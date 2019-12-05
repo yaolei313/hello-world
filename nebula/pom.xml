@@ -27,16 +27,6 @@
       <artifactId>assertj-core</artifactId>
     </dependency>
 
-    <!-- db and datasource -->
-    <dependency>
-      <groupId>org.mariadb.jdbc</groupId>
-      <artifactId>mariadb-java-client</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.zaxxer</groupId>
-      <artifactId>HikariCP</artifactId>
-    </dependency>
-
     <!-- spring -->
     <dependency>
       <groupId>org.springframework</groupId>
@@ -149,6 +139,16 @@
       <artifactId>hibernate-validator</artifactId>
     </dependency>
 
+    <!-- db and datasource -->
+    <dependency>
+      <groupId>org.mariadb.jdbc</groupId>
+      <artifactId>mariadb-java-client</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.zaxxer</groupId>
+      <artifactId>HikariCP</artifactId>
+    </dependency>
+
     <!-- mybatis -->
     <dependency>
       <groupId>org.mybatis</groupId>
@@ -156,7 +156,15 @@
     </dependency>
     <dependency>
       <groupId>org.mybatis</groupId>
+      <artifactId>mybatis-typehandlers-jsr310</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.mybatis</groupId>
       <artifactId>mybatis-spring</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.github.pagehelper</groupId>
+      <artifactId>pagehelper</artifactId>
     </dependency>
 
     <!-- spring mvc json -->

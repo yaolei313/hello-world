@@ -1,7 +1,8 @@
-package com.yao.app.java.reflection;
+package com.yao.app.java.types;
 
 import com.google.inject.internal.MoreTypes;
 
+import com.yao.app.java.reflection.ReflectionStudy;
 import java.lang.reflect.*;
 import java.util.Arrays;
 import java.util.HashMap;

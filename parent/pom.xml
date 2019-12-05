@@ -159,9 +159,14 @@
                 <version>${mybatis.version}</version>
             </dependency>
             <dependency>
+                <groupId>org.mybatis</groupId>
+                <artifactId>mybatis-typehandlers-jsr310</artifactId>
+                <version>1.0.2</version>
+            </dependency>
+            <dependency>
                 <groupId>com.github.pagehelper</groupId>
                 <artifactId>pagehelper</artifactId>
-                <version>5.1.8</version>
+                <version>5.1.11</version>
             </dependency>
             <dependency>
                 <groupId>org.mybatis</groupId>
