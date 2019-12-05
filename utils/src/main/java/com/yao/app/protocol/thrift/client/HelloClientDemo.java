@@ -52,7 +52,7 @@ public class HelloClientDemo {
         TTransport transport = null;
         try {
             // transport不一致会出现connect reset
-            transport = new TFramedTransport(new TSocket(SERVER_IP, SERVER_PORT, TIMEOUT));
+            transport = new TFramedTransport(newVER_PORT, TIMEOUT));
             // transport = new TSocket(SERVER_IP, SERVER_PORT, TIMEOUT);
             // 协议要和服务端一致
             // TProtocol protocol = new TCompactProtocol(transport);
