@@ -12,6 +12,10 @@ import java.util.List;
  * d) Local classes (named classes declared within a method)
  * e) Anonymous classes
  *
+ *
+ * JVM Spec 4.7.7: A class must have an EnclosingMethod
+ * attribute if and only if it is a local class or an anonymous class.
+ *
  * @author allen@xiaohongshu.com 2019-12-03
  */
 public class TopLevelClass {
