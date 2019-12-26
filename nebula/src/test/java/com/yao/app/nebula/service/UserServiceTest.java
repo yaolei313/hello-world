@@ -2,6 +2,7 @@ package com.yao.app.nebula.service;
 
 import static org.assertj.core.api.Assertions.*;
 
+import java.util.Date;
 import javax.annotation.Resource;
 
 import org.junit.Test;
@@ -18,12 +19,25 @@ public class UserServiceTest extends AbstractTest {
     private UserService service;
     
     @Test
-    public void getTest(){
+    public void test1(){
         UserBean user = service.queryUserByUsername("y00196907");
         
         
         assertThat(user.getNickname()).isEqualTo("李白");
         System.out.println(user.getNickname());
+    }
+
+    @Test
+    public void test2() {
+        UserBean user = new UserBean();
+        user.setUsername("y00196907");
+        user.setEmail("123@123.com");
+        user.setNickname("李白路过");
+        user.setSex("M");
+        user.setGravatarMail("");
+        user.setRegisterTime(new Date());
+
+        service.addUser(user);
     }
     
     /*@Test

@@ -3,7 +3,12 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.yao.app.database.jdbc.UserMapper">
-	<select id="findUser" parameterType="string" resultType="UserBean">
+	<select id="findUser" parameterType="string" resultType="com.yao.app.database.jdbc.UserBean">
 		select id,username,email,nickname,sex,gravatar_mail as gravatarMail,register_time as registerTime from users where username =#{username}
 	</select>
+
+	<insert id="insert" parameterType="com.yao.app.database.jdbc.UserBean" useGeneratedKeys="true" keyProperty="id">
+    insert into users (username,email,nickname,sex,register_time)
+    values (#{username}, #{email}, #{nickname}, #{sex}, #{registerTime})
+  </insert>
 </mapper>

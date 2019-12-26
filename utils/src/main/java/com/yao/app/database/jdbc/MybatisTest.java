@@ -1,6 +1,9 @@
 package com.yao.app.database.jdbc;
 
+import java.sql.SQLException;
+import java.util.Date;
 import org.apache.ibatis.builder.xml.XMLMapperBuilder;
+import org.apache.ibatis.exceptions.PersistenceException;
 import org.apache.ibatis.executor.ErrorContext;
 import org.apache.ibatis.mapping.Environment;
 import org.apache.ibatis.session.Configuration;
@@ -37,6 +40,7 @@ import javax.sql.DataSource;
  * Created by yaolei02 on 2017/2/23.
  */
 public class MybatisTest {
+
     public static void main(String[] args) {
         test1();
     }
@@ -92,6 +96,25 @@ public class MybatisTest {
             // 验证一级缓存
             user = userMapper.findUser("y00196907");
             System.out.println(user);
+
+            UserBean newUser = new UserBean();
+            newUser.setUsername("y00196907");
+            newUser.setEmail("y00196907@xxx.com");
+            newUser.setNickname("李白");
+            newUser.setSex("M");
+            newUser.setRegisterTime(new Date());
+
+            userMapper.insert(newUser);
+
+            sqlSession2.commit();
+        } catch (PersistenceException e) {
+            // mybatis抛出的都是PersistenceException
+            // 若使用的是spring的MapperFactoryBean，使用的是SqlSessionTemplate，其中包含exceptionTranslator，此时会是spring的异常体系
+            Throwable cause = e.getCause();
+            if (cause instanceof SQLException) {
+                System.out.println(((SQLException) cause).getErrorCode());
+            }
+            e.printStackTrace();
         } finally {
             sqlSession2.close();
         }
@@ -101,6 +124,7 @@ public class MybatisTest {
             PostMapper postMapper = sqlSession3.getMapper(PostMapper.class);
             String title = postMapper.findPostTitle(1L);
             System.out.print(title);
+            sqlSession3.commit();
         } finally {
             sqlSession3.close();
         }

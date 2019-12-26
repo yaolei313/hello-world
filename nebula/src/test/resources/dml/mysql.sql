@@ -20,3 +20,11 @@ CREATE TABLE `users` (
 INSERT INTO `study`.`users` (`username`, `email`, `nickname`, `sex`, `gravatar_mail`, `register_time`) VALUES 
 ('l00190940', 'lvxuguang@huawei.com', '老吕', 'M', NULL, '2014-09-18 19:19:25'),
 ('y00196907', 'yaolei313@gmail.com', '李白', 'M', NULL, '2014-08-08 19:19:25');
+
+
+drop table if exists posts;
+create table posts (
+    id int not null auto_increment,
+    title varchar(32) not null,
+    primary key(id)
+);
