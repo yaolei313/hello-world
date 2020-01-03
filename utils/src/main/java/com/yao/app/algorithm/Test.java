@@ -13,8 +13,8 @@ public class Test {
         System.out.println(-123%10);
     }
 
-    // 左侧都是引用reference，存储了对象的地址
-    // 可以认为reference是个数据结构，传值复制会复制该引用。
+    // 参数都是引用reference对象，存储了对象的地址
+    // 传值复制会复制的是引用对象，故交换这2个复制后的引用对象的地址没用处
     public static void swap(Person a, Person b) {
         Person tmp = a;
         a = b;
