@@ -94,6 +94,7 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-instrument</artifactId>
+			<scope>provided</scope>
 		</dependency>
 
 		<!-- AspectJ -->
@@ -393,7 +394,7 @@
 				<configuration>
 					<archive>
 						<manifestEntries>
-							<Premain-Class>com.yao.app.java.jvm.InstrumentationSavingAgent</Premain-Class>
+							<Premain-Class>com.yao.app.java.jvm.NotUsedInstrumentationSavingAgent</Premain-Class>
 						</manifestEntries>
 					</archive>
 				</configuration>

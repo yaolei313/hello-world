@@ -10,10 +10,12 @@ import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.CreateCollectionOptions;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.IndexModel;
 import com.mongodb.client.model.IndexOptions;
 import com.mongodb.client.model.Updates;
+import com.mongodb.client.model.ValidationOptions;
 import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.UpdateResult;
 import com.yao.app.java.date.DateExtUtils;
@@ -33,11 +35,24 @@ public class MongoStudy {
     public static void main(String[] args) {
         MongoClientSettings settings = MongoClientSettings.builder()
             .applyToClusterSettings(builder -> builder.hosts(Arrays.asList(new ServerAddress("10.4.44.199", 27017))))
+            //.credential(MongoCredential.createCredential("userName", "study", "password".toCharArray()))
+            //.compressorList(Arrays.asList(MongoCompressor.createSnappyCompressor(), MongoCompressor.createZlibCompressor(), MongoCompressor.createZstdCompressor()))
             .build();
+        // MongoClientSettings默认的codecRegistry为MongoClientSettings.getDefaultCodecRegistry()
+
         MongoClient mongoClient = MongoClients.create(settings);
 
+        // mongodb://[username:password@]host1[:port1][,host2[:port2],...[,hostN[:portN]]][/[database.collection][?options]]
+        // ConnectionString connectionString = new ConnectionString("mongodb://10.4.44.199:27017/study?compressors=snappy,zlib,zstd");
+        // MongoClient mongoClient = MongoClients.create(connectionString);
+
         MongoDatabase database = mongoClient.getDatabase("study");
+
         MongoCollection<Document> collection = database.getCollection("user");
+        collection.drop();
+
+        ValidationOptions collOptions = new ValidationOptions().validator(Filters.and(Filters.exists("username"), Filters.exists("email")));
+        database.createCollection("user", new CreateCollectionOptions().validationOptions(collOptions));
 
         System.out.println(LocalDateTime.now());
 
@@ -122,17 +137,22 @@ public class MongoStudy {
         System.out.println("-----4-----");
 
         Document tmp = new Document("username", "z00121605")
-            .append("email", "zhangyi@gmail.com")
+            .append("email", "zhaoyi@gmail.com")
             .append("nickname", "赵一")
             .append("sex", "F")
             .append("register_time", DateExtUtils.asDate(LocalDateTime.of(2012, 8, 5, 0, 0)));
         collection.insertOne(tmp);
         System.out.println(tmp.get("_id"));
 
-        DeleteResult deleteResult = collection.deleteMany(Filters.eq("email", "zhangyi@gmail.com"));
+        DeleteResult deleteResult = collection.deleteMany(Filters.eq("email", "zhaoyi@gmail.com"));
         System.out.println(deleteResult);
 
         System.out.println("-----5-----");
+
+        doc.append("nickname", "李白replace2");
+        // replace one等同删除，再insert。id会发生变化
+        updateResult = collection.replaceOne(Filters.eq("username", "y00196907"), doc);
+        System.out.println(updateResult);
 
     }
 }
