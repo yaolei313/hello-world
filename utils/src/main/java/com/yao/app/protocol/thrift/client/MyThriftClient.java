@@ -1,9 +1,11 @@
 package com.yao.app.protocol.thrift.client;
 
+import com.yao.app.protocol.thrift.service.THelloWorldService;
+import com.yao.app.protocol.thrift.service.TUser;
+import com.yao.app.protocol.thrift.service.TUserService;
 import java.io.IOException;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
-
 import org.apache.thrift.TException;
 import org.apache.thrift.async.AsyncMethodCallback;
 import org.apache.thrift.async.TAsyncClientManager;
@@ -16,11 +18,6 @@ import org.apache.thrift.transport.TNonblockingTransport;
 import org.apache.thrift.transport.TSocket;
 import org.apache.thrift.transport.TTransport;
 import org.apache.thrift.transport.TTransportException;
-
-import com.yao.app.protocol.thrift.service.HelloWorldService;
-import com.yao.app.protocol.thrift.service.HelloWorldService.AsyncClient.sayHello_call;
-import com.yao.app.protocol.thrift.service.TUserService;
-import com.yao.app.protocol.thrift.service.TUser;
 
 /**
  * TODO 增加下client pool
@@ -51,7 +48,7 @@ public class MyThriftClient {
             TCompactProtocol tprotocol = new TCompactProtocol(transport);
             TMultiplexedProtocol protocol = new TMultiplexedProtocol(tprotocol, "HELLO_SERVICE");
 
-            HelloWorldService.Client client = new HelloWorldService.Client(protocol);
+            THelloWorldService.Client client = new THelloWorldService.Client(protocol);
 
             transport.open();
 
@@ -78,7 +75,7 @@ public class MyThriftClient {
             TCompactProtocol tprotocol = new TCompactProtocol(transport);
             TMultiplexedProtocol protocol = new TMultiplexedProtocol(tprotocol, "HELLO_SERVICE");
 
-            HelloWorldService.Client client = new HelloWorldService.Client(protocol);
+            THelloWorldService.Client client = new THelloWorldService.Client(protocol);
 
             transport.open();
 
@@ -107,7 +104,7 @@ public class MyThriftClient {
 
             TProtocolFactory protocolFactory = new TMultiplexedProtocolFactory(new TCompactProtocol.Factory(), "HELLO_SERVICE");
 
-            HelloWorldService.AsyncClient client = new HelloWorldService.AsyncClient(protocolFactory, clientManager, transport);
+            THelloWorldService.AsyncClient client = new THelloWorldService.AsyncClient(protocolFactory, clientManager, transport);
 
             System.out.println("Client start ...");
 

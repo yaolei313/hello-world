@@ -1,58 +1,40 @@
 package com.yao.app.java.nio.socket;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
+import com.yao.app.java.nio.IOExtUtils;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.net.InetSocketAddress;
 import java.net.Socket;
-import java.nio.charset.Charset;
 
 public class Client1 {
+
     public static void main(String[] args) {
-        try {
-            Socket client = new Socket();
+        try (Socket socket = new Socket()) {
             // 8s连接超时
-            client.connect(new InetSocketAddress("127.0.0.1",8088), 8000);
-            client.setKeepAlive(true);
-            // client.set
-            /*PrintWriter bw =
-                    new PrintWriter(new BufferedWriter(new OutputStreamWriter(client.getOutputStream(),
-                            Constants.DEFAULT_CHAR)));
+            socket.connect(new InetSocketAddress("127.0.0.1", 8088), 8000);
+            // 默认情况下的socket.close()会立即返回，但是底层的socket并没有立即关闭，他会延迟一段时间，等待发送完毕后再关闭。
+            // (true,n)的话，会在两种情况关闭，数据发送完毕，或者等待超过n秒
+            socket.setSoLinger(false, 0);
+            socket.setTcpNoDelay(true);
+            // 长时间处于空闲状态的socket，是否自动关闭
+            socket.setKeepAlive(true);
+            // 设置读取超时时间，仅表示对于socket.read() 最大阻塞时间。
+            socket.setSoTimeout(300 * 1000);
 
-            bw.println("hello world");
-            bw.println("eof");
-            bw.flush();*/
-            OutputStreamWriter os = new OutputStreamWriter(client.getOutputStream(),
-                Charset.forName("UTF-8"));
-            os.write("hello world\n");
-            os.write("eof\n");
-            os.flush();
+            BufferedInputStream in = new BufferedInputStream(socket.getInputStream());
+            BufferedOutputStream out = new BufferedOutputStream(socket.getOutputStream());
 
-            // 设置读取超时时间
-            client.setSoTimeout(10*1000);  
-            
-            BufferedReader br =
-                    new BufferedReader(new InputStreamReader(client.getInputStream(), Charset.forName("UTF-8")));
+            IOExtUtils.writeMessage(out, "li bai");
+            String response = IOExtUtils.readMessage(in);
+            System.out.println("from server:" + response);
 
-            StringBuilder sb = new StringBuilder();
-            String line = br.readLine();
-            while (line != null) {
-                sb.append(line);
-                if (line.contains("eof")) {
-                    break;
-                }
-                line = br.readLine();
-            }
-            
-            br.close();
-            //bw.close();
-            os.close();
-            
-            
+            IOExtUtils.writeMessage(out, "zhang san");
+            response = IOExtUtils.readMessage(in);
 
-            System.out.println("from server:" + sb.toString());
+            System.out.println("from server:" + response);
 
-            client.close();
+            out.close();
+            in.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
