@@ -27,7 +27,7 @@ public class IOExtUtils {
             return null;
         }
         // big endian, high byte first
-        int size = ((header[0] << 24) + (header[1] << 16) + (header[2] << 8) + (header[3] << 0));
+        int size = decodeSize(header);
         if (size == 0) {
             return "";
         }
@@ -38,7 +38,6 @@ public class IOExtUtils {
         return new String(body, StandardCharsets.UTF_8);
     }
 
-
     public static void writeMessage(BufferedOutputStream out, String text) throws IOException {
         if (text == null) {
             return;
@@ -46,17 +45,28 @@ public class IOExtUtils {
         int len = text.length();
         ByteBuffer buffer = ByteBuffer.allocate(4 + len);
 
-        // big endian, high byte first
-        buffer.put((byte) ((len >>> 24) & 0xFF));
-        buffer.put((byte) ((len >>> 16) & 0xFF));
-        buffer.put((byte) ((len >>> 8) & 0xFF));
-        buffer.put((byte) ((len >>> 0) & 0xFF));
+        buffer.put(encodeSize(len));
         buffer.put(text.getBytes(StandardCharsets.UTF_8));
 
         System.out.println(Arrays.toString(buffer.array()));
 
         out.write(buffer.array(), 0, buffer.position());
         out.flush();
+    }
+
+    // tcp都是big endian, high byte first
+    public static byte[] encodeSize(int size) {
+        final byte[] buf = new byte[4];
+        buf[0] = (byte) (0xff & (size >> 24));
+        buf[1] = (byte) (0xff & (size >> 16));
+        buf[2] = (byte) (0xff & (size >> 8));
+        buf[3] = (byte) (0xff & (size));
+
+        return buf;
+    }
+
+    public static int decodeSize(byte[] buf) {
+        return ((buf[0] & 0xff) << 24) | ((buf[1] & 0xff) << 16) | ((buf[2] & 0xff) << 8) | ((buf[3] & 0xff));
     }
 
 }

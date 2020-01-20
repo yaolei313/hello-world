@@ -1,5 +1,6 @@
 package com.yao.app.java.nio.socket;
 
+import com.yao.app.java.nio.IOExtUtils;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
@@ -11,6 +12,10 @@ import java.nio.channels.SocketChannel;
 public class Server2 {
 
     public static void main(String[] args) {
+        // 复用
+        final byte[] sizeBufferArray = new byte[4];
+        ByteBuffer sizeBuffer = ByteBuffer.wrap(sizeBufferArray);
+
         ServerSocketChannel serverSocketChannel = null;
         try {
             serverSocketChannel = ServerSocketChannel.open();
@@ -32,6 +37,13 @@ public class Server2 {
 
                     // 读数据
                     StringBuilder sb = new StringBuilder();
+
+                    if (socketChannel.read(sizeBuffer) < 0) {
+                        throw new IOException("Read call size failed");
+                    }
+
+                    int size = IOExtUtils.decodeSize(sizeBuffer.array());
+
                     ByteBuffer buf = ByteBuffer.allocate(128);
                     // 阻塞模式下， if a channel is in blocking mode and there is at least one byte remaining in the buffer
                     // then this method will block until at least one byte is read.
@@ -39,22 +51,10 @@ public class Server2 {
                     // 非阻塞模式下, cannot read any more bytes than are immediately available from the socket's input buffer;
                     // similarly, a file channel cannot read any more bytes than remain in the file
                     int readBytes = socketChannel.read(buf);
-                    while (readBytes != -1) {
-                        System.out.println("read " + readBytes);
-                        if (readBytes == 0) {
-                            try {
-                                Thread.sleep(10);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
-                            continue;
-                        }
-                        buf.flip();
-                        sb.append(new String(buf.array(), 0, readBytes));
-                        buf.clear();
+                    buf.flip();
+                    sb.append(new String(buf.array(), 0, readBytes));
+                    buf.clear();
 
-                        readBytes = socketChannel.read(buf);
-                    }
                     System.out.println("client shutdown input");
 
                     // 写数据
