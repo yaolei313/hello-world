@@ -13,10 +13,12 @@ public class Study {
 
     public static void main(String[] args) {
         Objenesis objenesis = new ObjenesisStd();
-        ObjectInstantiator instantiator = objenesis.getInstantiatorOf(AlonePerson.class);
+        ObjectInstantiator instantiateHelper = objenesis.getInstantiatorOf(AlonePerson.class);
 
-        AlonePerson a1 = (AlonePerson)instantiator.newInstance();
+        AlonePerson a1 = (AlonePerson) instantiateHelper.newInstance();
         a1.setName("li san");
-        a1.set
+        a1.setDesc("alone one");
+
+        System.out.println(a1);
     }
 }

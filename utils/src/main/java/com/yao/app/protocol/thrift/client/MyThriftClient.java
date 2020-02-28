@@ -31,12 +31,12 @@ public class MyThriftClient {
     public static final int TIMEOUT = 30000;
 
     public static void main(String[] args) {
+        testService1();
         //testService2();
         //testService3();
-        testService4();
     }
 
-    public static void testService() {
+    public static void testService1() {
         System.out.println("TCompactProtocol客户端");
 
         TTransport transport = null;
@@ -47,7 +47,6 @@ public class MyThriftClient {
 
             TCompactProtocol tprotocol = new TCompactProtocol(transport);
             TMultiplexedProtocol protocol = new TMultiplexedProtocol(tprotocol, "HELLO_SERVICE");
-
             THelloWorldService.Client client = new THelloWorldService.Client(protocol);
 
             transport.open();
@@ -67,7 +66,7 @@ public class MyThriftClient {
     }
 
     public static void testService2() {
-        System.out.println("TFramedTransport TCompactProtocol客户端");
+        System.out.println("TFramedTransport+TCompactProtocol客户端");
         TTransport transport = null;
         try {
             transport = new TFramedTransport(new TSocket(SERVER_HOST, SERVER_PORT));
@@ -140,34 +139,4 @@ public class MyThriftClient {
         }
     }
 
-    // --user service --
-
-    public static void testService4() {
-        System.out.println("TFramedTransport TCompactProtocol客户端");
-        TTransport transport = null;
-        try {
-            // transport = new TSocket(SERVER_HOST, SERVER_PORT, TIMEOUT);
-            // transport = new TSocket(SERVER_HOST, SERVER_PORT);
-            transport = new TFramedTransport(new TSocket(SERVER_HOST, SERVER_PORT));
-
-            TCompactProtocol tprotocol = new TCompactProtocol(transport);
-            TMultiplexedProtocol protocol = new TMultiplexedProtocol(tprotocol, "USER_SERVICE");
-
-            TUserService.Client client = new TUserService.Client(protocol);
-
-            transport.open();
-
-            TUser result = client.queryUserById("y00196907");
-            System.out.println(result.toString());
-
-        } catch (TTransportException e) {
-            e.printStackTrace();
-        } catch (TException e) {
-            e.printStackTrace();
-        } finally {
-            if (transport != null) {
-                transport.close();
-            }
-        }
-    }
 }
