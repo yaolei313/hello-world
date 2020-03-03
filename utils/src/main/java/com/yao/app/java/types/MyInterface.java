@@ -5,9 +5,7 @@ package com.yao.app.java.types;
  *
  * @author allen@xiaohongshu.com 2019-12-03
  */
-public class ChildClass extends ParentClass {
+public interface MyInterface {
 
-    public void childClassMethod(){
-
-    }
+    void hello();
 }

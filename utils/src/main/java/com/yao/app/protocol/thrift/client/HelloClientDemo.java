@@ -1,12 +1,17 @@
 package com.yao.app.protocol.thrift.client;
 
+import com.yao.app.protocol.thrift.client.pool.ThriftConfig;
+import com.yao.app.protocol.thrift.client.pool.ThriftServiceClientBuilder;
 import com.yao.app.protocol.thrift.service.THelloWorldService;
+import com.yao.app.protocol.thrift.service.THelloWorldService.Client;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
+import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import org.apache.thrift.TException;
 import org.apache.thrift.async.AsyncMethodCallback;
 import org.apache.thrift.async.TAsyncClientManager;
 import org.apache.thrift.protocol.TBinaryProtocol;
+import org.apache.thrift.protocol.TCompactProtocol;
 import org.apache.thrift.protocol.TProtocol;
 import org.apache.thrift.protocol.TProtocolFactory;
 import org.apache.thrift.transport.TNonblockingSocket;
@@ -17,7 +22,7 @@ import org.apache.thrift.transport.TTransportException;
 
 public class HelloClientDemo {
 
-    public static final String SERVER_IP = "localhost";
+    public static final String SERVER_HOST = "localhost";
 
     public static final int SERVER_PORT = 8090;
 
@@ -27,6 +32,7 @@ public class HelloClientDemo {
 
     public static void main(String[] args) {
         callSayHello();
+        //callSayHelloByPool();
         //callSayHelloAsync();
     }
 
@@ -34,30 +40,51 @@ public class HelloClientDemo {
         TTransport transport = null;
         try {
             // transport不一致会出现connect reset
-            transport = new TSocket(SERVER_IP, SERVER_PORT, TIMEOUT);
+            transport = new TSocket(SERVER_HOST, SERVER_PORT, TIMEOUT);
             // 协议要和服务端一致
-            TProtocol protocol = new TBinaryProtocol(transport);
-            // TProtocol protocol = new TCompactProtocol(transport);
+            //TProtocol protocol = new TBinaryProtocol(transport);
+            TProtocol protocol = new TCompactProtocol(transport);
             // TProtocol protocol = new TJSONProtocol(transport);
             THelloWorldService.Client client = new THelloWorldService.Client(protocol);
             transport.open();
             String result = client.sayHello("libai");
             System.out.println("Thrify client result =: " + result);
-        } catch (TTransportException e2) {
-            e2.printStackTrace();
-        } catch (TException e3) {
-            e3.printStackTrace();
+        } catch (TException e) {
+            e.printStackTrace();
         } finally {
-            if (null != transport) {
+            if (transport != null) {
                 transport.close();
             }
+        }
+    }
+
+    public static void callSayHelloByPool() {
+        try {
+            ThriftConfig thriftConfig = new ThriftConfig();
+            thriftConfig.setHost(SERVER_HOST);
+            thriftConfig.setPort(SERVER_PORT);
+            thriftConfig.setServiceTopClass(THelloWorldService.class);
+
+            GenericObjectPoolConfig poolConfig = new GenericObjectPoolConfig();
+            ThriftServiceClientBuilder<Client> builder = new ThriftServiceClientBuilder<>();
+            builder.setPoolConfig(poolConfig).setThriftConfig(thriftConfig).setProxyTargetClass(false);
+
+            THelloWorldService.Iface client = builder.build();
+            String result = client.sayHello("li bai");
+            System.out.println(result);
+
+            Thread.sleep(2000);
+            AutoCloseable closeable = (AutoCloseable) client;
+            closeable.close();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
     public static void callSayHelloAsync() {
         try {
             TAsyncClientManager clientManager = new TAsyncClientManager();
-            TNonblockingTransport transport = new TNonblockingSocket(SERVER_IP, ASYNC_SERVER_PORT, TIMEOUT);
+            TNonblockingTransport transport = new TNonblockingSocket(SERVER_HOST, ASYNC_SERVER_PORT, TIMEOUT);
 
             //TProtocolFactory tprotocol = new TCompactProtocol.Factory();
             TProtocolFactory tprotocol = new TBinaryProtocol.Factory();

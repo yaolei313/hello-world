@@ -1,11 +1,13 @@
 package com.yao.app.protocol.thrift.client;
 
+import com.yao.app.protocol.thrift.client.pool.ThriftConfig;
+import com.yao.app.protocol.thrift.client.pool.ThriftServiceClientBuilder;
 import com.yao.app.protocol.thrift.service.THelloWorldService;
-import com.yao.app.protocol.thrift.service.TUser;
-import com.yao.app.protocol.thrift.service.TUserService;
+import com.yao.app.protocol.thrift.service.THelloWorldService.Client;
 import java.io.IOException;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
+import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import org.apache.thrift.TException;
 import org.apache.thrift.async.AsyncMethodCallback;
 import org.apache.thrift.async.TAsyncClientManager;
@@ -17,13 +19,12 @@ import org.apache.thrift.transport.TNonblockingSocket;
 import org.apache.thrift.transport.TNonblockingTransport;
 import org.apache.thrift.transport.TSocket;
 import org.apache.thrift.transport.TTransport;
-import org.apache.thrift.transport.TTransportException;
 
 /**
  * TODO 增加下client pool
- *
  */
 public class MyThriftClient {
+
     public static final String SERVER_HOST = "127.0.0.1";
 
     public static final int SERVER_PORT = 8091;
@@ -53,9 +54,6 @@ public class MyThriftClient {
 
             String result = client.sayHello("李白路过");
             System.out.println(result);
-
-        } catch (TTransportException e) {
-            e.printStackTrace();
         } catch (TException e) {
             e.printStackTrace();
         } finally {
@@ -80,9 +78,6 @@ public class MyThriftClient {
 
             String result = client.sayHello("李白路过");
             System.out.println(result);
-
-        } catch (TTransportException e) {
-            e.printStackTrace();
         } catch (TException e) {
             e.printStackTrace();
         } finally {
@@ -99,7 +94,7 @@ public class MyThriftClient {
             TAsyncClientManager clientManager = new TAsyncClientManager();
 
             TNonblockingTransport transport = new TNonblockingSocket(SERVER_HOST,
-                    SERVER_PORT, TIMEOUT);
+                SERVER_PORT, TIMEOUT);
 
             TProtocolFactory protocolFactory = new TMultiplexedProtocolFactory(new TCompactProtocol.Factory(), "HELLO_SERVICE");
 

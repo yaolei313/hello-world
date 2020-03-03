@@ -4,18 +4,18 @@ import java.io.Closeable;
 import org.apache.commons.pool2.PooledObjectFactory;
 import org.apache.commons.pool2.impl.GenericObjectPool;
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
-import org.apache.thrift.TServiceClient;
 
 /**
  * 描述:
  *
  * @author allen@xiaohongshu.com 2020-02-28
  */
-public class ThriftPool<T extends TServiceClient> implements Closeable {
+public class ThriftServiceClientPool<T> implements Closeable {
 
     private final GenericObjectPool<T> internalPool;
 
-    public ThriftPool(final GenericObjectPoolConfig poolConfig, PooledObjectFactory<T> factory) {
+    public ThriftServiceClientPool(final GenericObjectPoolConfig poolConfig, final ThriftConfig thriftConfig) {
+        PooledObjectFactory<T> factory = new ThriftServiceClientPooledObjectFactory<>(thriftConfig);
         this.internalPool = new GenericObjectPool<T>(factory, poolConfig);
     }
 
@@ -32,7 +32,7 @@ public class ThriftPool<T extends TServiceClient> implements Closeable {
         return this.internalPool == null || this.internalPool.isClosed();
     }
 
-    public T getResource() {
+    public T getClient() {
         try {
             return internalPool.borrowObject();
         } catch (Exception e) {
@@ -40,7 +40,7 @@ public class ThriftPool<T extends TServiceClient> implements Closeable {
         }
     }
 
-    public void returnResource(final T resource) {
+    public void returnClient(final T resource) {
         if (resource == null) {
             return;
         }
@@ -51,7 +51,7 @@ public class ThriftPool<T extends TServiceClient> implements Closeable {
         }
     }
 
-    public void returnBrokenResource(final T resource) {
+    public void returnBrokenClient(final T resource) {
         if (resource == null) {
             return;
         }

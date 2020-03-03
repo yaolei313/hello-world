@@ -5,7 +5,7 @@ import org.openjdk.jol.info.GraphLayout;
 import org.springframework.instrument.InstrumentationSavingAgent;
 
 /**
- * 关于InstrumentationSavingAgent
+ * 关于InstrumentationSavingAgent,有2中获取方式
  *
  * 1.代理在main前启动
  * 清单必须包含Premain-Class属性
