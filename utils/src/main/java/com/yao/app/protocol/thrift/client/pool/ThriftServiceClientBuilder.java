@@ -87,6 +87,8 @@ public class ThriftServiceClientBuilder<T> {
     }
 
     private static Object doIntercept(Method method, Object[] args, ThriftServiceClientPool thriftPool) {
+        String methodName = method.getName();
+        System.out.println("into " + methodName);
         if (isAutoCloseableMethod(method)) {
             System.out.println("close");
             thriftPool.close();

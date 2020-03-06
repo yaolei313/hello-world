@@ -35,7 +35,7 @@
         <spring.version>5.2.4.RELEASE</spring.version>
         <aspectj.version>1.9.2</aspectj.version>
 
-        <jetty.version>9.4.14.v20181114</jetty.version>
+        <jetty.version>9.4.27.v20200227</jetty.version>
         <shiro.version>1.5.1</shiro.version>
         <hystrix.version>1.5.18</hystrix.version>
 

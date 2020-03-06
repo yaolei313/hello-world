@@ -31,8 +31,8 @@ public class HelloClientDemo {
     public static final int TIMEOUT = 30000;
 
     public static void main(String[] args) {
-        callSayHello();
-        //callSayHelloByPool();
+        //callSayHello();
+        callSayHelloByPool();
         //callSayHelloAsync();
     }
 
