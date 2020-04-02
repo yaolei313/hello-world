@@ -1,8 +1,8 @@
 package com.yao.app.xml;
 
+import java.util.Iterator;
 import javax.xml.XMLConstants;
 import javax.xml.namespace.NamespaceContext;
-import java.util.Iterator;
 
 /**
  * 没必要，直接使用{@link org.springframework.util.xml.SimpleNamespaceContext SimpleNamespaceContext}

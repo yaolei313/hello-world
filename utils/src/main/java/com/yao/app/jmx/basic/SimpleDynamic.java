@@ -22,7 +22,22 @@ package com.yao.app.jmx.basic;
 
 import java.lang.reflect.Constructor;
 import java.util.Iterator;
-import javax.management.*;
+import javax.management.Attribute;
+import javax.management.AttributeChangeNotification;
+import javax.management.AttributeList;
+import javax.management.AttributeNotFoundException;
+import javax.management.DynamicMBean;
+import javax.management.InvalidAttributeValueException;
+import javax.management.MBeanAttributeInfo;
+import javax.management.MBeanConstructorInfo;
+import javax.management.MBeanException;
+import javax.management.MBeanInfo;
+import javax.management.MBeanNotificationInfo;
+import javax.management.MBeanOperationInfo;
+import javax.management.MBeanParameterInfo;
+import javax.management.NotificationBroadcasterSupport;
+import javax.management.ReflectionException;
+import javax.management.RuntimeOperationsException;
 
 public class SimpleDynamic extends NotificationBroadcasterSupport implements DynamicMBean {
 

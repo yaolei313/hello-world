@@ -1,10 +1,9 @@
 package com.yao.app.java.lock;
 
-import org.apache.commons.lang3.RandomUtils;
-
 import java.util.List;
 import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CyclicBarrier;
+import org.apache.commons.lang3.RandomUtils;
 
 /**
  * Created by yaolei02 on 2019/1/31.

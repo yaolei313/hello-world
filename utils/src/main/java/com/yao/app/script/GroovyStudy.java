@@ -1,7 +1,6 @@
 package com.yao.app.script;
 
 import groovy.util.Eval;
-
 import java.util.HashMap;
 import java.util.Map;
 

@@ -2,7 +2,6 @@ package com.yao.app.java.annotation;
 
 import com.yao.app.java.jvm.Employee;
 import com.yao.app.spi.annotation.Custom;
-
 import java.io.Serializable;
 
 /**

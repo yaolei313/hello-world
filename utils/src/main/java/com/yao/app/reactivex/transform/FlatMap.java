@@ -1,11 +1,5 @@
 package com.yao.app.reactivex.transform;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
-
-
-
 public class FlatMap {
 
     public static void main(String[] args) {

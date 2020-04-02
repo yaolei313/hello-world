@@ -2,7 +2,6 @@ package com.yao.app.jaas;
 
 import java.io.IOException;
 import java.util.Map;
-
 import javax.security.auth.Subject;
 import javax.security.auth.callback.Callback;
 import javax.security.auth.callback.CallbackHandler;
@@ -11,7 +10,6 @@ import javax.security.auth.callback.PasswordCallback;
 import javax.security.auth.callback.UnsupportedCallbackException;
 import javax.security.auth.login.LoginException;
 import javax.security.auth.spi.LoginModule;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

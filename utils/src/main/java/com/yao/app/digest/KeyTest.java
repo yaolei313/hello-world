@@ -1,13 +1,11 @@
 package com.yao.app.digest;
 
-import org.apache.commons.codec.binary.Base64;
-
+import java.security.SecureRandom;
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
-import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
+import org.apache.commons.codec.binary.Base64;
 
 /**
  * Created by yaolei02 on 2017/4/1.

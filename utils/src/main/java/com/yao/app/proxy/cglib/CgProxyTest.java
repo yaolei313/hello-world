@@ -1,13 +1,11 @@
 package com.yao.app.proxy.cglib;
 
 
+import com.yao.app.proxy.jdk.INamed;
 import java.io.Serializable;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Collection;
-
-import com.yao.app.proxy.jdk.INamed;
-
 import net.sf.cglib.proxy.Callback;
 import net.sf.cglib.proxy.CallbackFilter;
 import net.sf.cglib.proxy.Enhancer;

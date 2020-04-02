@@ -30,9 +30,9 @@
  */ 
 package com.yao.app.jmx.security.subjectdelegation.client;
 
+import com.yao.app.jmx.security.subjectdelegation.mbeans.SimpleStandardMBean;
 import java.util.Collections;
 import java.util.HashMap;
-
 import javax.management.Attribute;
 import javax.management.JMX;
 import javax.management.MBeanServerConnection;
@@ -42,8 +42,6 @@ import javax.management.remote.JMXConnectorFactory;
 import javax.management.remote.JMXPrincipal;
 import javax.management.remote.JMXServiceURL;
 import javax.security.auth.Subject;
-
-import com.yao.app.jmx.security.subjectdelegation.mbeans.SimpleStandardMBean;
 
 public class Client {
 

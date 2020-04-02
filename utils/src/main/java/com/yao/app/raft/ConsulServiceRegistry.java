@@ -1,7 +1,6 @@
 package com.yao.app.raft;
 
 import com.ecwid.consul.v1.ConsulClient;
-import com.yao.app.raft.ServiceRegistry;
 import java.net.URL;
 import java.util.List;
 

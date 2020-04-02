@@ -1,9 +1,8 @@
 package com.yao.app.protocol.thrift.service.impl;
 
-import org.apache.thrift.TException;
-
 import com.yao.app.protocol.thrift.service.TUser;
 import com.yao.app.protocol.thrift.service.TUserService.Iface;
+import org.apache.thrift.TException;
 
 public class UserServiceImpl implements Iface {
 

@@ -1,7 +1,6 @@
 package com.yao.app.baidumaps;
 
-import org.apache.http.NameValuePair;
-import org.apache.http.message.BasicNameValuePair;
+import static com.yao.app.baidumaps.PathEnum.GEO_CODING_API;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -9,8 +8,8 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.yao.app.baidumaps.PathEnum.GEO_CODING_API;
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
 
 /**
  * Created by yaolei02 on 2017/5/9.

@@ -1,8 +1,6 @@
 package com.yao.app.jmx.basic;
 
 import java.io.IOException;
-import java.rmi.registry.LocateRegistry;
-
 import javax.management.Attribute;
 import javax.management.MBeanAttributeInfo;
 import javax.management.MBeanConstructorInfo;

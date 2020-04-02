@@ -31,43 +31,31 @@
 
 package com.yao.app.jmx.lookup.ldap;
 
-import javax.naming.InitialContext;
-import javax.naming.Context;
-import javax.naming.NamingEnumeration;
-import javax.naming.NameNotFoundException;
-import javax.naming.NamingException;
-
-import javax.naming.directory.DirContext;
-import javax.naming.directory.Attribute;
-import javax.naming.directory.BasicAttribute;
-import javax.naming.directory.Attributes;
-import javax.naming.directory.BasicAttributes;
-import javax.naming.directory.DirContext;
-import javax.naming.directory.Attribute;
-import javax.naming.directory.Attributes;
-import javax.naming.directory.SearchResult;
-import javax.naming.directory.SearchControls;
-
-import javax.naming.ldap.InitialLdapContext;
-
-import javax.management.*;
-import javax.management.remote.*;
-import javax.management.remote.rmi.*;
-
-import java.text.SimpleDateFormat;
-
-import java.util.Date;
-import java.util.Map;
-import java.util.HashMap;
-import java.util.Hashtable;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Locale;
-import java.util.Vector;
 import java.io.IOException;
-import java.io.Serializable;
 import java.net.InetAddress;
 import java.net.MalformedURLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Hashtable;
+import java.util.Map;
+import javax.management.JMException;
+import javax.management.MBeanServer;
+import javax.management.MBeanServerFactory;
+import javax.management.remote.JMXConnectorServer;
+import javax.management.remote.JMXConnectorServerFactory;
+import javax.management.remote.JMXServiceURL;
+import javax.management.remote.rmi.RMIConnectorServer;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NameNotFoundException;
+import javax.naming.NamingException;
+import javax.naming.directory.Attribute;
+import javax.naming.directory.Attributes;
+import javax.naming.directory.BasicAttribute;
+import javax.naming.directory.BasicAttributes;
+import javax.naming.directory.DirContext;
+import javax.naming.ldap.InitialLdapContext;
 
 /**
  * This class demonstrates how to use an LDAP directory as a lookup

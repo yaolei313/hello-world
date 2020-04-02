@@ -1,7 +1,7 @@
 package com.yao.app.jmx.security.finegrained.client;
 
+import com.yao.app.jmx.security.finegrained.mbeans.SimpleStandardMBean;
 import java.util.HashMap;
-
 import javax.management.Attribute;
 import javax.management.JMX;
 import javax.management.MBeanServerConnection;
@@ -9,8 +9,6 @@ import javax.management.ObjectName;
 import javax.management.remote.JMXConnector;
 import javax.management.remote.JMXConnectorFactory;
 import javax.management.remote.JMXServiceURL;
-
-import com.yao.app.jmx.security.finegrained.mbeans.SimpleStandardMBean;
 
 public class Client {
 

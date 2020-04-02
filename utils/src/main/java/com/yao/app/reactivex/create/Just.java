@@ -1,10 +1,5 @@
 package com.yao.app.reactivex.create;
 
-import java.util.List;
-
-
-import com.google.common.collect.Lists;
-
 public class Just {
 
     public static void main(String[] args) {

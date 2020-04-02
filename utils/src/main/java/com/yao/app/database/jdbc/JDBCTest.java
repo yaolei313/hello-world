@@ -3,9 +3,9 @@ package com.yao.app.database.jdbc;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Savepoint;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,12 +18,12 @@ public class JDBCTest {
     public static void main(String[] args) {
         try {
             log.warn("测试logback配置");
-            
+
             log.info("测试normal");
-            // test();
+            test();
 
             log.info("测试savepoint");
-            testSavepoint();
+            //testSavepoint();
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
@@ -42,6 +42,11 @@ public class JDBCTest {
             ps.setString(3, "dufu@gmail.com");
 
             ps.executeUpdate();
+            ResultSet rs = ps.getGeneratedKeys();
+            if (rs.next()) {
+                int id = rs.getInt(1);
+                log.info(String.valueOf(id));
+            }
 
             ps.setString(1, "y00196907");
             ps.setString(2, "yaolei");
@@ -102,9 +107,10 @@ public class JDBCTest {
     }
 
     public static Connection getDefaultConnection() throws ClassNotFoundException, SQLException {
-        Class.forName("com.mysql.jdbc.Driver");
-        Connection conn = DriverManager.getConnection("jdbc:mysql://192.168.189.28:3306/study", "study",
-                "study");
+        // Class.forName("com.mysql.jdbc.Driver");
+        Class.forName("org.mariadb.jdbc.Driver");
+        Connection conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/study", "study",
+            "study");
 
         conn.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
 

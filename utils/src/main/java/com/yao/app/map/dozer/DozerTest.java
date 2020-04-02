@@ -1,11 +1,10 @@
 package com.yao.app.map.dozer;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.yao.app.map.Student;
 import com.yao.app.map.Student2;
 import com.yao.app.map.StudentDTO;
+import java.util.ArrayList;
+import java.util.List;
 import org.dozer.DozerBeanMapper;
 import org.dozer.Mapper;
 

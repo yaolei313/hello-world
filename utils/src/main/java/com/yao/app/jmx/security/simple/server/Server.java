@@ -25,19 +25,14 @@
  */
 package com.yao.app.jmx.security.simple.server;
 
-import java.io.File;
 import java.net.URL;
 import java.rmi.registry.LocateRegistry;
 import java.util.HashMap;
-
 import javax.management.MBeanServer;
 import javax.management.MBeanServerFactory;
 import javax.management.remote.JMXConnectorServer;
 import javax.management.remote.JMXConnectorServerFactory;
 import javax.management.remote.JMXServiceURL;
-import javax.management.remote.rmi.RMIConnectorServer;
-import javax.rmi.ssl.SslRMIClientSocketFactory;
-import javax.rmi.ssl.SslRMIServerSocketFactory;
 
 public class Server {
 

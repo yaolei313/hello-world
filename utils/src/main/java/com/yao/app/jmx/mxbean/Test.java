@@ -1,7 +1,6 @@
 package com.yao.app.jmx.mxbean;
 
 import java.lang.management.ManagementFactory;
-
 import javax.management.AttributeNotFoundException;
 import javax.management.InstanceNotFoundException;
 import javax.management.MBeanException;

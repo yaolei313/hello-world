@@ -3,7 +3,6 @@ package com.yao.app.json.object;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.google.common.collect.Maps;
-
 import java.util.Map;
 
 /**

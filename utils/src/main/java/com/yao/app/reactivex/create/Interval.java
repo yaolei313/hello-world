@@ -1,9 +1,5 @@
 package com.yao.app.reactivex.create;
 
-import java.util.Scanner;
-import java.util.concurrent.TimeUnit;
-
-
 public class Interval {
     public static void main(String[] args) {
         /*Observable<Long> observable = Observable.interval(1, TimeUnit.SECONDS).take(20);

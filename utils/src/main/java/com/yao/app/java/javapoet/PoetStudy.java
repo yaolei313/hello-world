@@ -1,13 +1,18 @@
 package com.yao.app.java.javapoet;
 
 import com.google.common.collect.Lists;
-import com.squareup.javapoet.*;
-
-import javax.lang.model.element.Modifier;
+import com.squareup.javapoet.FieldSpec;
+import com.squareup.javapoet.JavaFile;
+import com.squareup.javapoet.MethodSpec;
+import com.squareup.javapoet.ParameterSpec;
+import com.squareup.javapoet.ParameterizedTypeName;
+import com.squareup.javapoet.TypeName;
+import com.squareup.javapoet.TypeSpec;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Function;
+import javax.lang.model.element.Modifier;
 
 /**
  * 一个生成java文件的工具,注意生成的不是byte code

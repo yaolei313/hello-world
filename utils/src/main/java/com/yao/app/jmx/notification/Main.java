@@ -5,8 +5,9 @@
 
 package com.yao.app.jmx.notification;
 
-import java.lang.management.*;
-import javax.management.*;
+import java.lang.management.ManagementFactory;
+import javax.management.MBeanServer;
+import javax.management.ObjectName;
 
 public class Main {
 

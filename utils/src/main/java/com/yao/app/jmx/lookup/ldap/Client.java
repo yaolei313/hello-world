@@ -31,43 +31,32 @@
 
 package com.yao.app.jmx.lookup.ldap;
 
-import javax.naming.InitialContext;
-import javax.naming.Context;
-import javax.naming.NamingEnumeration;
-import javax.naming.NameNotFoundException;
-import javax.naming.NamingException;
-
-import javax.naming.directory.DirContext;
-import javax.naming.directory.Attribute;
-import javax.naming.directory.BasicAttribute;
-import javax.naming.directory.Attributes;
-import javax.naming.directory.BasicAttributes;
-import javax.naming.directory.DirContext;
-import javax.naming.directory.Attribute;
-import javax.naming.directory.Attributes;
-import javax.naming.directory.SearchResult;
-import javax.naming.directory.SearchControls;
-
-import javax.naming.ldap.InitialLdapContext;
-
-import javax.management.remote.*;
-import javax.management.*;
-
+import java.io.IOException;
 import java.text.SimpleDateFormat;
-
-import java.util.Date;
-import java.util.Map;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Hashtable;
-import java.util.Set;
 import java.util.Iterator;
-import java.util.Locale;
-import java.util.Vector;
-
-import java.io.IOException;
-import java.io.Serializable;
+import java.util.List;
+import java.util.Set;
+import javax.management.MBeanAttributeInfo;
+import javax.management.MBeanInfo;
+import javax.management.MBeanServerConnection;
+import javax.management.ObjectName;
+import javax.management.remote.JMXConnector;
+import javax.management.remote.JMXConnectorFactory;
+import javax.management.remote.JMXServiceURL;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingEnumeration;
+import javax.naming.NamingException;
+import javax.naming.directory.Attribute;
+import javax.naming.directory.Attributes;
+import javax.naming.directory.DirContext;
+import javax.naming.directory.SearchControls;
+import javax.naming.directory.SearchResult;
+import javax.naming.ldap.InitialLdapContext;
 
 /**
  * This class demonstrates how to use an LDAP directory as a lookup service

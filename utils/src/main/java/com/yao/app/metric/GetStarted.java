@@ -2,16 +2,23 @@ package com.yao.app.metric;
 
 import static com.codahale.metrics.MetricRegistry.name;
 
-import com.codahale.metrics.*;
+import com.codahale.metrics.ConsoleReporter;
+import com.codahale.metrics.Counter;
+import com.codahale.metrics.CsvReporter;
+import com.codahale.metrics.Gauge;
+import com.codahale.metrics.Histogram;
+import com.codahale.metrics.Meter;
+import com.codahale.metrics.MetricRegistry;
+import com.codahale.metrics.Slf4jReporter;
+import com.codahale.metrics.Timer;
 import com.codahale.metrics.health.HealthCheck;
 import com.codahale.metrics.health.HealthCheckRegistry;
 import com.codahale.metrics.jmx.JmxReporter;
-import org.slf4j.LoggerFactory;
-
 import java.io.File;
 import java.util.Locale;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
+import org.slf4j.LoggerFactory;
 
 /**
  * 在抽象监控api的时候，可以参考metrics这种形式

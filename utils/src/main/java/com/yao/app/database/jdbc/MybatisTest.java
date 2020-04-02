@@ -2,9 +2,9 @@ package com.yao.app.database.jdbc;
 
 import java.sql.SQLException;
 import java.util.Date;
+import javax.sql.DataSource;
 import org.apache.ibatis.builder.xml.XMLMapperBuilder;
 import org.apache.ibatis.exceptions.PersistenceException;
-import org.apache.ibatis.executor.ErrorContext;
 import org.apache.ibatis.mapping.Environment;
 import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.SqlSession;
@@ -13,11 +13,8 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.apache.ibatis.transaction.TransactionFactory;
 import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.core.NestedIOException;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
-
-import javax.sql.DataSource;
 
 /**
  * SqlSessionFactoryBuilder

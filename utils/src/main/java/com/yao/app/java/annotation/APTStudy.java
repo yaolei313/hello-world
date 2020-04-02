@@ -1,8 +1,8 @@
 package com.yao.app.java.annotation;
 
-import javax.annotation.processing.Processor;
 import java.util.Iterator;
 import java.util.ServiceLoader;
+import javax.annotation.processing.Processor;
 
 /**
  * Created by yaolei02 on 2018/11/19.

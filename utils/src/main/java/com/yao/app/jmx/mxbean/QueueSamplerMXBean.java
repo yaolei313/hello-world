@@ -6,8 +6,6 @@
 
 package com.yao.app.jmx.mxbean;
 
-import javax.management.MXBean;
-
 /**
  * The annotation @MXBean can be also
  * used to annotate the Java interface instead of requiring the interface’s name to be followed by

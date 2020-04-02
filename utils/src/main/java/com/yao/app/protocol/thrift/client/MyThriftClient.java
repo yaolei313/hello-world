@@ -1,13 +1,9 @@
 package com.yao.app.protocol.thrift.client;
 
-import com.yao.app.protocol.thrift.client.pool.ThriftConfig;
-import com.yao.app.protocol.thrift.client.pool.ThriftServiceClientBuilder;
 import com.yao.app.protocol.thrift.service.THelloWorldService;
-import com.yao.app.protocol.thrift.service.THelloWorldService.Client;
 import java.io.IOException;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
-import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import org.apache.thrift.TException;
 import org.apache.thrift.async.AsyncMethodCallback;
 import org.apache.thrift.async.TAsyncClientManager;

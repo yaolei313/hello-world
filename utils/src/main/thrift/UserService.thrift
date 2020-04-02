@@ -7,6 +7,17 @@ struct TUser{
 	4:optional string email
 }
 
+struct TUserDetail{
+  1:i64 accountNo;
+  2:string name;
+  3:string department;
+  4:string email;
+  5:binary snsAccountNo;
+  6:list<string> permissions;
+  7:map<string,string> otherProperties;
+  8:i64 loginTimestamp;
+}
+
 service TUserService{
 	TUser queryUserById(1:required string id),
 	

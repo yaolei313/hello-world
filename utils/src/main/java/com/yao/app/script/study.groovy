@@ -1,7 +1,4 @@
 package com.yao.app.script
-
-import org.codehaus.groovy.control.CompilerConfiguration
-
 /**
  * Created by yaolei02 on 2017/3/26.
  */

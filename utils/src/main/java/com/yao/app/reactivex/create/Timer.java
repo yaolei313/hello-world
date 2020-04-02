@@ -1,12 +1,5 @@
 package com.yao.app.reactivex.create;
 
-import io.reactivex.Observable;
-
-import java.util.Scanner;
-import java.util.concurrent.TimeUnit;
-
-
-
 public class Timer {
 
     public static void main(String[] args) {

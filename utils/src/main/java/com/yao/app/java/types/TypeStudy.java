@@ -1,9 +1,13 @@
 package com.yao.app.java.types;
 
 import com.google.inject.internal.MoreTypes;
-
 import com.yao.app.java.reflection.ReflectionStudy;
-import java.lang.reflect.*;
+import java.lang.reflect.Field;
+import java.lang.reflect.GenericArrayType;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+import java.lang.reflect.TypeVariable;
+import java.lang.reflect.WildcardType;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
