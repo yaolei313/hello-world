@@ -20,6 +20,7 @@ public class HelloServerDemo {
     public static final int SERVER_PORT = 8090;
 
     public static void main(String[] args) {
+        // 注意优先使用TFramedTransport，由于buffer存在的关系，可以保证序列化过程中有错误时，不完整的数据包不会发送。
         startService2();
     }
 

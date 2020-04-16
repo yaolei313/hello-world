@@ -19,7 +19,9 @@ struct TUserDetail{
 }
 
 service TUserService{
-	TUser queryUserById(1:required string id),
+	TUser queryUserById(1:required string id);
+
+	list<TUser> queryUserByIds(1:required list<string> ids),
 	
 	string addUser(1:required TUser user)
 }
