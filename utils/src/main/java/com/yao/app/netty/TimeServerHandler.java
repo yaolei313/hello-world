@@ -17,11 +17,13 @@ public class TimeServerHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelActive(final ChannelHandlerContext ctx) { // (1)
         final ByteBuf time = ctx.alloc().buffer(4); // (2)
+
+        // 2208988800为1900年1月1日00:00:00~1970年1月1日00:00:00的总秒数
         time.writeInt((int) (System.currentTimeMillis() / 1000L + 2208988800L));
 
         // ChannelHandlerContext.write() (and writeAndFlush()) method returns a ChannelFuture
-        // A ChannelFuture represents an I/O operation which has not yet occurred.
-        // It means, any requested operation might not have been performed yet because all operations are asynchronous in Netty.
+        // ChannelFuture代表一个尚未发生的I/O操作，因为该操作是异步的，故状态不确定，实际可能IO已发生，可能也IO未发生。
+        // 所以，在ChannelFuture完成后，我们需要close下ctx，close也是个异步操作
         final ChannelFuture f = ctx.writeAndFlush(time); // (3)
         f.addListener(new ChannelFutureListener() {
             @Override

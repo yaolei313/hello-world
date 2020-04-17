@@ -9,6 +9,7 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import java.util.function.Supplier;
 
 public class Server {
 
@@ -18,17 +19,19 @@ public class Server {
         this.port = port;
     }
 
-    public void run(ChannelHandler handler) throws Exception {
+    public void run(Supplier<ChannelHandler> handlerSupplier) throws Exception {
         EventLoopGroup bossGroup = new NioEventLoopGroup(); // (1)
         EventLoopGroup workerGroup = new NioEventLoopGroup();
         try {
             ServerBootstrap b = new ServerBootstrap(); // (2)
             b.group(bossGroup, workerGroup)
                 .channel(NioServerSocketChannel.class) // (3)
+
                 .childHandler(new ChannelInitializer<SocketChannel>() { // (4)
                     @Override
                     public void initChannel(SocketChannel ch) throws Exception {
-                        ch.pipeline().addLast(handler);
+                        // 必须每次都new，不然会出现is not a @Sharable handler
+                        ch.pipeline().addLast(handlerSupplier.get());
                     }
                 })
                 .option(ChannelOption.SO_BACKLOG, 128)          // (5) NioServerSocketChannel
@@ -53,6 +56,6 @@ public class Server {
             port = Integer.parseInt(args[0]);
         }
 
-        new Server(port).run(new TimeServerHandler());
+        new Server(port).run(() -> new TimeServerHandler());
     }
 }
