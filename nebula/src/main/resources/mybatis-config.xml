@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
+	<settings>
+		<!-- https://mybatis.org/mybatis-3/zh/configuration.html#properties
+		mybatis缓存功能弱
+		开启cacheEnabled，会导致使用CachingExecutor
+		开启localCacheScope=SESSION，则会在session中缓存所有查询，若有更新操作则清理缓存，该缓存是namespace维度
+		若有多个namespace或非namespace(通过Mapper)的更新语句，则导致缓存不能被清理
+		REUSE的范围是SqlSession，也可以认为是namespace
+		-->
+		<setting name="cacheEnabled" value="false"/>
+		<setting name="localCacheScope" value="STATEMENT"/>
+		<setting name="defaultExecutorType" value="REUSE"/>
+		<setting name="mapUnderscoreToCamelCase" value="true" />
+	</settings>
 	<typeAliases>
 		<typeAlias alias="UserBean" type="com.yao.app.nebula.domain.UserBean"/>
 	</typeAliases>

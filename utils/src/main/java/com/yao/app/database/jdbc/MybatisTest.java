@@ -75,7 +75,7 @@ public class MybatisTest {
         // 会开启一个事务(也就是不自动提交) autoCommit=false
         // 连接对象会从由活动环境配置的数据源实例中得到。
         // 事务隔离级别将会使用驱动或数据源的默认设置。
-        // 预处理语句不会被复用,也不会批量处理更新。
+        // 由于每个SqlSession都有一个executor，所以我们缓存在ReuseExecutor上的Statement作用域是同一个SqlSession。
         SqlSession sqlSession = sqlSessionFactory.openSession();
         try {
             UserBean user = sqlSession.selectOne("com.yao.app.database.jdbc.UserMapper.findUser", "y00196907");

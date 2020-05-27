@@ -44,6 +44,7 @@
         
         <poi.version>3.10-FINAL</poi.version>
         <thrift.version>0.13.0</thrift.version>
+        <protostuff.version>1.7.2</protostuff.version>
         <httpclient.version>4.5.10</httpclient.version>
         <httpcore.version>4.4.12</httpcore.version>
         <commons-lang3.version>3.9</commons-lang3.version>
@@ -279,13 +280,13 @@
             <dependency>
                 <groupId>io.protostuff</groupId>
                 <artifactId>protostuff-core</artifactId>
-                <version>1.5.9</version>
+                <version>${protostuff.version}</version>
             </dependency>
             
             <dependency>
                 <groupId>io.protostuff</groupId>
                 <artifactId>protostuff-runtime</artifactId>
-                <version>1.5.9</version>
+                <version>${protostuff.version}</version>
             </dependency>
             
             <!-- http utils -->

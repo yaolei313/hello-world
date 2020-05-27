@@ -13,6 +13,9 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.ByteToMessageDecoder;
 import io.netty.handler.codec.ReplayingDecoder;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -56,6 +59,7 @@ public class TimeClient {
                 long currentTimeMillis = (m.readUnsignedInt() - 2208988800L) * 1000L;
                 System.out.println(new Date(currentTimeMillis));
                 ctx.close();
+                LocalDate.now().plusDays(1).atStartOfDay();
             } finally {
                 m.release();
             }
@@ -141,6 +145,9 @@ public class TimeClient {
         }
     }
 
+    /**
+     * ReplayingDecoder用来对比用
+     */
     public static class IntegerHeaderFrameDecoder extends ByteToMessageDecoder {
 
         @Override

@@ -449,6 +449,16 @@
 			<optional>true</optional>
 		</dependency>
 
+		<!-- decompiler-->
+		<dependency>
+			<groupId>study</groupId>
+			<artifactId>study</artifactId>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/lib/agent.jar</systemPath>
+		</dependency>
+
+
+
 	</dependencies>
 
 	<build>
@@ -461,13 +471,16 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
+				<!--
+				配置package出的jar包中META-INF/MANIFEST.MF文件中的Premain-Class这项配置
 				<configuration>
 					<archive>
 						<manifestEntries>
-							<Premain-Class>com.yao.app.java.jvm.NotUsedInstrumentationSavingAgent</Premain-Class>
+							<Premain-Class>com.yao.app.java.jvm.InstrumentationSavingAgent</Premain-Class>
 						</manifestEntries>
 					</archive>
 				</configuration>
+				-->
 			</plugin>
 		</plugins>
 	</build>
