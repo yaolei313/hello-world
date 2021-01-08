@@ -1,11 +1,11 @@
 package com.yao.app.nebula.command;
 
-import org.junit.Test;
-import rx.functions.Action1;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.concurrent.Future;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
 
 public class CommandTest {
 
@@ -31,11 +31,11 @@ public class CommandTest {
         assertEquals("Hello World!", fWorld.get());
         assertEquals("Hello Bob!", fBob.get());
     }
-    
+
     @Test
-    public void testObservable(){
+    public void testObservable() {
         new CommandHelloWorld1("World").observe();
-        
+
         new CommandHelloWorld1("World").toObservable();
     }
 }

@@ -19,12 +19,8 @@
   <dependencies>
     <!-- test -->
     <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.assertj</groupId>
-      <artifactId>assertj-core</artifactId>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter</artifactId>
     </dependency>
 
     <!-- spring -->
@@ -361,7 +357,7 @@
               <createDependencyReducedPom>false</createDependencyReducedPom>
               <artifactSet>
                 <excludes>
-                  <exclude>junit:junit</exclude>
+                  <exclude>org.junit.jupiter:*</exclude>
                   <exclude>org.assertj:*</exclude>
                   <exclude>org.mockito:*</exclude>
                   <exclude>org.mybatis.generator:*</exclude>

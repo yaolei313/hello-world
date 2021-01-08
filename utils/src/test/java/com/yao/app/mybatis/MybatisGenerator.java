@@ -1,6 +1,6 @@
 package com.yao.app.mybatis;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.mybatis.generator.api.MyBatisGenerator;
 import org.mybatis.generator.config.Configuration;
 import org.mybatis.generator.config.xml.ConfigurationParser;

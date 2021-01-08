@@ -1,17 +1,17 @@
 package com.yao.app.nebula.service;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations="classpath:applicationContext-test.xml")
+@ExtendWith(SpringExtension.class)
+@ContextConfiguration(locations = "classpath:applicationContext-test.xml")
 public class MyTest extends AbstractJUnit4SpringContextTests {
-    
+
     @Test
-    public void test(){
+    public void test() {
         System.out.println("test");
     }
 }

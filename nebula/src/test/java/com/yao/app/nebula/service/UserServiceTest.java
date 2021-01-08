@@ -1,29 +1,23 @@
 package com.yao.app.nebula.service;
 
-import static org.assertj.core.api.Assertions.*;
-
-import java.util.Date;
-import javax.annotation.Resource;
-
-import org.junit.Test;
 
 import com.yao.app.nebula.basic.AbstractTest;
 import com.yao.app.nebula.domain.UserBean;
-import com.yao.app.nebula.service.UserService;
-import com.yao.app.nebula.util.ApplicationContextUtil;
-import com.yao.app.nebula.web.vo.Student;
+import java.util.Date;
+import javax.annotation.Resource;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class UserServiceTest extends AbstractTest {
 
     @Resource
     private UserService service;
-    
+
     @Test
-    public void test1(){
+    public void test1() {
         UserBean user = service.queryUserByUsername("y00196907");
-        
-        
-        assertThat(user.getNickname()).isEqualTo("李白");
+
+        Assertions.assertEquals(user.getNickname(), "李白");
         System.out.println(user.getNickname());
     }
 
