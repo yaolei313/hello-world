@@ -80,7 +80,8 @@ public class JwtStudy {
         JWSSigner signer = new MACSigner(sharedSecret);
 
         // Prepare JWS object with "Hello, world!" payload
-        JWSObject jwsObject = new JWSObject(new JWSHeader(JWSAlgorithm.HS256), new Payload("Hello, world!"));
+        JWSHeader header = new JWSHeader(JWSAlgorithm.HS256);
+        JWSObject jwsObject = new JWSObject(header, new Payload("Hello, world!"));
 
         // Apply the HMAC
         jwsObject.sign(signer);

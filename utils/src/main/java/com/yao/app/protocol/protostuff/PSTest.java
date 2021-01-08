@@ -19,18 +19,29 @@ public class PSTest {
         LinkedBuffer buffer = LinkedBuffer.allocate(512);
 
         // ser
-        final byte[] protostuff;
-        try
-        {
-            protostuff = ProtostuffIOUtil.toByteArray(foo, schema, buffer);
-        }
-        finally
-        {
+        final byte[] bytes;
+        try {
+            bytes = ProtostuffIOUtil.toByteArray(foo, schema, buffer);
+        } finally {
             buffer.clear();
         }
 
         // deser
         Foo fooParsed = schema.newMessage();
-        ProtostuffIOUtil.mergeFrom(protostuff, fooParsed, schema);
+        ProtostuffIOUtil.mergeFrom(bytes, fooParsed, schema);
+
+        // --------
+
+        Integer obj = 100;
+        Schema<Integer> schema2 = RuntimeSchema.getSchema(Integer.class);
+        final byte[] bytes2;
+        try {
+            bytes2 = ProtostuffIOUtil.toByteArray(obj, schema2, buffer);
+        } finally {
+            buffer.clear();
+        }
+        Integer obj2 = schema2.newMessage();
+        ProtostuffIOUtil.mergeFrom(bytes2, obj2, schema2);
+        System.out.println(obj2);
     }
 }

@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>com.yao.app</groupId>
 		<artifactId>parent</artifactId>
-		<version>1.0.1-SNAPSHOT</version>
+		<version>2.0.0-SNAPSHOT</version>
     <relativePath/>
 	</parent>
 
@@ -268,9 +268,16 @@
 			<artifactId>jsoup</artifactId>
 		</dependency>
 
+		<!-- redis -->
 		<dependency>
 			<groupId>redis.clients</groupId>
 			<artifactId>jedis</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>io.lettuce</groupId>
+			<artifactId>lettuce-core</artifactId>
+			<version>5.3.3.RELEASE</version>
 		</dependency>
 
 		<!-- metrics -->
@@ -453,11 +460,16 @@
 		<dependency>
 			<groupId>study</groupId>
 			<artifactId>study</artifactId>
+			<version>1.0.0</version>
 			<scope>system</scope>
 			<systemPath>${project.basedir}/lib/agent.jar</systemPath>
 		</dependency>
 
-
+		<dependency>
+			<groupId>com.googlecode.libphonenumber</groupId>
+			<artifactId>libphonenumber</artifactId>
+			<version>8.12.11</version>
+		</dependency>
 
 	</dependencies>
 

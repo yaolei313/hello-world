@@ -13,7 +13,6 @@
     <modules>
         <module>apt-api</module>
         <module>apt-processor</module>
-        <module>instrumentation-spi</module>
     </modules>
 </project>
 

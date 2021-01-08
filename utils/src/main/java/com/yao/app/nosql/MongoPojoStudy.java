@@ -47,6 +47,14 @@ public class MongoPojoStudy {
         MongoCollection<Document> tmpCollection = database.getCollection("people");
         tmpCollection = tmpCollection.withCodecRegistry(pojoCodecRegistry);
          */
+        MongoCollection<Person> collection = database.getCollection("people", Person.class);
+        Person somebody = collection.find(eq("address.city", "Wimborne")).first();
+        System.out.println(somebody);
+
+        test1(database);
+    }
+
+    public static void test1(MongoDatabase database){
 
         MongoCollection<Person> collection = database.getCollection("people", Person.class);
         collection.drop();
