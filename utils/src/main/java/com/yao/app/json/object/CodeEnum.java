@@ -21,7 +21,7 @@ public enum CodeEnum {
         this.desc = desc;
     }
 
-    private static final Map<Integer, CodeEnum> maps = Maps.newHashMap();
+    private static final Map<Integer, CodeEnum> maps = Map.newHashMap();
 
     static {
         for (CodeEnum codeEnum : CodeEnum.values()) {
