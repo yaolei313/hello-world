@@ -461,14 +461,13 @@
 			<optional>true</optional>
 		</dependency>
 
-		<!-- decompiler-->
-		<dependency>
+		<!--<dependency>
 			<groupId>study</groupId>
 			<artifactId>study</artifactId>
 			<version>1.0.0</version>
 			<scope>system</scope>
 			<systemPath>${project.basedir}/lib/agent.jar</systemPath>
-		</dependency>
+		</dependency>-->
 
 		<dependency>
 			<groupId>com.googlecode.libphonenumber</groupId>
