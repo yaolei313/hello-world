@@ -13,5 +13,9 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 11
+    - name: Install Parent Pom
+      run: mvn clean install --file parent/pom.xml
+    - name: Install Dependency
+      run: mvn clean install --file spi/pom.xml
     - name: Build with Maven
       run: mvn -B package --file utils/pom.xml
