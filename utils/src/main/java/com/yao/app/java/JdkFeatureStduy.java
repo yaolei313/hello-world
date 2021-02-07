@@ -48,6 +48,8 @@ public class JdkFeatureStduy {
     }
 
     public static void studyJdk11() {
+        // JDK8 -> 11 参考
+        // https://zhuanlan.zhihu.com/p/87157172
         // LTS版本，可以使用
 
         // 新的httpclient支持HTTP/2和WebSocket,异步调用
