@@ -1,5 +1,6 @@
 package com.yao.app.nosql;
 
+import java.time.LocalDateTime;
 import org.bson.types.ObjectId;
 
 /**
@@ -17,6 +18,8 @@ public class Person {
 
     private Address address;
 
+    private LocalDateTime createTime;
+
     public Person() {
     }
 
@@ -25,6 +28,7 @@ public class Person {
         this.name = name;
         this.age = age;
         this.address = address;
+        this.createTime = LocalDateTime.now();
     }
 
     public ObjectId getId() {
@@ -57,5 +61,13 @@ public class Person {
 
     public void setAddress(Address address) {
         this.address = address;
+    }
+
+    public LocalDateTime getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(LocalDateTime createTime) {
+        this.createTime = createTime;
     }
 }

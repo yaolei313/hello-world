@@ -395,7 +395,7 @@
 		<dependency>
 			<groupId>org.mongodb</groupId>
 			<artifactId>mongodb-driver-sync</artifactId>
-			<version>3.11.2</version>
+			<version>4.2.2</version>
 		</dependency>
 
 		<!-- https://asm.ow2.io/versions.html -->

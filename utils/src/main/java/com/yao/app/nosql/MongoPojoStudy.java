@@ -33,7 +33,7 @@ public class MongoPojoStudy {
 
         // 全局的codec registry
         MongoClientSettings settings = MongoClientSettings.builder()
-            .applyToClusterSettings(builder -> builder.hosts(Arrays.asList(new ServerAddress("10.4.44.199", 27017))))
+            .applyToClusterSettings(builder -> builder.hosts(Arrays.asList(new ServerAddress("10.4.44.194", 27017))))
             .codecRegistry(pojoCodecRegistry)
             .build();
         MongoClient mongoClient = MongoClients.create(settings);
