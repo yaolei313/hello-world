@@ -5,8 +5,6 @@ import org.apache.thrift.protocol.TProtocolFactory;
 
 /**
  * 描述:
- *
- * @author allen@xiaohongshu.com 2020-03-02
  */
 public class ThriftConfig {
 

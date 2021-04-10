@@ -11,7 +11,6 @@ import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 /**
  * 描述:
  *
- * @author allen@xiaohongshu.com 2020-03-02
  */
 public class ThriftServiceClientBuilder<T> {
 

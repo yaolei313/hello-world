@@ -6,8 +6,8 @@ import static com.mongodb.client.model.Filters.not;
 import static com.mongodb.client.model.Updates.combine;
 import static com.mongodb.client.model.Updates.set;
 
+import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;
-import com.mongodb.ServerAddress;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
@@ -28,12 +28,14 @@ import org.bson.codecs.pojo.PojoCodecProvider;
 public class MongoPojoStudy {
 
     public static void main(String[] args) {
+        ConnectionString connectionString = new ConnectionString("mongodb://10.4.44.199:27017/study?compressors=snappy,zlib,zstd&maxIdleTimeMS=300000");
+
         CodecRegistry pojoCodecRegistry = CodecRegistries.fromRegistries(MongoClientSettings.getDefaultCodecRegistry(),
             CodecRegistries.fromProviders(PojoCodecProvider.builder().automatic(true).build()));
 
         // 全局的codec registry
         MongoClientSettings settings = MongoClientSettings.builder()
-            .applyToClusterSettings(builder -> builder.hosts(Arrays.asList(new ServerAddress("10.4.44.194", 27017))))
+            .applyConnectionString(connectionString)
             .codecRegistry(pojoCodecRegistry)
             .build();
         MongoClient mongoClient = MongoClients.create(settings);
@@ -54,7 +56,7 @@ public class MongoPojoStudy {
         test1(database);
     }
 
-    public static void test1(MongoDatabase database){
+    public static void test1(MongoDatabase database) {
 
         MongoCollection<Person> collection = database.getCollection("people", Person.class);
         collection.drop();

@@ -3,19 +3,18 @@ package com.yao.app.protocol.thrift.client.pool;
 import org.apache.commons.pool2.BasePooledObjectFactory;
 import org.apache.commons.pool2.PooledObject;
 import org.apache.commons.pool2.impl.DefaultPooledObject;
+import org.apache.thrift.TConfiguration;
 import org.apache.thrift.TServiceClient;
 import org.apache.thrift.protocol.TProtocol;
-import org.apache.thrift.transport.TFastFramedTransport;
 import org.apache.thrift.transport.TNonblockingSocket;
 import org.apache.thrift.transport.TSocket;
 import org.apache.thrift.transport.TTransport;
+import org.apache.thrift.transport.layered.TFastFramedTransport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * 描述:
- *
- * @author allen@xiaohongshu.com 2020-02-28
  */
 public class ThriftServiceClientPooledObjectFactory<T> extends BasePooledObjectFactory<T> {
 
@@ -33,7 +32,7 @@ public class ThriftServiceClientPooledObjectFactory<T> extends BasePooledObjectF
         if (thriftConfig.isNonblock()) {
             transport = new TNonblockingSocket(thriftConfig.getHost(), thriftConfig.getPort(), thriftConfig.getTimeout());
         } else {
-            transport = new TSocket(thriftConfig.getHost(), thriftConfig.getPort(), thriftConfig.getTimeout());
+            transport = new TSocket(TConfiguration.DEFAULT, thriftConfig.getHost(), thriftConfig.getPort(), thriftConfig.getTimeout());
         }
 
         if (thriftConfig.isFramed()) {

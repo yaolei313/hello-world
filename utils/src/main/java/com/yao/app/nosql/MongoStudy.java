@@ -3,8 +3,8 @@ package com.yao.app.nosql;
 import static com.mongodb.client.model.Filters.eq;
 
 import com.google.common.collect.Lists;
+import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;
-import com.mongodb.ServerAddress;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
@@ -20,7 +20,6 @@ import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.UpdateResult;
 import com.yao.app.java.date.DateExtUtils;
 import java.time.LocalDateTime;
-import java.util.Arrays;
 import java.util.List;
 import java.util.function.Consumer;
 import org.bson.Document;
@@ -33,19 +32,15 @@ import org.bson.Document;
 public class MongoStudy {
 
     public static void main(String[] args) {
+        // mongodb://[username:password@]host1[:port1][,host2[:port2],...[,hostN[:portN]]][/[database.collection][?options]]
+        ConnectionString connectionString = new ConnectionString("mongodb://10.4.44.199:27017/study?compressors=snappy,zlib,zstd&maxIdleTimeMS=300000");
         MongoClientSettings settings = MongoClientSettings.builder()
-            .applyToClusterSettings(builder -> builder.hosts(Arrays.asList(new ServerAddress("10.4.44.199", 27017))))
-            //.credential(MongoCredential.createCredential("userName", "study", "password".toCharArray()))
-            //.compressorList(Arrays.asList(MongoCompressor.createSnappyCompressor(), MongoCompressor.createZlibCompressor(), MongoCompressor.createZstdCompressor()))
+            .applyConnectionString(connectionString)
+            //  .credential(MongoCredential.createCredential("userName", "study", "password".toCharArray()))
+            //  .compressorList(Arrays.asList(MongoCompressor.createSnappyCompressor(), MongoCompressor.createZlibCompressor(), MongoCompressor.createZstdCompressor()))
             .build();
         // MongoClientSettings默认的codecRegistry为MongoClientSettings.getDefaultCodecRegistry()
-
         MongoClient mongoClient = MongoClients.create(settings);
-
-        // mongodb://[username:password@]host1[:port1][,host2[:port2],...[,hostN[:portN]]][/[database.collection][?options]]
-        // ConnectionString connectionString = new ConnectionString("mongodb://10.4.44.199:27017/study?compressors=snappy,zlib,zstd");
-        // MongoClient mongoClient = MongoClients.create(connectionString);
-
         MongoDatabase database = mongoClient.getDatabase("study");
 
         MongoCollection<Document> collection = database.getCollection("user");

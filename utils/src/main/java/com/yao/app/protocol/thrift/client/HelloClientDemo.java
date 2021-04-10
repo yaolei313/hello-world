@@ -7,6 +7,7 @@ import com.yao.app.protocol.thrift.service.THelloWorldService.Client;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
+import org.apache.thrift.TConfiguration;
 import org.apache.thrift.TException;
 import org.apache.thrift.async.AsyncMethodCallback;
 import org.apache.thrift.async.TAsyncClientManager;
@@ -39,7 +40,7 @@ public class HelloClientDemo {
         TTransport transport = null;
         try {
             // transport不一致会出现connect reset
-            transport = new TSocket(SERVER_HOST, SERVER_PORT, TIMEOUT);
+            transport = new TSocket(TConfiguration.DEFAULT, SERVER_HOST, SERVER_PORT, TIMEOUT);
             // 协议要和服务端一致
             //TProtocol protocol = new TBinaryProtocol(transport);
             TProtocol protocol = new TCompactProtocol(transport);
