@@ -35,7 +35,7 @@
         <aspectj.version>1.9.2</aspectj.version>
 
         <jetty.version>9.4.27.v20200227</jetty.version>
-        <shiro.version>1.5.1</shiro.version>
+        <shiro.version>1.7.1</shiro.version>
         <hystrix.version>1.5.18</hystrix.version>
         <resilience4j.version>1.7.0</resilience4j.version>
 
