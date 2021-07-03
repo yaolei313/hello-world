@@ -2,6 +2,7 @@ package com.yao.app.protocol.thrift.service.impl;
 
 import com.yao.app.protocol.thrift.service.TUser;
 import com.yao.app.protocol.thrift.service.TUserService.Iface;
+import java.util.List;
 import org.apache.thrift.TException;
 
 public class UserServiceImpl implements Iface {
@@ -23,6 +24,11 @@ public class UserServiceImpl implements Iface {
         user.email="yaolei313@gmail.com";
         //user.gravatarMail="yaolei313@gmail.com";
         return user;
+    }
+
+    @Override
+    public List<TUser> queryUserByIds(List<String> ids) throws TException {
+        return null;
     }
 
     @Override

@@ -1,0 +1,19 @@
+
+// 1~15一个字节，16~2047二个字节，最大id为2^29 - 1, or 536,870,911
+// 19000~19999 为保留范围
+// required(必须1个)，optional(0个或1个)，repeated(0个或多个)
+message SearchRequest {
+  required string query = 1;
+  optional int32 page_number = 2;
+  optional int32 result_per_page = 3;
+  repeated int32 samples = 4 [packed=true];  // 由于历史原因，在新版，数字类型的repeated需使用packed提高下效率
+}
+
+message SearchResponse {
+  required i32 code = 1;
+}
+
+message Foo {
+  reserved 2, 15, 9 to 11; // 废弃字段需要使用reserved关键字废弃
+  reserved "foo", "bar";
+}
