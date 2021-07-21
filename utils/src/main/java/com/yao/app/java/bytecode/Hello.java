@@ -21,7 +21,7 @@ public class Hello {
       Compiled from "Hello.java"
     public class com.yao.app.java.bytecode.Hello
       minor version: 0
-      major version: 52
+      major version: 52                                                                     # 52代表jdk8
       flags: ACC_PUBLIC, ACC_SUPER
     Constant pool:
        #1 = Methodref          #6.#23         // java/lang/Object."<init>":()V

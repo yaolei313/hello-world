@@ -35,10 +35,12 @@ public class JsonTest {
         mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
         mapper.configure(Feature.ALLOW_UNQUOTED_CONTROL_CHARS, true);
         mapper.setTimeZone(TimeZone.getDefault());
-        mapper.registerModule(new GuavaModule());
+        /*mapper.registerModule(new GuavaModule());
         mapper.registerModule(new ParameterNamesModule());
         mapper.registerModule(new JavaTimeModule());
-        mapper.registerModule(new Jdk8Module());
+        mapper.registerModule(new Jdk8Module());*/
+
+        mapper.findAndRegisterModules();
 
         mapper.enableDefaultTyping(DefaultTyping.NON_FINAL, As.PROPERTY);
 

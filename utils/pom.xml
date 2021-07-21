@@ -185,8 +185,6 @@
 			<artifactId>commons-codec</artifactId>
 		</dependency>
 
-
-
 		<!-- google java library -->
 		<dependency>
 			<groupId>com.google.guava</groupId>

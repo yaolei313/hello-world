@@ -70,5 +70,6 @@ public class CircuitBreakerStudy {
         Supplier<String> supplier = () -> "hello world";
         Supplier<String> decorated = CircuitBreaker.decorateSupplier(breaker, supplier);
         String result = Try.ofSupplier(decorated).get();
+
     }
 }

@@ -597,7 +597,9 @@
                     <artifactId>maven-compiler-plugin</artifactId>
                     <version>3.8.1</version>
                     <configuration>
-                        <release>11</release>
+                        <source>11</source>
+                        <target>11</target>
+                        <compilerVersion>11</compilerVersion>
                         <!-- 此处没指定utf-8的话可能导致代码中的汉字乱码，即打印汉字时，非代码中写死的汉字不会乱码，写死的会乱码 -->
                         <encoding>UTF-8</encoding>
                         <compilerArgument>-Xlint:all</compilerArgument>
