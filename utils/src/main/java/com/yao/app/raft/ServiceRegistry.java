@@ -5,7 +5,7 @@ import java.util.List;
 
 /**
  * 描述: 服务注册与发现。服务格式为如下的字符串
- * protocol://username:password@host:port/path?param1=xxx&param2=xxx
+ * protocol://host:port/path?param1=xxx&param2=xxx
  *
  * thrift://xxxx:port/clazz?param1=xxx&param2=xxx
  *

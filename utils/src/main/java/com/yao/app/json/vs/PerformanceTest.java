@@ -1,6 +1,5 @@
 package com.yao.app.json.vs;
 
-import com.alibaba.fastjson.JSON;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.yao.app.json.object.Group;
@@ -61,19 +60,6 @@ public class PerformanceTest {
             t4 = System.currentTimeMillis();
 
             System.out.println("jackson deserializing time:" + (t4 - t3));
-
-            // fastjson test
-            t1 = System.currentTimeMillis();
-            json = JSON.toJSONString(group);
-            t2 = System.currentTimeMillis();
-
-            System.out.println("fastjson serializing time:" + (t2 - t1));
-
-            t3 = System.currentTimeMillis();
-            g = JSON.parseObject(json, Group.class);
-            t4 = System.currentTimeMillis();
-
-            System.out.println("fastjson deserializing time:" + (t4 - t3));
         } catch (Exception e) {
             e.printStackTrace();
         }

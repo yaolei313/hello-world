@@ -46,10 +46,6 @@
 			<artifactId>mybatis</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.mybatis</groupId>
-			<artifactId>mybatis-typehandlers-jsr310</artifactId>
-		</dependency>
-		<dependency>
 			<groupId>org.mybatis.generator</groupId>
 			<artifactId>mybatis-generator-core</artifactId>
 		</dependency>
@@ -237,12 +233,6 @@
 			<artifactId>gson</artifactId>
 		</dependency>
 
-		<!-- fastjson -->
-		<dependency>
-			<groupId>com.alibaba</groupId>
-			<artifactId>fastjson</artifactId>
-		</dependency>
-
 		<dependency>
 			<groupId>io.netty</groupId>
 			<artifactId>netty-all</artifactId>
@@ -285,6 +275,11 @@
 			<artifactId>metrics-healthchecks</artifactId>
 		</dependency>
 
+		<dependency>
+			<groupId>io.micrometer</groupId>
+			<artifactId>micrometer-registry-prometheus</artifactId>
+		</dependency>
+
 		<!-- mq -->
 		<dependency>
 			<groupId>com.rabbitmq</groupId>
@@ -322,7 +317,7 @@
 
 		<dependency>
 			<groupId>org.codehaus.groovy</groupId>
-			<artifactId>groovy-all</artifactId>
+			<artifactId>groovy</artifactId>
 		</dependency>
 
 		<dependency>
