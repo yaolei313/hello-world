@@ -168,6 +168,11 @@
       <artifactId>pagehelper</artifactId>
     </dependency>
 
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-lang3</artifactId>
+    </dependency>
+
     <!-- spring mvc json -->
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
@@ -205,10 +210,6 @@
     </dependency>
 
     <!-- jaxb -->
-    <dependency>
-      <groupId>javax.xml.bind</groupId>
-      <artifactId>jaxb-api</artifactId>
-    </dependency>
     <dependency>
       <groupId>com.sun.xml.bind</groupId>
       <artifactId>jaxb-core</artifactId>
@@ -266,11 +267,6 @@
       <groupId>com.stormpath.shiro</groupId>
       <artifactId>stormpath-shiro-core</artifactId>
       <version>0.6.0</version>
-    </dependency>
-
-    <dependency>
-      <groupId>com.netflix.hystrix</groupId>
-      <artifactId>hystrix-core</artifactId>
     </dependency>
 
     <!-- sitemesh -->
