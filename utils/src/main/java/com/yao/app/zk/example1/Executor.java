@@ -1,4 +1,4 @@
-package com.yao.app.example1;
+package com.yao.app.zk.example1;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -50,7 +50,7 @@ public class Executor implements Watcher, Runnable, DataMonitorListener {
 	/***************************************************************************
 	 * We do process any events ourselves, we just need to forward them on.
 	 * 
-	 * @see org.apache.zookeeper.Watcher#process(org.apache.zookeeper.proto.WatcherEvent)
+	 * @see Watcher#process(org.apache.zookeeper.proto.WatcherEvent)
 	 */
 	public void process(WatchedEvent event) {
 		dm.process(event);

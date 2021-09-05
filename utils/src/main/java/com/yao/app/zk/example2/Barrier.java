@@ -1,4 +1,4 @@
-package com.yao.app.example2;
+package com.yao.app.zk.example2;
 
 import static org.apache.zookeeper.CreateMode.EPHEMERAL;
 import static org.apache.zookeeper.CreateMode.PERSISTENT;
