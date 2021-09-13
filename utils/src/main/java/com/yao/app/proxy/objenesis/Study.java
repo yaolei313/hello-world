@@ -13,9 +13,9 @@ public class Study {
 
     public static void main(String[] args) {
         Objenesis objenesis = new ObjenesisStd();
-        ObjectInstantiator instantiateHelper = objenesis.getInstantiatorOf(AlonePerson.class);
+        ObjectInstantiator<AlonePerson> instantiateHelper = objenesis.getInstantiatorOf(AlonePerson.class);
 
-        AlonePerson a1 = (AlonePerson) instantiateHelper.newInstance();
+        AlonePerson a1 = instantiateHelper.newInstance();
         a1.setName("li san");
         a1.setDesc("alone one");
 

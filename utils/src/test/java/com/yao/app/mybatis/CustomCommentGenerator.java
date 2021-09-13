@@ -51,7 +51,6 @@ public class CustomCommentGenerator extends DefaultCommentGenerator {
         topLevelClass.addJavaDocLine(" * ");
         topLevelClass.addJavaDocLine(" * @author " + author);
         topLevelClass.addJavaDocLine(" * @date " + dateFormat.format(new Date()));
-        topLevelClass.addJavaDocLine(" *");
         topLevelClass.addJavaDocLine(" */");
     }
 

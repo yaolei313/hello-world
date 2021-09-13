@@ -123,7 +123,7 @@ public class JsonMapper {
             return (T) mapper.readValue(jsonString, valueTypeRef);
         } catch (IOException e) {
             LOG.warn("parse json error:{}", jsonString, e);
-            throw Throwables.propagate(e);
+            throw new RuntimeException(e);
         }
     }
 

@@ -60,17 +60,7 @@ public class MybatisGenerator {
                     return FileVisitResult.CONTINUE;
                 }
             });
-        }
-    }
-
-    private void clearPath(File path) {
-        File[] files = path.listFiles();
-        for (File file : files) {
-            if (file.isDirectory()) {
-                clearPath(file);
-            } else {
-                file.delete();
-            }
+            Files.createDirectories(file);
         }
     }
 

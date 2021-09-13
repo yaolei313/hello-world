@@ -21,4 +21,9 @@ public class HelloImpl implements INamed {
         System.out.println("cglib li bai");
         return "cglib li bai";
     }
+
+	@Override
+	public String toString() {
+		return "toStringTest";
+	}
 }
