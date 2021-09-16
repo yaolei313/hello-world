@@ -43,7 +43,7 @@ public class CustomCommentGenerator extends DefaultCommentGenerator {
 
     @Override
     public void addModelClassComment(TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
-        String author = System.getProperty("user.name");
+        String author = System.getenv("user.name");
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         topLevelClass.addJavaDocLine("/**");
         topLevelClass.addJavaDocLine(" * 数据库表：" + introspectedTable.getFullyQualifiedTable());

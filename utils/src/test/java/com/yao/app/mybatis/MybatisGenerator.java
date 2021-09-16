@@ -23,12 +23,11 @@ public class MybatisGenerator {
             System.out.println(MybatisGenerator.class.getClassLoader().getResource(""));
             mkdirAndClear();
             List<String> warnings = new ArrayList<String>();
-            boolean overwrite = true;
             // 此处路径是classpath相关，即jvm classloader规范指定的-cp
             InputStream inputStream = MybatisGenerator.class.getResourceAsStream("/mybatis/generatorConfig.xml");
             ConfigurationParser cp = new ConfigurationParser(warnings);
             Configuration config = cp.parseConfiguration(inputStream);
-            DefaultShellCallback callback = new DefaultShellCallback(overwrite);
+            DefaultShellCallback callback = new DefaultShellCallback(true);
             MyBatisGenerator myBatisGenerator = new MyBatisGenerator(config, callback, warnings);
             myBatisGenerator.generate(null);
             System.out.println(warnings);
