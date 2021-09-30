@@ -5,16 +5,16 @@ grant all privileges on study.* to 'study'@'%' identified by 'study';
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `username` char(9) NOT NULL,
-  `email` varchar(64) NOT NULL,
-  `nickname` varchar(32) NOT NULL,
+  `username` char(9) NOT NULL comment '账号名',
+  `email` varchar(64) NOT NULL comment '邮箱',
+  `nickname` varchar(32) NOT NULL comment '昵称',
   `sex` char(1) DEFAULT 'M',
   `gravatar_mail` varchar(64) DEFAULT NULL,
   `register_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY(`username`),
   UNIQUE KEY(`email`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 
 INSERT INTO `study`.`users` (`username`, `email`, `nickname`, `sex`, `gravatar_mail`, `register_time`) VALUES 

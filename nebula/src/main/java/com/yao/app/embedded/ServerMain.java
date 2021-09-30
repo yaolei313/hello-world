@@ -71,7 +71,6 @@ public class ServerMain {
         server.start();
         server.join();
 
-        Runtime.getRuntime();
         Map<String, String> envs = System.getenv();
         Properties p = System.getProperties();
 

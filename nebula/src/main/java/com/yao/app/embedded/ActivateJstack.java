@@ -26,8 +26,7 @@ public class ActivateJstack {
         private final ScheduledExecutorService scheduler;
         private final LongAdder adder;
 
-        private static String acquirePid()
-        {
+        private static String acquirePid() {
             String mxName = ManagementFactory.getRuntimeMXBean().getName();
 
             int index = mxName.indexOf(PID_SEPERATOR);
@@ -43,14 +42,13 @@ public class ActivateJstack {
             return result;
         }
 
-        private void executeJstack( )
-        {
+        private void executeJstack() {
             ProcessInterface pi = new ProcessInterface();
 
             int exitCode;
 
             try {
-                exitCode = pi.run(new String[] { pathToJStack, "-l", pid,}, System.err);
+                exitCode = pi.run(new String[]{pathToJStack, "-l", pid,}, System.err);
             } catch (Exception e) {
                 throw new IllegalStateException("Error invoking jstack", e);
             }
@@ -60,8 +58,7 @@ public class ActivateJstack {
             }
         }
 
-        public ExecuteJStackTask(String pathToJStack, int througput)
-        {
+        public ExecuteJStackTask(String pathToJStack, int througput) {
             this.pathToJStack = pathToJStack;
             this.pid = acquirePid();
             this.adder = new LongAdder();
@@ -80,8 +77,7 @@ public class ActivateJstack {
             }, APP_WARMUP, POLLING_CYCLE, TimeUnit.SECONDS);
         }
 
-        private void checkThroughput()
-        {
+        private void checkThroughput() {
             int value = adder.intValue();
 
             if (value < MIN_THROUGHPUT) {
@@ -107,17 +103,13 @@ public class ActivateJstack {
 
         Scanner scanner = new Scanner(System.in);
 
-        try
-        {
-            while (true)
-            {
+        try {
+            while (true) {
                 int throughput = scanner.nextInt();
                 ste.incThrughput(throughput);
                 System.out.println("Througput = " + throughput);
             }
-        }
-        finally
-        {
+        } finally {
             scanner.close();
         }
     }
