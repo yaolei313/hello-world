@@ -26,7 +26,7 @@ import java.util.Set;
 @AutoService(Processor.class)
 @SupportedAnnotationTypes("com.yao.app.spi.annotation.Custom")
 @SupportedOptions({TestProcessor.SKIP_PRIMITIVE_TYPE_PRESENCE_CHECK})
-@SupportedSourceVersion(SourceVersion.RELEASE_8)
+@SupportedSourceVersion(SourceVersion.RELEASE_11)
 public class TestProcessor extends AbstractProcessor {
 
     protected static final String SKIP_PRIMITIVE_TYPE_PRESENCE_CHECK = "skipPrimitiveTypePresenceCheck";

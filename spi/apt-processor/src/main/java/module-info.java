@@ -17,6 +17,9 @@ import com.yao.app.spi.processor.TestProcessor;
  * open     表示这个模块向外暴露哪些包，即only runtime时可用，编译时不能引用，但是可以用反射的方法调用。
  * provides 表示这个模块提供的接口或是abstract类的实现，可以通过java.util.ServiceLoader来加载实现的。
  * uses     表示这个模块要用到的另人申明的接口或是abstract类。
+ *
+ * 未命名模块和自动模块
+ * https://www.cnblogs.com/yuluoxingkong/p/14682431.html
  * </pre>
  */
 module apt.processor {
@@ -24,8 +27,7 @@ module apt.processor {
     requires java.compiler;
 
     requires apt.api;
-    requires auto.common;
-    requires auto.service;
+    requires com.google.auto.service;
     requires com.squareup.javapoet;
 
     provides javax.annotation.processing.Processor with TestProcessor;
