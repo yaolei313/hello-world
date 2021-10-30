@@ -64,7 +64,8 @@ jobs:
     #    uses a compiled language
 
     - run: |
-       mvn clean install
+       mvn clean install --file parent/pom.xml
+       mvn clean install --file spi/pom.xml
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v1
