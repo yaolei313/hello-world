@@ -48,7 +48,7 @@ public class App {
         int a = 0xffffffff + 10;
         System.out.println(a);
 
-        byte[] bytes = new byte[]{-1,2,5,-2,-1};
+        byte[] bytes = new byte[]{-1, 2, 5, -2, -1};
         int dwHashType = 1;
         dwHashType <<= 8;
         int idx = 0;
@@ -62,5 +62,12 @@ public class App {
             idx = dwHashType + (bytes[i] & 0xff);
         }
         System.out.println(idx);
+
+        Runtime.getRuntime().addShutdownHook(new Thread() {
+            @Override
+            public void run() {
+                System.out.println("shutdown hook");
+            }
+        });
     }
 }
