@@ -9,7 +9,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Test;
 
 /**
- * @author yaolei03 <yaolei03@kuaishou.com> Created on 2022-03-25
  */
 public class SimpleTest {
 

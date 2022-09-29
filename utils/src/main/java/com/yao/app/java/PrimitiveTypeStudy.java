@@ -3,7 +3,6 @@ package com.yao.app.java;
 import java.util.Arrays;
 
 /**
- * @author yaolei03 <yaolei03@kuaishou.com> Created on 2022-05-12
  */
 public class PrimitiveTypeStudy {
 
