@@ -7,6 +7,7 @@ import io.micrometer.core.instrument.simple.SimpleMeterRegistry;
 import io.micrometer.prometheus.PrometheusConfig;
 import io.micrometer.prometheus.PrometheusMeterRegistry;
 import java.net.InetAddress;
+import java.util.Scanner;
 
 public class MicrometerStudy {
 
@@ -16,6 +17,8 @@ public class MicrometerStudy {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        Scanner sc = new Scanner(System.in);
+        sc.next();
     }
 
     public static void test1() throws Exception {
@@ -38,17 +41,19 @@ public class MicrometerStudy {
         //registry.config().commonTags(Arrays.asList(Tag.of("stack", "prod"), Tag.of("region", "us-east-1")));
 
         // Timer, measure时间和次数
-        // Counter,
-        // Gauge,
+        // Counter, 次数，只会增加
+        // Gauge, 可以增加或减少
         // DistributionSummary,
         // LongTaskTimer,
         // FunctionCounter,
         // FunctionTimer,
         // TimeGauge.
 
-        Counter c1 = registry.counter("db", "a1", "read");
-        Counter c2 = registry.counter("db", "a1", "write");
+        Counter c1 = registry.counter("database.calls", "passport", "read");
+        Counter c2 = registry.counter("http.requests", "uri", "/api/users");
         c1.increment();
         c2.increment();
+
+        registry.gauge("cpu.usage",10);
     }
 }
