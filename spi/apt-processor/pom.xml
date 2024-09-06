@@ -26,7 +26,7 @@
         <dependency>
             <groupId>com.yao.app</groupId>
             <artifactId>apt-api</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>${project.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
