@@ -5,7 +5,6 @@ import io.github.resilience4j.circuitbreaker.CircuitBreakerConfig;
 import io.github.resilience4j.circuitbreaker.CircuitBreakerConfig.SlidingWindowType;
 import io.github.resilience4j.circuitbreaker.CircuitBreakerRegistry;
 import io.github.resilience4j.retry.Retry;
-import io.vavr.control.Try;
 import java.io.IOException;
 import java.time.Duration;
 import java.util.Random;
@@ -81,9 +80,9 @@ public class CircuitBreakerStudy {
 
         // decorated = Retry.decorateSupplier(retry, decorated);
 
-        for (int i = 0; i < 10; i++) {
+        /*for (int i = 0; i < 10; i++) {
             Try<String> result = Try.ofSupplier(decorated).recover(throwable -> "recover from exception");
             System.out.println(i + "," + result.get());
-        }
+        }*/
     }
 }

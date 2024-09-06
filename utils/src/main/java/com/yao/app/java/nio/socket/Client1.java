@@ -11,7 +11,7 @@ public class Client1 {
     public static void main(String[] args) {
         try (Socket socket = new Socket()) {
             // 8s连接超时
-            socket.connect(new InetSocketAddress("127.0.0.1", 8088), 8000);
+            socket.connect(new InetSocketAddress("127.0.0.1", 54398), 8000);
             // 默认情况下的socket.close()会立即返回，但是底层的socket并没有立即关闭，他会延迟一段时间，等待发送完毕后再关闭。
             // (true,n)的话，会在两种情况关闭，数据发送完毕，或者等待超过n秒
             socket.setSoLinger(false, 0);

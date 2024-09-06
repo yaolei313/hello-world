@@ -26,7 +26,6 @@ import java.util.Set;
 @AutoService(Processor.class)
 @SupportedAnnotationTypes("com.yao.app.spi.annotation.Custom")
 @SupportedOptions({TestProcessor.SKIP_PRIMITIVE_TYPE_PRESENCE_CHECK})
-@SupportedSourceVersion(SourceVersion.RELEASE_11)
 public class TestProcessor extends AbstractProcessor {
 
     protected static final String SKIP_PRIMITIVE_TYPE_PRESENCE_CHECK = "skipPrimitiveTypePresenceCheck";
@@ -42,7 +41,7 @@ public class TestProcessor extends AbstractProcessor {
     public SourceVersion getSupportedSourceVersion() {
         // 等同增加注解 @SupportedSourceVersion(SourceVersion.RELEASE_11)
         // return SourceVersion.RELEASE_11
-        return super.getSupportedSourceVersion();
+        return SourceVersion.latestSupported();
     }
 
     @Override
@@ -50,11 +49,11 @@ public class TestProcessor extends AbstractProcessor {
         LoggerFileTool tool = new LoggerFileTool(processingEnv);
         try {
             if (roundEnv.processingOver()) {
-                tool.writeLog("subsequent round");
+                processingEnv.getMessager().printMessage(Diagnostic.Kind.NOTE,"spi processing over");
                 return false;
             }
             Set<? extends Element> elements = roundEnv.getElementsAnnotatedWith(Custom.class);
-            processingEnv.getMessager().printMessage(Diagnostic.Kind.NOTE, "hello world");
+            processingEnv.getMessager().printMessage(Diagnostic.Kind.NOTE, "spi hello world");
             tool.writeLog("start handle");
             // 输出 [com.yao.app.java.annotation.Custom]
             tool.writeLog(annotations.toString());

@@ -1,29 +1,27 @@
 package com.yao.app.http;
 
-import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.http.Consts;
-import org.apache.http.Header;
-import org.apache.http.HttpEntity;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.CookieStore;
-import org.apache.http.client.config.CookieSpecs;
-import org.apache.http.client.config.RequestConfig;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.cookie.Cookie;
-import org.apache.http.impl.client.BasicCookieStore;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.impl.cookie.BasicClientCookie;
-import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.util.EntityUtils;
+import org.apache.hc.client5.http.classic.methods.HttpGet;
+import org.apache.hc.client5.http.classic.methods.HttpPost;
+import org.apache.hc.client5.http.config.RequestConfig;
+import org.apache.hc.client5.http.cookie.BasicCookieStore;
+import org.apache.hc.client5.http.cookie.Cookie;
+import org.apache.hc.client5.http.cookie.CookieStore;
+import org.apache.hc.client5.http.entity.UrlEncodedFormEntity;
+import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
+import org.apache.hc.client5.http.impl.classic.CloseableHttpResponse;
+import org.apache.hc.client5.http.impl.classic.HttpClients;
+import org.apache.hc.client5.http.impl.cookie.BasicClientCookie;
+import org.apache.hc.core5.http.Header;
+import org.apache.hc.core5.http.HttpEntity;
+import org.apache.hc.core5.http.NameValuePair;
+import org.apache.hc.core5.http.io.entity.EntityUtils;
+import org.apache.hc.core5.http.message.BasicNameValuePair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -46,12 +44,11 @@ public class Test {
 
         //
         try {
-            RequestConfig globalConfig = RequestConfig.custom().setCookieSpec(CookieSpecs.BEST_MATCH).build();
+            RequestConfig globalConfig = RequestConfig.custom().build();
 
             CookieStore globalCookieStore = new BasicCookieStore();
 
-            CloseableHttpClient httpclient = HttpClients.custom().setDefaultRequestConfig(globalConfig)
-                    .setDefaultCookieStore(globalCookieStore).build();
+            CloseableHttpClient httpclient = HttpClients.custom().setDefaultRequestConfig(globalConfig).setDefaultCookieStore(globalCookieStore).build();
             try {
                 HttpGet get = new HttpGet(loginUrl);
                 CloseableHttpResponse response = httpclient.execute(get);
@@ -60,7 +57,7 @@ public class Test {
                 try {
                     HttpEntity rspEntity = response.getEntity();
 
-                    respContent = EntityUtils.toString(rspEntity, Consts.UTF_8).trim();
+                    respContent = EntityUtils.toString(rspEntity, StandardCharsets.UTF_8).trim();
                     EntityUtils.consume(rspEntity);
                 } finally {
                     response.close();
@@ -97,31 +94,27 @@ public class Test {
                 HttpPost post = new HttpPost(loginUrl);
                 post.setEntity(new UrlEncodedFormEntity(nvpList));
                 CloseableHttpResponse loginResponse = httpclient.execute(post);
-                
+
                 try {
-                    System.out.println(loginResponse.getStatusLine());
-                    
-                    Header[] headers = loginResponse.getAllHeaders();
-                    for(Header h :headers){
-                    System.out.println(h.getName()+":"+h.getValue());
+                    System.out.println(loginResponse.getCode());
+
+                    Header[] headers = loginResponse.getHeaders();
+                    for (Header h : headers) {
+                        System.out.println(h.getName() + ":" + h.getValue());
                     }
                     HttpEntity contentRspEntity = loginResponse.getEntity();
 
-                    respContent = EntityUtils.toString(contentRspEntity, Consts.UTF_8).trim();
+                    respContent = EntityUtils.toString(contentRspEntity, StandardCharsets.UTF_8).trim();
                     EntityUtils.consume(contentRspEntity);
 
                     System.out.println(respContent);
                 } finally {
                     response.close();
                 }
-
-            } catch (Exception e) {
-                throw e;
             } finally {
                 httpclient.close();
             }
-
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

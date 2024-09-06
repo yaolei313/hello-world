@@ -1,6 +1,7 @@
 package com.yao.app.reactivex;
 
-import io.reactivex.Observable;
+
+import io.reactivex.rxjava3.core.Observable;
 
 /**
  * Created by yaolei02 on 2018/12/4.

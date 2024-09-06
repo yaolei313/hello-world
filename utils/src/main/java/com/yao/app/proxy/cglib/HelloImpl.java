@@ -12,10 +12,6 @@ public class HelloImpl implements INamed {
 		System.out.println("boss : hello boy");
 	}
 	
-	public void sayHelloByLeader() {
-		System.out.println("leader : hello guy");
-	}
-
     @Override
     public String getName() {
         System.out.println("cglib li bai");

@@ -5,8 +5,8 @@
 	<parent>
 		<groupId>com.yao.app</groupId>
 		<artifactId>parent</artifactId>
-		<version>2.0.0-SNAPSHOT</version>
-    <relativePath/>
+		<version>2.0.1-SNAPSHOT</version>
+    	<relativePath/>
 	</parent>
 
 	<groupId>com.yao.app</groupId>
@@ -154,12 +154,8 @@
 
 		<!-- http utils -->
 		<dependency>
-			<groupId>org.apache.httpcomponents</groupId>
-			<artifactId>httpclient</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.httpcomponents</groupId>
-			<artifactId>httpcore</artifactId>
+			<groupId>org.apache.httpcomponents.client5</groupId>
+			<artifactId>httpclient5</artifactId>
 		</dependency>
 
 		<!-- excel -->
@@ -245,7 +241,7 @@
 
 		<!-- rx java -->
 		<dependency>
-			<groupId>io.reactivex.rxjava2</groupId>
+			<groupId>io.reactivex.rxjava3</groupId>
 			<artifactId>rxjava</artifactId>
 		</dependency>
 
@@ -268,19 +264,6 @@
 
 		<!-- metrics -->
 		<dependency>
-			<groupId>io.dropwizard.metrics</groupId>
-			<artifactId>metrics-core</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>io.dropwizard.metrics</groupId>
-			<artifactId>metrics-jmx</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>io.dropwizard.metrics</groupId>
-			<artifactId>metrics-healthchecks</artifactId>
-		</dependency>
-
-		<dependency>
 			<groupId>io.micrometer</groupId>
 			<artifactId>micrometer-registry-prometheus</artifactId>
 		</dependency>
@@ -298,11 +281,15 @@
 			<groupId>org.apache.kafka</groupId>
 			<artifactId>kafka-streams</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework.kafka</groupId>
+			<artifactId>spring-kafka</artifactId>
+		</dependency>
 
 		<!-- bean validator 1.1 -->
 		<dependency>
-			<groupId>javax.validation</groupId>
-			<artifactId>validation-api</artifactId>
+			<groupId>jakarta.validation</groupId>
+			<artifactId>jakarta.validation-api</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate.validator</groupId>
@@ -321,7 +308,7 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.codehaus.groovy</groupId>
+			<groupId>org.apache.groovy</groupId>
 			<artifactId>groovy</artifactId>
 		</dependency>
 
@@ -349,6 +336,11 @@
 			<artifactId>javapoet</artifactId>
 		</dependency>
 
+		<dependency>
+			<groupId>com.yao.app</groupId>
+			<artifactId>apt-api</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
 		<dependency>
 			<groupId>com.yao.app</groupId>
 			<artifactId>apt-processor</artifactId>
@@ -414,16 +406,16 @@
 			<artifactId>javassist</artifactId>
 		</dependency>
 
-		<dependency>
+<!--		<dependency>
 			<groupId>com.orbitz.consul</groupId>
 			<artifactId>consul-client</artifactId>
-			<version>1.4.2</version>
-		</dependency>
+			<version>1.5.3</version>
+		</dependency>-->
 
 		<dependency>
 			<groupId>com.ecwid.consul</groupId>
 			<artifactId>consul-api</artifactId>
-			<version>1.4.4</version>
+			<version>1.4.5</version>
 		</dependency>
 
 		<!-- jwt -->

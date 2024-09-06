@@ -11,11 +11,11 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import java.util.function.Supplier;
 
-public class Server {
+public class TimeServer {
 
     private int port;
 
-    public Server(int port) {
+    public TimeServer(int port) {
         this.port = port;
     }
 
@@ -56,6 +56,6 @@ public class Server {
             port = Integer.parseInt(args[0]);
         }
 
-        new Server(port).run(() -> new TimeServerHandler());
+        new TimeServer(port).run(() -> new TimeServerHandler());
     }
 }

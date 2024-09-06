@@ -22,7 +22,7 @@ public class App {
         Float t = 0.62342323f;
         System.out.println(t);
 
-        // 因为int的范围是-2147483648,-2147483647,最小值转为正数后溢出，故Math.abs(Integer.MIN_VALUE)=Integer.MIN_VALUE
+        // 因为int的范围是-2147483648,2147483647,最小值转为正数后溢出，故Math.abs(Integer.MIN_VALUE)=Integer.MIN_VALUE
         Integer d = Integer.MIN_VALUE;
         System.out.println(d);
         System.out.println(Math.abs(d));

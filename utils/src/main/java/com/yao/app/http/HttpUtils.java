@@ -2,6 +2,7 @@ package com.yao.app.http;
 
 import java.io.IOException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.security.KeyManagementException;
 import java.security.KeyStore;
 import java.security.KeyStoreException;
@@ -9,42 +10,40 @@ import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import javax.net.ssl.SSLContext;
-import org.apache.http.Consts;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpHost;
-import org.apache.http.NameValuePair;
-import org.apache.http.ParseException;
-import org.apache.http.auth.AuthScope;
-import org.apache.http.auth.UsernamePasswordCredentials;
-import org.apache.http.client.AuthCache;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.CookieStore;
-import org.apache.http.client.CredentialsProvider;
-import org.apache.http.client.config.CookieSpecs;
-import org.apache.http.client.config.RequestConfig;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.protocol.HttpClientContext;
-import org.apache.http.config.Registry;
-import org.apache.http.config.RegistryBuilder;
-import org.apache.http.conn.socket.ConnectionSocketFactory;
-import org.apache.http.conn.socket.PlainConnectionSocketFactory;
-import org.apache.http.conn.ssl.NoopHostnameVerifier;
-import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
-import org.apache.http.cookie.Cookie;
-import org.apache.http.impl.auth.BasicScheme;
-import org.apache.http.impl.client.BasicAuthCache;
-import org.apache.http.impl.client.BasicCookieStore;
-import org.apache.http.impl.client.BasicCredentialsProvider;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
-import org.apache.http.ssl.SSLContexts;
-import org.apache.http.ssl.TrustStrategy;
-import org.apache.http.util.EntityUtils;
+
+import org.apache.hc.client5.http.auth.AuthCache;
+import org.apache.hc.client5.http.auth.AuthScope;
+import org.apache.hc.client5.http.auth.UsernamePasswordCredentials;
+import org.apache.hc.client5.http.classic.methods.HttpGet;
+import org.apache.hc.client5.http.classic.methods.HttpPost;
+import org.apache.hc.client5.http.config.RequestConfig;
+import org.apache.hc.client5.http.cookie.BasicCookieStore;
+import org.apache.hc.client5.http.cookie.Cookie;
+import org.apache.hc.client5.http.cookie.CookieStore;
+import org.apache.hc.client5.http.entity.UrlEncodedFormEntity;
+import org.apache.hc.client5.http.impl.auth.BasicAuthCache;
+import org.apache.hc.client5.http.impl.auth.BasicCredentialsProvider;
+import org.apache.hc.client5.http.impl.auth.BasicScheme;
+import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
+import org.apache.hc.client5.http.impl.classic.CloseableHttpResponse;
+import org.apache.hc.client5.http.impl.classic.HttpClients;
+import org.apache.hc.client5.http.impl.io.PoolingHttpClientConnectionManager;
+import org.apache.hc.client5.http.protocol.HttpClientContext;
+import org.apache.hc.client5.http.socket.ConnectionSocketFactory;
+import org.apache.hc.client5.http.socket.PlainConnectionSocketFactory;
+import org.apache.hc.client5.http.ssl.NoopHostnameVerifier;
+import org.apache.hc.client5.http.ssl.SSLConnectionSocketFactory;
+import org.apache.hc.core5.http.HttpEntity;
+import org.apache.hc.core5.http.HttpHost;
+import org.apache.hc.core5.http.NameValuePair;
+import org.apache.hc.core5.http.ParseException;
+import org.apache.hc.core5.http.config.Registry;
+import org.apache.hc.core5.http.config.RegistryBuilder;
+import org.apache.hc.core5.http.io.entity.EntityUtils;
+import org.apache.hc.core5.ssl.SSLContexts;
+import org.apache.hc.core5.ssl.TrustStrategy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -82,8 +81,9 @@ public class HttpUtils {
         cm.setDefaultMaxPerRoute(500);
 
         RequestConfig globalConfig =
-                RequestConfig.custom().setConnectionRequestTimeout(500).setConnectTimeout(500).setSocketTimeout(1000).setRedirectsEnabled(false)
-                        .setCookieSpec(CookieSpecs.DEFAULT).build();
+                RequestConfig.custom().setConnectionRequestTimeout(500, TimeUnit.MICROSECONDS).setConnectTimeout(500, TimeUnit.MICROSECONDS)
+                        .setResponseTimeout(1000, TimeUnit.MICROSECONDS).setRedirectsEnabled(false)
+                        .build();
 
         CookieStore globalCookieStore = new BasicCookieStore();
         if (globalCookies != null) {
@@ -98,7 +98,7 @@ public class HttpUtils {
     }
 
     public static String getContentByPreemptiveAuthentication(CloseableHttpClient httpClient, String url, String username, String password,
-            List<NameValuePair> nvpList, List<Cookie> cookies, boolean isPost) throws ParseException, IOException {
+                                                              List<NameValuePair> nvpList, List<Cookie> cookies, boolean isPost) throws IOException, ParseException {
         HttpClientContext localContext = HttpClientContext.create();
 
         // 添加cookies
@@ -110,12 +110,12 @@ public class HttpUtils {
         }
 
         // http抢先认证
-        CredentialsProvider credentialsProvider = new BasicCredentialsProvider();
+        BasicCredentialsProvider credentialsProvider = new BasicCredentialsProvider();
 
         URL turl = new URL(url);
-        HttpHost target = new HttpHost(turl.getHost(), turl.getPort(), turl.getProtocol());
+        HttpHost target = new HttpHost(turl.getProtocol(), turl.getHost(), turl.getPort( ));
 
-        credentialsProvider.setCredentials(new AuthScope(target.getHostName(), target.getPort()), new UsernamePasswordCredentials(username, password));
+        credentialsProvider.setCredentials(new AuthScope(target.getHostName(), target.getPort()), new UsernamePasswordCredentials(username, password.toCharArray()));
         localContext.setCredentialsProvider(credentialsProvider);
         // Create AuthCache instance
         AuthCache authCache = new BasicAuthCache();
@@ -129,7 +129,7 @@ public class HttpUtils {
     }
 
     public static String getContent(CloseableHttpClient httpClient, String url, List<NameValuePair> nvpList, List<Cookie> cookies, boolean isPost)
-            throws ClientProtocolException, IOException {
+            throws IOException, ParseException {
         HttpClientContext localContext = HttpClientContext.create();
 
         // 添加cookies
@@ -144,14 +144,14 @@ public class HttpUtils {
     }
 
     private static String getHttpResonse(CloseableHttpClient httpClient, String url, List<NameValuePair> nvpList, boolean isPost,
-            HttpClientContext localContext) throws ClientProtocolException, IOException {
+            HttpClientContext localContext) throws IOException, ParseException {
         CloseableHttpResponse response = null;
         if (isPost) {
             log.debug("post url is {}", url);
 
             HttpPost post = new HttpPost(url);
             if (nvpList != null && !nvpList.isEmpty()) {
-                post.setEntity(new UrlEncodedFormEntity(nvpList, Consts.UTF_8));
+                post.setEntity(new UrlEncodedFormEntity(nvpList, StandardCharsets.UTF_8));
             }
 
             response = httpClient.execute(post, localContext);
@@ -159,7 +159,7 @@ public class HttpUtils {
         } else {
             String targetUrl = url;
             if (nvpList != null && !nvpList.isEmpty()) {
-                String strParams = EntityUtils.toString(new UrlEncodedFormEntity(nvpList, Consts.UTF_8));
+                String strParams = EntityUtils.toString(new UrlEncodedFormEntity(nvpList, StandardCharsets.UTF_8));
                 if (url.contains("?")) {
                     targetUrl = targetUrl + "&" + strParams;
                 } else {
@@ -176,7 +176,7 @@ public class HttpUtils {
         try {
             HttpEntity rspEntity = response.getEntity();
 
-            String respContent = EntityUtils.toString(rspEntity, Consts.UTF_8).trim();
+            String respContent = EntityUtils.toString(rspEntity, StandardCharsets.UTF_8).trim();
             EntityUtils.consume(rspEntity);
 
             return respContent;
@@ -185,7 +185,7 @@ public class HttpUtils {
         }
     }
 
-    public static void destoryHttpClient(CloseableHttpClient httpClient) {
+    public static void destroyHttpClient(CloseableHttpClient httpClient) {
         try {
             httpClient.close();
         } catch (IOException e) {

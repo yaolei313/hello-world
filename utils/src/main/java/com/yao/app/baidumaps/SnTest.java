@@ -1,5 +1,16 @@
 package com.yao.app.baidumaps;
 
+import org.apache.hc.client5.http.classic.HttpClient;
+import org.apache.hc.client5.http.classic.methods.HttpGet;
+import org.apache.hc.client5.http.classic.methods.HttpPost;
+import org.apache.hc.client5.http.entity.UrlEncodedFormEntity;
+import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
+import org.apache.hc.client5.http.impl.classic.CloseableHttpResponse;
+import org.apache.hc.client5.http.impl.classic.HttpClientBuilder;
+import org.apache.hc.core5.http.HttpEntity;
+import org.apache.hc.core5.http.NameValuePair;
+import org.apache.hc.core5.http.message.BasicNameValuePair;
+
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
@@ -9,15 +20,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.message.BasicNameValuePair;
+
 
 /**
  * Created by Yao on 2017/8/22.
@@ -42,9 +45,9 @@ public class SnTest {
          */
         Map<String, String> paramsMap = new LinkedHashMap<>();
         paramsMap.put("query", "汽车站");
-        paramsMap.put("coord_type","1");
-        paramsMap.put("city_limit","true");
-        paramsMap.put("region","淄博市");
+        paramsMap.put("coord_type", "1");
+        paramsMap.put("city_limit", "true");
+        paramsMap.put("region", "淄博市");
         paramsMap.put("output", "json");
         paramsMap.put("ak", YOURAK);
 
@@ -66,14 +69,14 @@ public class SnTest {
 
         System.out.println(sn);
 
-        String url = "http://api.map.baidu.com/place/v2/search?query=汽车站&coord_type=1&city_limit=true&region=淄博市" +
-                "&output=json&ak="+YOURAK+"&sn=" + sn;
+        String url =
+            "http://api.map.baidu.com/place/v2/search?query=汽车站&coord_type=1&city_limit=true&region=淄博市" + "&output=json&ak=" + YOURAK + "&sn=" + sn;
         System.out.println(url);
 
         // 算得sn后发送get请求
-        HttpClient client = HttpClientBuilder.create().build();
+        CloseableHttpClient client = HttpClientBuilder.create().build();
         HttpGet httpget = new HttpGet(url);
-        HttpResponse response = client.execute(httpget);
+        CloseableHttpResponse response = client.execute(httpget);
         InputStream is = response.getEntity().getContent();
         String result = inStream2String(is);
         // 打印响应内容
@@ -104,11 +107,9 @@ public class SnTest {
         String sn = MD5(tempStr);
 
         // 算得sn后发送get请求
-        HttpClient client = HttpClientBuilder.create().build();
-        HttpGet httpget = new HttpGet(
-                "http://api.map.baidu.com/geocoder/v2/?address=百度大厦&output=json&ak="+YOURAK+"&sn="
-                        + sn);
-        HttpResponse response = client.execute(httpget);
+        CloseableHttpClient client = HttpClientBuilder.create().build();
+        HttpGet httpget = new HttpGet("http://api.map.baidu.com/geocoder/v2/?address=百度大厦&output=json&ak=" + YOURAK + "&sn=" + sn);
+        CloseableHttpResponse response = client.execute(httpget);
         InputStream is = response.getEntity().getContent();
         String result = inStream2String(is);
         // 打印响应内容
@@ -129,15 +130,13 @@ public class SnTest {
         Map<String, String> treeMap = new TreeMap<>(paramsMap);
         String paramsStr = toQueryString(treeMap);
 
-        String wholeStr = new String("/geodata/v3/geotable/create?" + paramsStr
-                + YOURSK);
+        String wholeStr = new String("/geodata/v3/geotable/create?" + paramsStr + YOURSK);
         String tempStr = URLEncoder.encode(wholeStr, "UTF-8");
         // 调用下面的MD5方法得到sn签名值
         String sn = MD5(tempStr);
 
-        HttpClient client = HttpClientBuilder.create().build();
-        HttpPost post = new HttpPost(
-                "http://api.map.baidu.com/geodata/v3/geotable/create");
+        CloseableHttpClient client = HttpClientBuilder.create().build();
+        HttpPost post = new HttpPost("http://api.map.baidu.com/geodata/v3/geotable/create");
         List<NameValuePair> params = new ArrayList<>();
         params.add(new BasicNameValuePair("geotype", "1"));
         params.add(new BasicNameValuePair("ak", YOURAK));
@@ -146,7 +145,7 @@ public class SnTest {
         params.add(new BasicNameValuePair("sn", sn));
         HttpEntity formEntity = new UrlEncodedFormEntity(params);
         post.setEntity(formEntity);
-        HttpResponse response = client.execute(post);
+        CloseableHttpResponse response = client.execute(post);
         InputStream is = response.getEntity().getContent();
         String result = inStream2String(is);
         // 打印响应内容
@@ -154,12 +153,11 @@ public class SnTest {
     }
 
     // 对Map内所有value作utf8编码，拼接返回结果
-    public String toQueryString(Map<?, ?> data)
-            throws UnsupportedEncodingException {
+    public String toQueryString(Map<?, ?> data) throws UnsupportedEncodingException {
         StringBuffer queryString = new StringBuffer();
         for (Map.Entry<?, ?> pair : data.entrySet()) {
             queryString.append(pair.getKey() + "=");
-            queryString.append(URLEncoder.encode((String) pair.getValue(),"UTF-8") + "&");
+            queryString.append(URLEncoder.encode((String) pair.getValue(), "UTF-8") + "&");
         }
         if (queryString.length() > 0) {
             queryString.deleteCharAt(queryString.length() - 1);
@@ -170,13 +168,11 @@ public class SnTest {
     // MD5计算方法，调用了MessageDigest库函数，并把byte数组结果转换成16进制
     public String MD5(String md5) {
         try {
-            java.security.MessageDigest md = java.security.MessageDigest
-                    .getInstance("MD5");
+            java.security.MessageDigest md = java.security.MessageDigest.getInstance("MD5");
             byte[] array = md.digest(md5.getBytes());
             StringBuffer sb = new StringBuffer();
             for (int i = 0; i < array.length; ++i) {
-                sb.append(Integer.toHexString((array[i] & 0xFF) | 0x100)
-                        .substring(1, 3));
+                sb.append(Integer.toHexString((array[i] & 0xFF) | 0x100).substring(1, 3));
             }
             return sb.toString();
         } catch (java.security.NoSuchAlgorithmException e) {

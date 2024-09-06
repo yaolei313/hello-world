@@ -38,7 +38,7 @@ public class CgProxyTest {
         Object proxy = enhancer.create();
 
         System.out.println("--------------------");
-        System.out.println(((HelloImpl) proxy).toString());
+        System.out.println(proxy.toString());
         System.out.println("--------------------");
         ((HelloImpl) proxy).sayHello();
         
