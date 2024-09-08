@@ -18,6 +18,7 @@ import java.util.Set;
 
 /**
  * 此处不是运行时的处理注解的机制(反射)，而是编译时处理注解。
+ * https://docs.oracle.com/en/java/javase/17/docs/specs/man/javac.html#annotation-processing
  * <p>
  * processingEnv在父类中被传入，其
  * 提供了一系列工具类，比如Elements,Types,Filer等.

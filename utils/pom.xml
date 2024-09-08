@@ -328,10 +328,6 @@
 			<artifactId>mapstruct</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.mapstruct</groupId>
-			<artifactId>mapstruct-processor</artifactId>
-		</dependency>
-		<dependency>
 			<groupId>com.squareup</groupId>
 			<artifactId>javapoet</artifactId>
 		</dependency>
@@ -341,11 +337,11 @@
 			<artifactId>apt-api</artifactId>
 			<version>1.0.0-SNAPSHOT</version>
 		</dependency>
-		<dependency>
+		<!--<dependency>
 			<groupId>com.yao.app</groupId>
 			<artifactId>apt-processor</artifactId>
 			<version>1.0.0-SNAPSHOT</version>
-		</dependency>
+		</dependency>-->
 
 		<!-- ioc -->
 		<dependency>
