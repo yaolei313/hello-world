@@ -26,9 +26,7 @@ module apt.processor {
     requires java.base;
     requires java.compiler;
 
-    requires apt.api;
     requires com.google.auto.service;
-    requires com.squareup.javapoet;
 
     provides javax.annotation.processing.Processor with TestProcessor;
 

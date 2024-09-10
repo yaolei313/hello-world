@@ -21,6 +21,7 @@
   <modules>
     <module>apt-api</module>
     <module>apt-processor</module>
+    <module>apt-api-gem</module>
   </modules>
   <properties>
     <revision>1.0.0-SNAPSHOT</revision>

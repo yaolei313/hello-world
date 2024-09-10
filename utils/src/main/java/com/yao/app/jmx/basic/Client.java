@@ -66,9 +66,9 @@ public class Client {
             // Query MBean names
             //
             echo("\nQuery MBeanServer MBeans:");
-            Set names = mbsc.queryNames(null, null);
+            Set<ObjectName> names = mbsc.queryNames(null, null);
             for (Iterator i = names.iterator(); i.hasNext();) {
-                echo("\tObjectName = " + (ObjectName) i.next());
+                echo("\tObjectName = " + i.next());
             }
             waitForEnterPressed();
 

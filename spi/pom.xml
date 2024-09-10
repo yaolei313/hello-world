@@ -19,6 +19,7 @@
     <modules>
         <module>apt-api</module>
         <module>apt-processor</module>
+        <module>apt-api-gem</module>
     </modules>
 
     <build>

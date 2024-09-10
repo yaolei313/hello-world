@@ -116,9 +116,8 @@ public class CloneUtil {
                 }
                 value = tmp;
             }
-        } else if (value instanceof Map) {// 复制新的MAP
+        } else if (value instanceof Map org) {// 复制新的MAP
             Map tmp = (Map) c.newInstance();
-            Map org = (Map) value;
             for (Object key : org.keySet()) {
                 tmp.put(key, clone(org.get(key), level));// 深度复制
             }

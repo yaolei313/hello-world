@@ -26,8 +26,8 @@ public class TypeTest {
         System.out.println("------------");
 
         // cache range [-128, 127]
-        Integer t3 = new Integer(127);
-        Integer t4 = new Integer(127);
+        Integer t3 = Integer.valueOf(127);
+        Integer t4 = Integer.valueOf(127);
         System.out.println(t3 == t4);
         System.out.println(127 == t4);
         System.out.println(t3 == 127);

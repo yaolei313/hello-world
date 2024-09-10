@@ -7,7 +7,7 @@
     <artifactId>spi</artifactId>
     <version>1.0.0-SNAPSHOT</version>
   </parent>
-  <artifactId>apt-processor</artifactId>
+  <artifactId>apt-api-gem</artifactId>
   <version>1.0.0-SNAPSHOT</version>
   <licenses>
     <license>
@@ -16,40 +16,31 @@
     </license>
   </licenses>
   <properties>
-    <auto-service.version>1.0</auto-service.version>
+    <gem.version>1.0.0.Alpha3</gem.version>
   </properties>
   <dependencies>
     <dependency>
-      <groupId>com.google.auto.service</groupId>
-      <artifactId>auto-service-annotations</artifactId>
-      <version>${auto-service.version}</version>
+      <groupId>com.yao.app</groupId>
+      <artifactId>apt-api</artifactId>
+      <version>${project.version}</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.mapstruct.tools.gem</groupId>
+      <artifactId>gem-api</artifactId>
+      <version>${gem.version}</version>
     </dependency>
   </dependencies>
   <build>
     <plugins>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>default-compile</id>
-            <configuration>
-              <compilerArgument>-proc:none</compilerArgument>
-            </configuration>
-          </execution>
-          <execution>
-            <id>compile-project</id>
-            <phase>compile</phase>
-            <goals>
-              <goal>compile</goal>
-            </goals>
-          </execution>
-        </executions>
         <configuration>
           <annotationProcessorPaths>
             <path>
-              <groupId>com.google.auto.service</groupId>
-              <artifactId>auto-service</artifactId>
-              <version>${auto-service.version}</version>
+              <groupId>org.mapstruct.tools.gem</groupId>
+              <artifactId>gem-processor</artifactId>
+              <version>${gem.version}</version>
             </path>
           </annotationProcessorPaths>
         </configuration>
