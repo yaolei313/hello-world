@@ -27,6 +27,21 @@ import javax.tools.Diagnostic;
  * <p>https://docs.oracle.com/en/java/javase/17/docs/specs/man/javac.html#annotation-processing
  * <p>processingEnv在父类中被传入，其 提供了一系列工具类，比如Elements,Types,Filer等.
  *
+ * <pre>
+ * 1.compiler找到所有的Processor
+ * 2.扫码源文件,确认可以处理的annotation
+ * 3.尝试寻找可匹配的Processor，若找到，则调用。若是processor声称它已处理，则后续不在尝试匹配其余的Processor
+ * 4.如果任何Processor产生了新的文件，则会触发新一轮的处理。即扫描新生成的代码文件，继续步骤2,3。直到没有新的代码文件生成为止。
+ * 5.在最后一轮没有新文件产生后，processors会被再次调用一次，让processors完成剩余的收尾工作
+ * </pre>
+ *
+ * <pre>
+ * javac 运行时存在（代码）编译环境和（自身）运行环境，传参数给javac需要增加-J
+ * annotation processor处理的elements是在compilation environment；annotation processor自身是runtime environment
+ * 如果annotation processor依赖其他jar，则需要在--processor-path同样也包含该依赖
+ *
+ * </pre>
+ *
  * @author yaolei02 on 2018/11/19.
  */
 @AutoService(Processor.class)
