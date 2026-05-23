@@ -1,6 +1,6 @@
 package com.yao.app.nebula.util;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 public class WebUtils {
     public static boolean isAjax(HttpServletRequest request) {

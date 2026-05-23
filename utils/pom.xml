@@ -1,17 +1,15 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-
 	<parent>
 		<groupId>com.yao.app</groupId>
 		<artifactId>parent</artifactId>
-		<version>2.0.1-SNAPSHOT</version>
-    	<relativePath/>
+		<version>${revision}</version>
+    	<relativePath>../pom.xml</relativePath>
 	</parent>
 
 	<groupId>com.yao.app</groupId>
 	<artifactId>utils</artifactId>
-	<version>1.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>utils</name>
@@ -95,14 +93,14 @@
 		</dependency>
 
 		<!-- AspectJ -->
-		<dependency>
-			<groupId>org.aspectj</groupId>
-			<artifactId>aspectjrt</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.aspectj</groupId>
-			<artifactId>aspectjweaver</artifactId>
-		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>org.aspectj</groupId>-->
+<!--			<artifactId>aspectjrt</artifactId>-->
+<!--		</dependency>-->
+<!--		<dependency>-->
+<!--			<groupId>org.aspectj</groupId>-->
+<!--			<artifactId>aspectjweaver</artifactId>-->
+<!--		</dependency>-->
 
 		<!-- Logging -->
 		<dependency>
@@ -195,37 +193,20 @@
 
 		<!-- jackson -->
 		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-core</artifactId>
+      <groupId>tools.jackson.core</groupId>
+      <artifactId>jackson-core</artifactId>
 		</dependency>
+    <dependency>
+      <groupId>tools.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+    </dependency>
 		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-annotations</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-databind</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.fasterxml.jackson.dataformat</groupId>
+			<groupId>tools.jackson.dataformat</groupId>
 			<artifactId>jackson-dataformat-smile</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>com.fasterxml.jackson.datatype</groupId>
+			<groupId>tools.jackson.datatype</groupId>
 			<artifactId>jackson-datatype-guava</artifactId>
-		</dependency>
-		<!-- 以下3个模块参照https://github.com/FasterXML/jackson-modules-java8 -->
-		<dependency>
-			<groupId>com.fasterxml.jackson.module</groupId>
-			<artifactId>jackson-module-parameter-names</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.fasterxml.jackson.datatype</groupId>
-			<artifactId>jackson-datatype-jdk8</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.fasterxml.jackson.datatype</groupId>
-			<artifactId>jackson-datatype-jsr310</artifactId>
 		</dependency>
 
 		<!-- gson -->
@@ -335,7 +316,6 @@
 		<dependency>
 			<groupId>com.yao.app</groupId>
 			<artifactId>apt-api</artifactId>
-			<version>1.0.0-SNAPSHOT</version>
 		</dependency>
 		<!--<dependency>
 			<groupId>com.yao.app</groupId>
@@ -513,6 +493,12 @@
 			<groupId>io.github.kwai-apis</groupId>
 			<artifactId>kwai-oidc-client</artifactId>
 			<version>1.0.2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>io.opentelemetry.javaagent</groupId>
+			<artifactId>opentelemetry-javaagent</artifactId>
+			<version>2.19.0</version>
 		</dependency>
 
 	</dependencies>

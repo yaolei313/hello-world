@@ -1,0 +1,42 @@
+<sitemesh>
+
+    <!-- 默认的装饰路径。如果没有配置其他的路径将启用默认路径,这个可以适用于所有路径 -->
+    <!-- Map default decorator. This shall be applied to all paths if no other paths match. -->
+    <mapping decorator="/decorator/default-decorator.html"/>
+
+    <!-- 配置装饰器的路径 -->
+    <!-- Map decorators to path patterns. -->
+    <mapping path="/login" decorator="/decorator/decorator2.html"/>
+
+    <!-- 对同一路径配置多个装饰器 -->
+    <!-- Alternative convention. This is more verbose but allows multiple decorators
+         to be applied to a single path. -->
+    <mapping>
+        <path>/example/*</path>
+        <decorator>/decorators/d1.html</decorator>
+        <decorator>/decorators/d2.html</decorator>
+        <decorator>/decorators/d3.html</decorator>
+    </mapping>
+
+    <!-- 配置 不被装饰 的路径 -->
+    <!-- Exclude path from decoration. -->
+    <mapping path="/static/*" exclue="true"/>
+    <mapping path="/cxf/*" exclue="true"/>
+    <mapping path="/api/*" exclue="true"/>
+
+    <!-- 默认情况下，
+         sitemesh 只对 HTTP 响应头中 Content-Type 为 text/html 的类型进行拦截和装饰，
+         我们也可以添加更多的 mime 类型 -->
+    <mime-type>text/html</mime-type>
+    <mime-type>application/vnd.wap.xhtml+xml</mime-type>
+    <mime-type>application/xhtml+xml</mime-type>
+
+    <!--
+    Sitemesh 3 默认只提供了 body，title，head 种 tag 类型
+    我们可以添加自定义的tag规则 -->
+    <!--<content-processor>
+        <tag-rule-bundle class="com.something.CssCompressingBundle"/>
+        <tag-rule-bundle class="com.something.LinkRewritingBundle"/>
+    </content-processor>-->
+
+</sitemesh>

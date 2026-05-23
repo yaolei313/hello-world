@@ -1,20 +1,14 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>com.yao.app</groupId>
     <artifactId>parent</artifactId>
-    <version>2.0.0-SNAPSHOT</version>
-    <relativePath/>
+    <version>${revision}</version>
+    <relativePath>../pom.xml</relativePath>
   </parent>
-
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>com.yao.app</groupId>
   <artifactId>nebula</artifactId>
   <packaging>jar</packaging>
-  <version>1.0-SNAPSHOT</version>
-  <name>nebula</name>
-  <url>https://maven.apache.org</url>
 
   <dependencies>
     <!-- test -->
@@ -79,28 +73,22 @@
       <groupId>org.springframework</groupId>
       <artifactId>spring-test</artifactId>
     </dependency>
-    <!--
-    <dependency>
-        <groupId>org.springframework</groupId>
-        <artifactId>spring-oxm</artifactId>
-    </dependency>
-     -->
-    <!-- 性能不如jaxb2，未验证 -->
-    <!--
-    <dependency>
-        <groupId>com.thoughtworks.xstream</groupId>
-        <artifactId>xstream</artifactId>
-    </dependency>
-    -->
 
-    <!-- AspectJ -->
     <dependency>
-      <groupId>org.aspectj</groupId>
-      <artifactId>aspectjrt</artifactId>
+      <groupId>tools.jackson.core</groupId>
+      <artifactId>jackson-core</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.aspectj</groupId>
-      <artifactId>aspectjweaver</artifactId>
+      <groupId>tools.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>tools.jackson.dataformat</groupId>
+      <artifactId>jackson-dataformat-smile</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>tools.jackson.datatype</groupId>
+      <artifactId>jackson-datatype-guava</artifactId>
     </dependency>
 
     <dependency>
@@ -135,10 +123,10 @@
     <!-- Logging End -->
 
     <!-- JSR 303 with Hibernate Validator -->
-    <dependency>
-      <groupId>javax.validation</groupId>
-      <artifactId>validation-api</artifactId>
-    </dependency>
+    <!--    <dependency>-->
+    <!--      <groupId>javax.validation</groupId>-->
+    <!--      <artifactId>validation-api</artifactId>-->
+    <!--    </dependency>-->
     <dependency>
       <groupId>org.hibernate.validator</groupId>
       <artifactId>hibernate-validator</artifactId>
@@ -173,152 +161,39 @@
       <artifactId>commons-lang3</artifactId>
     </dependency>
 
-    <!-- spring mvc json -->
-    <dependency>
-      <groupId>com.fasterxml.jackson.core</groupId>
-      <artifactId>jackson-core</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.fasterxml.jackson.core</groupId>
-      <artifactId>jackson-databind</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.fasterxml.jackson.core</groupId>
-      <artifactId>jackson-annotations</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.fasterxml.jackson.datatype</groupId>
-      <artifactId>jackson-datatype-guava</artifactId>
-    </dependency>
-    <!-- 以下3个模块参照https://github.com/FasterXML/jackson-modules-java8 -->
-    <dependency>
-      <groupId>com.fasterxml.jackson.module</groupId>
-      <artifactId>jackson-module-parameter-names</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.fasterxml.jackson.datatype</groupId>
-      <artifactId>jackson-datatype-jdk8</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.fasterxml.jackson.datatype</groupId>
-      <artifactId>jackson-datatype-jsr310</artifactId>
-    </dependency>
-    <!-- 为了spring mvc输出xml使用 -->
-    <dependency>
-      <groupId>com.fasterxml.jackson.module</groupId>
-      <artifactId>jackson-module-jaxb-annotations</artifactId>
-    </dependency>
-
     <!-- jaxb -->
-    <dependency>
-      <groupId>com.sun.xml.bind</groupId>
-      <artifactId>jaxb-core</artifactId>
-    </dependency>
     <dependency>
       <groupId>com.sun.xml.bind</groupId>
       <artifactId>jaxb-impl</artifactId>
     </dependency>
 
-    <dependency>
-      <groupId>io.dropwizard.metrics</groupId>
-      <artifactId>metrics-core</artifactId>
-    </dependency>
-
-    <!-- security-->
-    <dependency>
-      <groupId>org.apache.shiro</groupId>
-      <artifactId>shiro-core</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.shiro</groupId>
-      <artifactId>shiro-ehcache</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.shiro</groupId>
-      <artifactId>shiro-spring</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.shiro</groupId>
-      <artifactId>shiro-web</artifactId>
-    </dependency>
-
-    <!-- 临时使用 -->
-    <!-- stormpath realm-->
-    <dependency>
-      <groupId>com.stormpath.sdk</groupId>
-      <artifactId>stormpath-sdk-api</artifactId>
-      <version>1.0.RC4.5</version>
-    </dependency>
-    <dependency>
-      <groupId>com.stormpath.sdk</groupId>
-      <artifactId>stormpath-sdk-httpclient</artifactId>
-      <version>1.0.RC4.5</version>
-      <scope>runtime</scope>
-    </dependency>
-    <!-- This next runtime dependency is only necessary if you have
-         a REST API and you want to secure it with OAuth: -->
-    <dependency>
-      <groupId>com.stormpath.sdk</groupId>
-      <artifactId>stormpath-sdk-oauth</artifactId>
-      <version>1.0.RC4.5</version>
-      <scope>runtime</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.stormpath.shiro</groupId>
-      <artifactId>stormpath-shiro-core</artifactId>
-      <version>0.6.0</version>
-    </dependency>
-
     <!-- sitemesh -->
     <dependency>
-      <groupId>opensymphony</groupId>
+      <groupId>org.sitemesh</groupId>
       <artifactId>sitemesh</artifactId>
-      <version>2.4.2</version>
+      <version>3.2.2</version>
     </dependency>
 
-    <!--
-     7.x = Servlet 2.5
-     8.x = Servlet 3.0
-     9.x = Servlet 3.1
-    10.x = Servlet 4.0
-    -->
-    <!-- embedded jetty -->
     <dependency>
-      <groupId>org.eclipse.jetty</groupId>
-      <artifactId>jetty-webapp</artifactId>
+      <groupId>org.apache.tomcat.embed</groupId>
+      <artifactId>tomcat-embed-core</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.eclipse.jetty</groupId>
-      <artifactId>jetty-client</artifactId>
+      <groupId>org.apache.tomcat.embed</groupId>
+      <artifactId>tomcat-embed-jasper</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.eclipse.jetty</groupId>
-      <artifactId>jetty-annotations</artifactId>
+      <groupId>org.apache.tomcat</groupId>
+      <artifactId>tomcat-jsp-api</artifactId>
     </dependency>
-    <dependency>
-      <groupId>org.eclipse.jetty</groupId>
-      <artifactId>jetty-jmx</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.eclipse.jetty</groupId>
-      <artifactId>apache-jsp</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.eclipse.jetty</groupId>
-      <artifactId>apache-jstl</artifactId>
-    </dependency>
-
   </dependencies>
+
   <build>
     <finalName>nebula</finalName>
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-enforcer-plugin</artifactId>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -338,7 +213,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-shade-plugin</artifactId>
-        <version>3.2.1</version>
+        <!--        <version>3.6.0</version>-->
         <executions>
           <execution>
             <phase>package</phase>

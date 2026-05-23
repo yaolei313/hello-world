@@ -2,31 +2,26 @@ package com.yao.app.nebula.util;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Properties;
-import java.util.Set;
+import java.util.*;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
+
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.http.converter.json.JacksonJsonHttpMessageConverter;
 import org.springframework.http.converter.xml.Jaxb2RootElementHttpMessageConverter;
 import org.springframework.http.server.ServletServerHttpRequest;
 import org.springframework.http.server.ServletServerHttpResponse;
 import org.springframework.util.ClassUtils;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.MimeTypeUtils;
 import org.springframework.web.HttpMediaTypeNotAcceptableException;
 import org.springframework.web.accept.ContentNegotiationManager;
 import org.springframework.web.accept.ContentNegotiationManagerFactoryBean;
@@ -36,8 +31,6 @@ import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.AbstractHandlerExceptionResolver;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * 返回的错误格式也是遵从内容协商的
@@ -152,8 +145,6 @@ public class CustomHandlerExceptionResolver extends AbstractHandlerExceptionReso
         }
 
         List<MediaType> mediaTypes = new ArrayList<MediaType>(compatibleMediaTypes);
-        MediaType.sortBySpecificityAndQuality(mediaTypes);
-
         MediaType selectedMediaType = null;
         for (MediaType mediaType : mediaTypes) {
             if (mediaType.isConcrete()) {
@@ -207,9 +198,26 @@ public class CustomHandlerExceptionResolver extends AbstractHandlerExceptionReso
     }
 
     private MediaType getMostSpecificMediaType(MediaType acceptType, MediaType produceType) {
-        MediaType produceTypeToUse = produceType.copyQualityValue(acceptType);
-        return (MediaType.SPECIFICITY_COMPARATOR.compare(acceptType, produceTypeToUse) <= 0 ? acceptType
-                : produceTypeToUse);
+        // 1. 安全检查：如果两者根本不兼容，直接返回服务端的原始能力
+        if (!acceptType.isCompatibleWith(produceType)) {
+            return produceType;
+        }
+
+        // 2. 利用官方推荐的静态方法进行特异性排序
+        // 排序规则：更具体的（通配符少的）会被排在 List 的前面
+        List<MediaType> types = Arrays.asList(acceptType, produceType);
+        MimeTypeUtils.sortBySpecificity(types);
+        MediaType mostSpecific = types.get(0);
+
+        // 3. 安全退避：确保最终返回的类型不包含通配符
+        // 比如 acceptType 是 application/*，排序后它可能依然因为某些权重排在前面，
+        // 但作为 Content-Type 返回值，它必须是具体的
+        if (mostSpecific.isWildcardType() || mostSpecific.isWildcardSubtype()) {
+            mostSpecific = produceType;
+        }
+
+        // 4. 将客户端的权重偏好（q 值）保留到最终的具体类型中
+        return mostSpecific.copyQualityValue(acceptType);
     }
 
     @Override
@@ -226,7 +234,6 @@ public class CustomHandlerExceptionResolver extends AbstractHandlerExceptionReso
 
             // 默认favorPathExtension为true,即XXXX.xml等
             ContentNegotiationManagerFactoryBean factory = new ContentNegotiationManagerFactoryBean();
-            factory.setFavorPathExtension(true);
             factory.setFavorParameter(false);
             factory.setIgnoreAcceptHeader(true);
             if (JACKSON2PRESENT) {
@@ -249,12 +256,7 @@ public class CustomHandlerExceptionResolver extends AbstractHandlerExceptionReso
                 messageConverters.add(new Jaxb2RootElementHttpMessageConverter());
             }
             if (JACKSON2PRESENT) {
-                MappingJackson2HttpMessageConverter jackson2 = new MappingJackson2HttpMessageConverter();
-                jackson2.setPrettyPrint(true);
-                ObjectMapper om = new ObjectMapper();
-                om.setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
-
-                jackson2.setObjectMapper(om);
+                JacksonJsonHttpMessageConverter jackson2 = new JacksonJsonHttpMessageConverter();
                 messageConverters.add(jackson2);
             }
         }
@@ -265,7 +267,7 @@ public class CustomHandlerExceptionResolver extends AbstractHandlerExceptionReso
             allSupportedMediaTypesSet.addAll(messageConverter.getSupportedMediaTypes());
         }
         List<MediaType> result = new ArrayList<MediaType>(allSupportedMediaTypesSet);
-        MediaType.sortBySpecificity(result);
+        MimeTypeUtils.sortBySpecificity(result);
 
         this.allSupportedMediaTypes = Collections.unmodifiableList(result);
 

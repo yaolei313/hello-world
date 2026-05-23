@@ -20,7 +20,7 @@
 	<!-- 国际化 -->
 	<bean id="messageSource"
 		class="org.springframework.context.support.ResourceBundleMessageSource">
-		<property name="basename" value="messages"></property>
+		<property name="basename" value="messages"/>
 		<!-- 多个文件时使用basenames属性 -->
 		<!--<property name="basenames"> <list> <value>msg-normal</value> <value>msg-exceptions</value> 
 			</list> </property> -->

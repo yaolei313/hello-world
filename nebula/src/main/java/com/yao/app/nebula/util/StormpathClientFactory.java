@@ -1,15 +1,18 @@
 package com.yao.app.nebula.util;
 
-import org.apache.shiro.cache.CacheManager;
+/*import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.util.AbstractFactory;
 
 import com.stormpath.sdk.api.ApiKey;
 import com.stormpath.sdk.api.ApiKeys;
 import com.stormpath.sdk.client.Client;
 import com.stormpath.sdk.client.Clients;
-import com.stormpath.shiro.cache.ShiroCacheManager;
+import com.stormpath.shiro.cache.ShiroCacheManager;*/
 
-public class StormpathClientFactory extends AbstractFactory<Client> {
+public class StormpathClientFactory {
+
+}
+/*public class StormpathClientFactory extends AbstractFactory<Client> {
 
     private String id;
     
@@ -36,4 +39,4 @@ public class StormpathClientFactory extends AbstractFactory<Client> {
         return client;
     }
 
-}
+}*/
