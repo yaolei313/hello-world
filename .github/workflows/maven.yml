@@ -1,21 +1,27 @@
 name: Java CI
 
-on: [push]
+on:
+  push:
+    branches: [ main, master ] # 建议限制分支，避免哪怕改个 README 的草稿分支也频繁触发 CI
+  pull_request:
+    branches: [ main, master ]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v1
-    - name: Set up JDK 17
-      uses: actions/setup-java@v1
-      with:
-        java-version: 17
-    - name: Install Parent Pom
-      run: mvn clean install --file parent/pom.xml
-    - name: Install Dependency
-      run: mvn clean install --file spi/pom.xml
-    - name: Build with Maven
-      run: mvn -B package --file utils/pom.xml
+      # 1. 使用最新的 checkout 版本
+      - uses: actions/checkout@v4
+
+      # 2. 使用最新的 setup-java 版本（支持 JDK 17 并且内置了缓存功能）
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin' # @v4 必须指定 JDK 的发行版，常用的有 temurin, zulu, corretto
+          cache: 'maven'          # 开启 Maven 缓存，下次构建时不用重复下载 jar 包，速度快好几倍
+
+      # 3. 如果是一般的 Maven 项目，直接在根目录一步到位即可
+      - name: Build with Maven
+        run: mvn -B clean package --file pom.xml
